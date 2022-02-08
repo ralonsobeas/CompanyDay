@@ -16,7 +16,7 @@ mysql.init_app(app)
 def index():
     return render_template('index.html')
 
-@app.route('/add contact', methods=['POST'])
+@app.route('/add_contact', methods=['POST'])
 def addContact():
     nombreEmpresa = request.form['nombreEmpresa']
 
@@ -28,5 +28,16 @@ def addContact():
 
     return 'received'
 
+@app.route('/registro_empresa')
+def registroEmpresa():
+
+    # show the form, it wasn't submitted
+    return render_template('registroEmpresa.html')
+
+@app.route('/contacto')
+def contacto():
+
+    # show the form, it wasn't submitted
+    return render_template('contacto.html')
 
 app.run(port = 3000, debug=True)

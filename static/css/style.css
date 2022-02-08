@@ -1,4 +1,12 @@
-.navbar-custom {
-    background-color: blue;
-    color: blue;
+/* navbar */
+.navbar {
+    background-color: white;
+}
+
+.footer {
+    background-color: white;
+}
+
+.fa {
+  color: black;
 }

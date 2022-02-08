@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{% block title %} Formulario de registro para empresa {% endblock %}</h3>
+
+    <form action="/add_contact" method = 'POST'>
+        <input type="text" name = "nombreEmpresa" placeholder="nombreEmpresa">
+        <button type="submit">
+            Guardar
+        </button>
+    </form>
+{% endblock %}
