@@ -2,4 +2,11 @@
 
 {% block content %}
     <h1>{% block title %} CompanyDay {% endblock %}</h1>
+
+    <form action="/add contact" method = 'POST'>
+        <input type="text" name = "nombreEmpresa" placeholder="nombreEmpresa">
+        <button type="submit">
+            Guardar
+        </button>
+    </form>
 {% endblock %}
