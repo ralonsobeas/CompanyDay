@@ -22,6 +22,7 @@ def addContact():
 
     cur = mysql.get_db().cursor()
 
+    #Cuidado con las consultas Manoel quiere que usemos un ORM
     cur.execute("INSERT INTO empresa VALUES ('" + nombreEmpresa + "');")
     #mysql.connection.commit()
     mysql.get_db().commit()
@@ -40,4 +41,4 @@ def contacto():
     # show the form, it wasn't submitted
     return render_template('contacto.html')
 
-app.run(port = 3000, debug=True)
+app.run(port = 3001, debug=True)
