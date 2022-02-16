@@ -3,44 +3,50 @@
 {% block content %}
     <h3>{% block title %} Formulario de registro para empresa {% endblock %}</h3>
 
-    <form action="/empresas/crear" method = 'POST' enctype="multipart/form-data">
-      <label for="id">Id de la empresa</label>
-      <br>
-      <input type="text" name = "id" placeholder="id">
-      <br>
-      <label for="nombreEmpresa">Nombre de la empresa</label>
-      <br>
-      <input type="text" name = "nombreEmpresa" placeholder="nombreEmpresa">
-      <br>
-      <br>
-      <label for="descripcion">Descripcion del evento</label>
-      <br>
-      <textarea id="descripcion" name="descripcion" rows = "10" cols = "50">
-          Introduzca aquí la descripción
-      </textarea>
-      <br>
-      <br>
-      <label for="correo">Correo de contacto</label>
-      <br>
-      <input type="email" name = "correo">
-      <br>
-      <br>
-      <label for="telefono">Telefono de contacto</label>
-      <br>
-      <input type="text" name = "telefono">
-      <br>
-      <br>
-      <label for="ubicacion">Ubicacion del evento</label>
-      <br>
-      <input type="text" name = "ubicacion">
-      <br>
-      <br>
-      <label for="logo"Selecciona un logo:</label>
-      <input type="file" id="logo" name="logo">
-      <br>
-      <br>
-      <button type="submit">
-          Guardar
-      </button>
-    </form>
+    <div class="container">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h2>Registro Empresa</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+          <form id="contact-form" class="form" action="/empresas/crear" method="POST" role="form" enctype="multipart/form-data">
+              <div class="form-group">
+                  <label class="form-label" for="id">Id Empresa</label>
+                  <input type="text" class="form-control" id="id" name="id" placeholder="Id Epresa" tabindex="1" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="nombreEmpresa">Nombre Empresa</label>
+                  <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa" placeholder="Nombre Empresa" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="descripcion">Descripción</label>
+                  <textarea rows = "10" cols = "50" type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" tabindex="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="correo">Email</label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="Email" tabindex="4" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="telefono">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" tabindex="5" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ubicacion">Ubicación</label>
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ubicación" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label for="logo"Selecciona un logo:</label>
+                <input type="file" id="logo" name="logo">
+              </div>
+              <div class="text-center">
+                  <button type="submit" class="btn btn-start-order">Guardar</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
 {% endblock %}
