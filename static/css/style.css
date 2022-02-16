@@ -11,3 +11,9 @@
 .fa {
   color: black;
 }
+
+.card-img-top {
+    width: 15vw;
+    height: 15vw;
+    object-fit: cover;
+}

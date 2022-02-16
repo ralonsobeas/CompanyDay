@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{% block title %} Datos Empresa {% endblock %}</h3>
+    <div class="card-deck">
+    {% for empresa in empresas %}
+        <div class="card" style="min-width: 20rem; max-width: 20rem; margin-top: 5px;">
+          <div style="min-width: 20rem; max-width: 20rem;">
+            <img src="data:image/png;base64,{{empresa.render_logo}}" class="img-responsive mx-auto d-block"  alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{empresa.nombre}}</h5>
+                <p class="card-text">{{empresa.descripcion}}</p>
+                <a href="#" class="btn btn-primary">Más informacion</a>
+              </div>
+          </div>
+        </div>
+        <!-- fasfaf -->
+        <!--
+        <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
+            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{empresa.nombre}}</h5>
+                <p class="card-text">{{empresa.descripcion}}</p>
+                <a href="#" class="btn btn-primary">Más informacion</a>
+          </div>
+        </div>
+        <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
+            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{empresa.nombre}}</h5>
+                <p class="card-text">{{empresa.descripcion}}</p>
+                <a href="#" class="btn btn-primary">Más informacion</a>
+          </div>
+        </div>
+        <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
+            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{empresa.nombre}}</h5>
+                <p class="card-text">{{empresa.descripcion}}</p>
+                <a href="#" class="btn btn-primary">Más informacion</a>
+          </div>
+        </div>
+        <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
+            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{empresa.nombre}}</h5>
+                <p class="card-text">{{empresa.descripcion}}</p>
+                <a href="#" class="btn btn-primary">Más informacion</a>
+          </div>
+        </div>
+        <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
+            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{empresa.nombre}}</h5>
+                <p class="card-text">{{empresa.descripcion}}</p>
+                <a href="#" class="btn btn-primary">Más informacion</a>
+          </div>
+        </div>
+        -->
+    {% endfor %}
+    </div>
+{% endblock %}
