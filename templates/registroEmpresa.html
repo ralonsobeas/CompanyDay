@@ -7,6 +7,7 @@
   <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
         <h2>Registro Empresa</h2>
+        <h2>Inscribe a tu empresa en el Company Day</h2>
       </div>
   </div>
   <div class="row">
@@ -17,28 +18,70 @@
                   <input type="text" class="form-control" id="id" name="id" placeholder="Id Epresa" tabindex="1" required>
               </div>
               <div class="form-group">
-                  <label class="form-label" for="nombreEmpresa">Nombre Empresa</label>
-                  <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa" placeholder="Nombre Empresa" tabindex="2" required>
+                  <label class="form-label" for="nombreEmpresa">Nombre de la empresa</label>
+                  <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa" placeholder="Nombre de la empresa" tabindex="2" required>
               </div>
               <div class="form-group">
-                  <label class="form-label" for="descripcion">Descripción</label>
-                  <textarea rows = "10" cols = "50" type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" tabindex="3"></textarea>
+                  <label class="form-label" for="personaContacto">Persona de contacto</label>
+                  <input type="text" class="form-control" id="personaContacto" name="personaContacto" placeholder="Persona de contacto" tabindex="2" required>
               </div>
               <div class="form-group">
-                <label class="form-label" for="correo">Email</label>
-                <input type="email" class="form-control" id="correo" name="correo" placeholder="Email" tabindex="4" required>
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" tabindex="4" required>
               </div>
               <div class="form-group">
                 <label class="form-label" for="telefono">Teléfono</label>
                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" tabindex="5" required>
               </div>
               <div class="form-group">
-                <label class="form-label" for="ubicacion">Ubicación</label>
-                <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ubicación" tabindex="6" required>
+                <label class="form-label" for="direccion">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="poblacion">Población</label>
+                <input type="text" class="form-control" id="poblacion" name="poblacion" placeholder="Población" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="provincia">Provincia</label>
+                <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Provincia" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="codigoPostal">Código postal</label>
+                <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Código postal" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pais">País</label>
+                <input type="text" class="form-control" id="pais" name="pais" placeholder="País" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="urlWeb">Url de la web corporativa</label>
+                <input type="text" class="form-control" id="urlWeb" name="urlWeb" placeholder="Url de la web corporativa" tabindex="6" required>
               </div>
               <div class="form-group">
                 <label for="logo"Selecciona un logo:</label>
                 <input type="file" id="logo" name="logo">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="consentimientoNombre">Consiento el uso del nombre</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="consentimientoNombre" id="consentimientoNombreSi" value="True" checked/>
+                  <label class="form-check-label" for="consentimientoNombreSi"> Si </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="consentimientoNombre" id="consentimientoNombreNo" value="False"/>
+                  <label class="form-check-label" for="consentimientoNombreNo"> No </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="buscaCandidatos">La empresa se encuentra buscando candidatos</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="buscaCandidatos" id="buscaCandidatosSi" value="True" checked/>
+                  <label class="form-check-label" for="buscaCandidatosSi"> Si </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="buscaCandidatos" id="buscaCandidatosNo" value="False"/>
+                  <label class="form-check-label" for="buscaCandidatosNo"> No </label>
+                </div>
               </div>
               <div class="text-center">
                   <button type="submit" class="btn btn-start-order">Guardar</button>

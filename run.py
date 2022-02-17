@@ -32,10 +32,12 @@ migrate = Migrate(app, db)
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
 
 from models import Empresa
+from models.Empresa import Empresa
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    empresas = Empresa.query.all()
+    return render_template('index.html',empresas=empresas)
 
 @app.route('/add_contact', methods=['POST'])
 def addContact():

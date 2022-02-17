@@ -15,10 +15,17 @@ def index():
 def store():
     id = request.form['id']
     nombre = request.form['nombreEmpresa']
-    descripcion = request.form['descripcion']
-    correo = request.form['correo']
+    personaContacto = request.form['personaContacto']
+    email = request.form['email']
     telefono = request.form['telefono']
-    ubicacion = request.form['ubicacion']
+    direccion = request.form['direccion']
+    poblacion = request.form['poblacion']
+    provincia = request.form['provincia']
+    codigoPostal = request.form['codigoPostal']
+    pais = request.form['pais']
+    urlWeb = request.form['urlWeb']
+    consentimientoNombre = True if(request.form['consentimientoNombre']=='True') else False
+    buscaCandidatos = True if(request.form['buscaCandidatos']=='True') else False
 
     #Guardar logo
     file = request.files['logo']
@@ -26,7 +33,9 @@ def store():
 
     render_logo = render_picture(logo)
 
-    empresa = Empresa(id,nombre,descripcion,correo,telefono,ubicacion,logo,render_logo)
+    empresa = Empresa(id,nombre,personaContacto,email,telefono,direccion, \
+                        poblacion,provincia,codigoPostal,pais,urlWeb,logo, \
+                        render_logo,consentimientoNombre,buscaCandidatos)
     db.session.add(empresa)
     db.session.commit()
 
