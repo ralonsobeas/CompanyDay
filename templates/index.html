@@ -4,23 +4,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
 
+
+
 {% endblock %}
 
 
 {% block content %}
+
     <h3>{% block title %} Inicio U-Tad CompanyDay {% endblock %}</h3>
 
-  <div>
-        <img class="d-block w-100" src="https://www.collegiate-ac.es/propeller/uploads/sites/3/2019/11/01-fachada-u-tad1.jpg" alt="First slide">
-
-  </div>
 
   <div class="row">
     <div class="container">
       <div class="brand-carousel section-padding owl-carousel">
         {% for empresa in empresas %}
         <div class="single-logo">
-          <img src="data:image/png;base64,{{empresa.render_logo}}" alt="">
+          <img src="data:image/png;base64,{{empresa.render_logo}}" class="filtered" alt="">
         </div>
         {% endfor %}
       </div>
@@ -32,4 +31,5 @@
 {% block script %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <script type="text/javascript" src="/static/javascript/index.js"></script>
+
 {% endblock %}

@@ -42,3 +42,11 @@ margin: 0 5px;
 .owl-dot.active {
 background-color: #000 !important;
 }
+
+.filtered {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  float: left;
+  max-width: 50%;
+  border: 5px solid white;
+}

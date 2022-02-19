@@ -1,5 +1,5 @@
 from urllib import request
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, send_from_directory
 #from flaskext.mysql import MySQL
 
 from flask_migrate import Migrate
@@ -8,6 +8,8 @@ from shared.models import db
 
 import urllib
 import urllib.request
+
+import os
 
 from routes.empresa_bp import empresa_bp
 
@@ -38,6 +40,11 @@ from models.Empresa import Empresa
 def index():
     empresas = Empresa.query.all()
     return render_template('index.html',empresas=empresas)
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static/images/favicon'), 'favicon.ico')
 
 @app.route('/add_contact', methods=['POST'])
 def addContact():
