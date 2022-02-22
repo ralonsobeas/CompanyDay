@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{% block title %} Formulario de registro para presentaciones de proyectos {% endblock %}</h3>
+
+    <div class="container">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h2>Registro Presentaciones de Proyectos</h2>
+        <h2>Descripcion</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+        <form form id="contact-form" class="form" action="/proyectos/crear" method="POST" role="form" enctype="multipart/form-data">
+            <label class="form-label" for="id">Id Empresa</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="IdPresentacion" tabindex="1" required>
+            <input type="checkbox" id="presencial" name="presencial" value="True">
+            <label for="presencial"> Presencial</label><br><br>
+            <input type="checkbox" id="videojuegos" name="videojuegos" value="True">
+            <label for="videojuegos"> Videojuegos</label><br><br>
+            <input type="checkbox" id="disenoDigital" name="disenoDigital" value="True">
+            <label for="disenoDigital"> Diseño digital</label><br><br>
+            <input type="checkbox" id="cortosAnimacion" name="cortosAnimacion" value="True">
+            <label for="cortosAnimacion"> Cortos de Animacion</label><br><br>
+            <input type="checkbox" id="ingenieria" name="ingenieria" value="True">
+            <label for="ingenieria"> Ingenieria</label><br><br>
+            <input type="submit" value="Submit">
+          </form>
+      </div>
+  </div>
+</div>
+
+
+{% endblock %}
