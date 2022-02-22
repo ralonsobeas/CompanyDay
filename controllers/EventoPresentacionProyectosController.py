@@ -1,7 +1,7 @@
 import sys
 
 from flask import render_template, redirect, url_for, request, abort
-from models.PresentacionProyectos import PresentacionProyectos
+from models.EventoPresentacionProyectos import EventoPresentacionProyectos
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import base64
@@ -14,7 +14,7 @@ def index():
 
 def store():
     id = request.form['id']
-    #presencial = True if(request.form['presencial']=='True') 
+    #presencial = True if(request.form['presencial']=='True')
     try:
         request.form['presencial'] == 'True'
         presencial = True
@@ -45,14 +45,14 @@ def store():
     except:
         ingenieria = False
 
-    presentacionProyectos = PresentacionProyectos(id, presencial, videojuegos, disenoDigital, ingenieria, cortosAnimacion)
+    presentacionProyectos = EventoPresentacionProyectos(id, presencial, videojuegos, disenoDigital, ingenieria, cortosAnimacion)
     db.session.add(presentacionProyectos)
     db.session.commit()
 
     return 'Su informacion ha sido guardada en nuestra base de datos'
 
 def show(presentacion_id):
-    presentacionProyectos = PresentacionProyectos.query.get(presentacion_id)
+    presentacionProyectos = EventoPresentacionProyectos.query.get(presentacion_id)
     return render_template('empresa.html',
                             empresa=presentacionProyectos)
 
@@ -63,6 +63,5 @@ def delete(presentacion_id):
     return 'delete'
 
 def all():
-    empresas = PresentacionProyectos.query.all()
+    empresas = EventoPresentacionProyectos.query.all()
     return render_template('empresas.html',empresas=empresas)
-

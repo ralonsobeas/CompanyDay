@@ -3,7 +3,7 @@
 #db = SQLAlchemy()
 from shared.models import db
 
-class PresentacionProyectos(db.Model):
+class EventoPresentacionProyectos(db.Model):
     __tablename__ = 'presentacionProyectos'
     id = db.Column(db.Integer, primary_key=True)
     presencial = db.Column(db.Boolean)

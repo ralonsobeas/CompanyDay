@@ -1,5 +1,5 @@
 from urllib import request
-from flask import Flask, render_template, url_for, request, send_from_directory
+from flask import Flask, render_template, url_for, request, send_from_directory,redirect, abort
 #from flaskext.mysql import MySQL
 
 from flask_migrate import Migrate
@@ -19,13 +19,13 @@ app = Flask(__name__)
 
 
 login_manager.init_app(app)
-admin = Admin(app)
+#   admin = Admin(app)
 
 from routes.empresa_bp import empresa_bp
 from routes.eventoFeriaEmpresas_bp import eventoFeriaEmpresas_bp
-from routes.presentacionProyectos_bp import presentacionProyectos_bp
-from routes.charla_bp import charla_bp
-
+from routes.eventoPresentacionProyectos_bp import eventoPresentacionProyectos_bp
+from routes.eventoCharla_bp import eventoCharla_bp
+from routes.eventoSpeedMeeting_bp import eventoSpeedMeeting_bp
 
 
 """
@@ -47,8 +47,9 @@ db.init_app(app)
 migrate = Migrate(app, db)
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
 app.register_blueprint(eventoFeriaEmpresas_bp, url_prefix='/eventoFeriaEmpresas')
-app.register_blueprint(presentacionProyectos_bp, url_prefix='/proyectos')
-app.register_blueprint(charla_bp, url_prefix='/charlas')
+app.register_blueprint(eventoPresentacionProyectos_bp, url_prefix='/proyectos')
+app.register_blueprint(eventoCharla_bp, url_prefix='/charlas')
+app.register_blueprint(eventoSpeedMeeting_bp, url_prefix='/speedMeeting')
 
 from models import Empresa
 from models.Empresa import Empresa
@@ -56,12 +57,14 @@ from models.Empresa import Empresa
 from models import EventoFeriaEmpresas
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 
-from models import PresentacionProyectos
-from models.PresentacionProyectos import PresentacionProyectos
+from models import EventoPresentacionProyectos
+from models.EventoPresentacionProyectos import EventoPresentacionProyectos
 
 from models import EventoCharlas
 from models.EventoCharlas import EventoCharlas
 
+from models import EventoSpeedMeeting
+from models.EventoSpeedMeeting import EventoSpeedMeeting
 
 
 
@@ -69,19 +72,26 @@ from models.EventoCharlas import EventoCharlas
 class AdminView(ModelView):
     ModelView.can_export = True
     ModelView.column_exclude_list = ('password','logo','render_logo')
-    ModelView.column_export_exclude_list  = ('password','logo','render_logo')
+    ModelView.column_export_exclude_list = ('password','logo','render_logo')
     def is_accessible(self):
-        if current_user.is_authenticated:
-            return current_user.admin
+        if not current_user.is_authenticated:
+            print("AUT "+ str(current_user.is_authenticated))
+            return abort(404, description="Sin permisos")
+        return current_user.admin
 
-    def inaccessible_callback(self,name,**kwargs):
-        return redirect(url_for('index'))
+    def _handle_view(self, name, **kwargs):
+        if not current_user.is_authenticated:
+            return render_template("admin/denied.html")
+        if not self.is_accessible:
+            return render_template("admin/denied.html")
 
+admin=Admin(app, name='Administrador',url="/admin", template_mode='bootstrap4')
 
 admin.add_view(AdminView(Empresa,db.session))
 admin.add_view(AdminView(EventoFeriaEmpresas,db.session))
-admin.add_view(AdminView(PresentacionProyectos,db.session))
+admin.add_view(AdminView(EventoPresentacionProyectos,db.session))
 admin.add_view(AdminView(EventoCharlas,db.session))
+admin.add_view(AdminView(EventoSpeedMeeting,db.session))
 
 
 @app.route('/')
@@ -131,7 +141,9 @@ def chulo():
     empresas = Empresa.query.all()
     return render_template('chulo.html',empresas=empresas)
 
-
+def page_not_found(e):
+  return render_template('admin/denied.html'), 404
+app.register_error_handler(404, page_not_found)
 
 
 if __name__ == '__main__':

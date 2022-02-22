@@ -89,7 +89,11 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('contacto') }}">Contacto</a>
+                <a class="nav-link" href="{{ url_for('loginEmpresa') }}">Login</a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('empresa_bp.logout') }}">Logout</a>
             </li>
 
             {% if current_user.admin %}
