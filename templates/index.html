@@ -1,5 +1,35 @@
 {% extends 'base.html' %}
 
+{% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+
+
+
+{% endblock %}
+
+
 {% block content %}
-    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+
+    <h3>{% block title %} Inicio U-Tad CompanyDay {% endblock %}</h3>
+
+
+  <div class="row">
+    <div class="container">
+      <div class="brand-carousel section-padding owl-carousel">
+        {% for empresa in empresas %}
+        <div class="single-logo">
+          <img src="data:image/png;base64,{{empresa.render_logo}}" class="filtered" alt="">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="/static/javascript/index.js"></script>
+
 {% endblock %}

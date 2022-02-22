@@ -1,6 +1,52 @@
-h1 {
-    border: 2px #eee solid;
-    color: brown;
-    text-align: center;
-    padding: 10px;
+/* navbar */
+/*
+.navbar {
+    background-color: white;
+}
+
+.footer {
+    background-color: white;
+}
+*/
+.fa {
+  color: black;
+}
+
+.card-img-top {
+    width: 15vw;
+    height: 15vw;
+    object-fit: cover;
+}
+
+
+
+.section-padding{
+padding:60px 0;
+}
+.brand-carousel {
+margin-top: 15%;
+}
+.owl-dots {
+text-align: center;
+margin-top: 4%;
+}
+.owl-dot {
+display: inline-block;
+height: 15px !important;
+width: 15px !important;
+background-color: #878787 !important;
+opacity: 0.8;
+border-radius: 50%;
+margin: 0 5px;
+}
+.owl-dot.active {
+background-color: #000 !important;
+}
+
+.filtered {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  float: left;
+  max-width: 50%;
+  border: 5px solid white;
 }
