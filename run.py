@@ -67,6 +67,9 @@ from models.EventoCharlas import EventoCharlas
 
 
 class AdminView(ModelView):
+    ModelView.can_export = True
+    ModelView.column_exclude_list = ('password','logo','render_logo')
+    ModelView.column_export_exclude_list  = ('password','logo','render_logo')
     def is_accessible(self):
         if current_user.is_authenticated:
             return current_user.admin
