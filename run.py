@@ -12,6 +12,7 @@ import urllib.request
 import os
 
 from routes.empresa_bp import empresa_bp
+from routes.presentacionProyectos_bp import presentacionProyectos_bp
 
 app = Flask(__name__)
 
@@ -32,6 +33,7 @@ app.config.from_object('config')
 db.init_app(app)
 migrate = Migrate(app, db)
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
+app.register_blueprint(presentacionProyectos_bp, url_prefix='/proyectos')
 
 from models import Empresa
 from models.Empresa import Empresa
@@ -64,6 +66,10 @@ def registroEmpresa():
 
     # show the form, it wasn't submitted
     return render_template('registroEmpresa.html')
+
+@app.route('/registro_presentacion')
+def registroPresentacion():
+    return render_template('registroPresentaciones.html')
 
 @app.route('/contacto')
 def contacto():
