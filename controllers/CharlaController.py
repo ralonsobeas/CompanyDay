@@ -15,7 +15,7 @@ def index():
 def store():
     id = request.form['id']
     tema = request.form['tema']
-    presencialidad = True if(request.form['presencialidadPresencial']=='True') else False
+    presencialidad = True if(request.form['presencialidad']=='True') else False
     titulo = request.form['titulo']
     fecha = request.form['fecha']
     idempresa = request.form['idempresa']

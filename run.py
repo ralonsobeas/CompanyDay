@@ -12,7 +12,9 @@ import urllib.request
 import os
 
 from routes.empresa_bp import empresa_bp
+from routes.eventoFeriaEmpresas_bp import eventoFeriaEmpresas_bp
 from routes.presentacionProyectos_bp import presentacionProyectos_bp
+from routes.charla_bp import charla_bp
 
 app = Flask(__name__)
 
@@ -33,7 +35,9 @@ app.config.from_object('config')
 db.init_app(app)
 migrate = Migrate(app, db)
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
+app.register_blueprint(eventoFeriaEmpresas_bp, url_prefix='/eventoFeriaEmpresas')
 app.register_blueprint(presentacionProyectos_bp, url_prefix='/proyectos')
+app.register_blueprint(charla_bp, url_prefix='/charlas')
 
 from models import Empresa
 from models.Empresa import Empresa
@@ -71,11 +75,25 @@ def registroEmpresa():
 def registroPresentacion():
     return render_template('registroPresentaciones.html')
 
+@app.route('/registro_charla')
+def registroCharla():
+    return render_template('charlas.html')
+
 @app.route('/contacto')
 def contacto():
 
     # show the form, it wasn't submitted
     return render_template('contacto.html')
+
+@app.route('/pruebajs')
+def pruebajs():
+    empresas = Empresa.query.all()
+    return render_template('prueba.html',empresas=empresas)
+
+@app.route('/chulo')
+def chulo():
+    empresas = Empresa.query.all()
+    return render_template('chulo.html',empresas=empresas)
 
 if __name__ == '__main__':
 

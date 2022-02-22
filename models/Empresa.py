@@ -2,6 +2,7 @@
 
 #db = SQLAlchemy()
 from shared.models import db
+from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 
 class Empresa(db.Model):
     __tablename__ = 'empresas'
@@ -20,6 +21,12 @@ class Empresa(db.Model):
     render_logo = db.Column(db.Text)
     consentimientoNombre = db.Column(db.Boolean)
     buscaCandidatos = db.Column(db.Boolean)
+
+    #Eventos
+    eventosFeriaEmpresas =db.relationship("EventoFeriaEmpresas")
+    #eventosPresentacionProyectos = db.relationship('EventoPresentacionProyectos')
+    #eventosSpeedMeetings = db.relationship('EventoSpeedMeetings')
+    #eventosCharlas =  db.relationship('EventoCharlas'
 
     def __init__(self, id,nombre,personaContacto,email,telefono,direccion, \
                         poblacion,provincia,codigoPostal,pais,urlWeb,logo, \
