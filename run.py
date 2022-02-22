@@ -4,19 +4,29 @@ from flask import Flask, render_template, url_for, request, send_from_directory
 
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from shared.models import db
+
+from shared.models import db,login_manager
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from flask_login import current_user
 
 import urllib
 import urllib.request
 
 import os
 
+app = Flask(__name__)
+
+
+login_manager.init_app(app)
+admin = Admin(app)
+
 from routes.empresa_bp import empresa_bp
 from routes.eventoFeriaEmpresas_bp import eventoFeriaEmpresas_bp
 from routes.presentacionProyectos_bp import presentacionProyectos_bp
 from routes.charla_bp import charla_bp
 
-app = Flask(__name__)
+
 
 """
 MySQL
@@ -32,6 +42,7 @@ mysql.init_app(app)
 app.config.from_object('config')
 #db = SQLAlchemy(app)
 
+
 db.init_app(app)
 migrate = Migrate(app, db)
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
@@ -42,9 +53,37 @@ app.register_blueprint(charla_bp, url_prefix='/charlas')
 from models import Empresa
 from models.Empresa import Empresa
 
+from models import EventoFeriaEmpresas
+from models.EventoFeriaEmpresas import EventoFeriaEmpresas
+
+from models import PresentacionProyectos
+from models.PresentacionProyectos import PresentacionProyectos
+
+from models import EventoCharlas
+from models.EventoCharlas import EventoCharlas
+
+
+
+
+
+class AdminView(ModelView):
+    def is_accessible(self):
+        if current_user.is_authenticated:
+            return current_user.admin
+
+    def inaccessible_callback(self,name,**kwargs):
+        return redirect(url_for('index'))
+
+
+admin.add_view(AdminView(Empresa,db.session))
+admin.add_view(AdminView(EventoFeriaEmpresas,db.session))
+admin.add_view(AdminView(PresentacionProyectos,db.session))
+admin.add_view(AdminView(EventoCharlas,db.session))
+
+
 @app.route('/')
 def index():
-    empresas = Empresa.query.all()
+    empresas = Empresa.query.filter_by(admin=False).all()
     return render_template('index.html',empresas=empresas)
 
 
@@ -52,18 +91,12 @@ def index():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static/images/favicon'), 'favicon.ico')
 
-@app.route('/add_contact', methods=['POST'])
-def addContact():
-    nombreEmpresa = request.form['nombreEmpresa']
 
-    cur = mysql.get_db().cursor()
+@app.route('/login_empresa')
+def loginEmpresa():
 
-    #Cuidado con las consultas Manoel quiere que usemos un ORM
-    cur.execute("INSERT INTO empresa VALUES ('" + nombreEmpresa + "');")
-    #mysql.connection.commit()
-    mysql.get_db().commit()
-
-    return 'received'
+    # show the form, it wasn't submitted
+    return render_template('login.html')
 
 @app.route('/registro_empresa')
 def registroEmpresa():
@@ -94,6 +127,9 @@ def pruebajs():
 def chulo():
     empresas = Empresa.query.all()
     return render_template('chulo.html',empresas=empresas)
+
+
+
 
 if __name__ == '__main__':
 

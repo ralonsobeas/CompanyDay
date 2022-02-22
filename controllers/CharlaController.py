@@ -1,7 +1,7 @@
 import sys
 
 from flask import render_template, redirect, url_for, request, abort
-from models.Charla import EventoCharlas
+from models.EventoCharlas import EventoCharlas
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import base64
