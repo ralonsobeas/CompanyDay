@@ -19,52 +19,6 @@
   </head>
   <body >
 
-    <!--
-    <div class="site-mobile-menu site-navbar-target">
-           <div class="site-mobile-menu-header">
-             <div class="site-mobile-menu-close mt-3">
-               <span class="icon-close2 js-menu-toggle"></span>
-             </div>
-           </div>
-           <div class="site-mobile-menu-body"></div>
-         </div>
-         <header class="site-navbar site-navbar-target py-4" role="banner">
-
-                <div class="container">
-                  <div class="row align-items-center position-relative">
-
-                    <div class="col-1">
-                      <div class="site-logo">
-                        <a href="index.html" class="font-weight-bold text-white"><img class="" src="/static/images/logos-company-day-03.png"  ></a>
-                      </div>
-                    </div>
-
-                    <div class="col-11  text-right">
-
-
-                      <span class="d-inline-block d-lg-block px-2"><a href="#" class="text-black site-menu-toggle js-menu-toggle py-5"><span class="fas fa-bars h3 text-white"></span></a></span>
-
-
-
-                      <nav class="site-navigation text-right ml-auto d-none d-lg-none " role="navigation">
-                        <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                          <li class="active"><a href="index.html" class="nav-link">Home</a></li>
-                          <li><a href="about.html" class="nav-link">About</a></li>
-                          <li><a href="services.html" class="nav-link">Services</a></li>
-                          <li><a href="blog.html" class="nav-link">Blog</a></li>
-                          <li><a href="contact.html" class="nav-link">Contact</a></li>
-                        </ul>
-                      </nav>
-                    </div>
-
-
-                  </div>
-                </div>
-
-              </header>
-            -->
-
-
     <nav class="navbar navbar-expand-md navbar-light sticky-top"  >
         <a class="navbar-brand" href="{{ url_for('index')}}">
           <img class="" src="/static/images/logos-company-day-03.png"  >
@@ -88,27 +42,111 @@
                 <a class="nav-link" href="{{ url_for('empresa_bp.all') }}">Empresas</a>
             </li>
 
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('loginEmpresa') }}">Login</a>
-            </li>
-
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('empresa_bp.logout') }}">Logout</a>
-            </li>
-
-            {% if current_user.admin %}
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('admin.index') }}" style="color:red">Modo Administrador</a>
-            </li>
+            {% if current_user.is_authenticated %}
+            <div class="nav-item active">
+                <a href="" class="btn btn-default btn-rounded fa-solid fa-user" data-toggle="modal" data-target="#exampleModal"></a>
+            </div>
+            {% else %}
+            <div class="nav-item active">
+              <a href="" class="btn btn-default btn-rounded fa-solid fa-user" data-toggle="modal" data-target="#darkModalForm"></a>
+            </div>
             {% endif %}
+
+
+
             </ul>
         </div>
+
     </nav>
+
+    <!-- Modal -->
+
+            <div class="modal left fade" id="exampleModal" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="nav flex-sm-column flex-row">
+                                <a class="nav-item nav-link active" href="{{ url_for('empresa_bp.userProfile') }}">Perfil</a>
+                                <a class="nav-item nav-link" href="{{ url_for('empresa_bp.logout') }}">Logout</a>
+                                {% if current_user.admin %}
+                                <a class="nav-item nav-link" href="{{ url_for('admin.index') }}" style="color:red">Modo Administrador</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!--Content-->
+        <div class="modal fade" id="darkModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog form-dark" role="document">
+        <div class="modal-content card card-image" style="background-color: #0065ef;">
+          <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+            <!--Header-->
+            <div class="modal-header text-center pb-4">
+              <h3 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>LOGIN</strong></h3>
+              <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+              <!--Body-->
+              <form id="contact-form" class="form" action="/empresas/login" method="POST" role="form" enctype="multipart/form-data">
+                  <div class="form-group md-form mb-5">
+                      <label data-error="wrong" data-success="right" class="form-label" for="id">Id Empresa</label>
+                      <input type="text" class="form-control  validate white-text" id="id" name="id" placeholder="Id Empresa" tabindex="1" required>
+                  </div>
+                  <div class="form-group md-form pb-3">
+                      <label data-error="wrong" data-success="right" class="form-label" for="password">Contraseña</label>
+                      <input type="password" class="form-control validate white-text" id="password" name="password" placeholder="Contraseña" tabindex="2" required>
+                  </div>
+                  <div class="form-group mt-4 pb-3">
+                    <label class="checkbox" class="white-text form-check-label">
+                        <input class="form-check-input" type="checkbox" name="remember">
+                        Recordar
+                    </label>
+                  </div>
+                  <div class="field">
+
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-success btn-block btn-rounded z-depth-1">Log in</button>
+                  </div>
+              </form>
+
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-12">
+                  <p class="font-small white-text d-flex justify-content-end">¿No tienes una cuenta? <a href="{{ url_for('registroEmpresa') }}" class="text-warning ml-1 font-weight-bold">Registro</a></p>
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+            </div>
+          </div>
+        </div>
+        <!--/.Content-->
+      </div>
+    </div>
+            </div>
+    <!-- Modal -->
 
 
     <div class="container-fluid">
+
         {% block content %} {% endblock %}
     </div>
+
+
+
 
 
 <!-- Footer -->

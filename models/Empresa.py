@@ -7,6 +7,7 @@ from flask_login import UserMixin
 
 class Empresa(UserMixin,db.Model):
     __tablename__ = 'empresas'
+    validado = db.Column(db.Boolean)
     id = db.Column(db.Integer, primary_key=True)
     nombre  = db.Column(db.String(120))
     password = db.Column(db.String(120))

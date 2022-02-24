@@ -1,5 +1,5 @@
 from urllib import request
-from flask import Flask, render_template, url_for, request, send_from_directory,redirect, abort
+from flask import Flask, render_template, url_for, request, send_from_directory,redirect, abort, flash
 #from flaskext.mysql import MySQL
 
 from flask_migrate import Migrate
@@ -8,7 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 from shared.models import db,login_manager
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.actions import action
 from flask_login import current_user
+
+from flask_babelex import Babel
 
 import urllib
 import urllib.request
@@ -16,7 +19,12 @@ import urllib.request
 import os
 
 app = Flask(__name__)
-
+babel = Babel(app)
+@babel.localeselector
+def get_locale():
+        # Put your logic here. Application can store locale in
+        # user profile, cookie, session, etc.
+        return 'es'
 
 login_manager.init_app(app)
 #   admin = Admin(app)
@@ -66,17 +74,18 @@ from models.EventoCharlas import EventoCharlas
 from models import EventoSpeedMeeting
 from models.EventoSpeedMeeting import EventoSpeedMeeting
 
-
+from controllers import EmpresaController
 
 
 class AdminView(ModelView):
     ModelView.can_export = True
     ModelView.column_exclude_list = ('password','logo','render_logo')
     ModelView.column_export_exclude_list = ('password','logo','render_logo')
+    ModelView.form_excluded_columns = ('logo','render_logo')
     def is_accessible(self):
-        if not current_user.is_authenticated:
-            print("AUT "+ str(current_user.is_authenticated))
+        if not current_user.is_authenticated or not current_user.admin:
             return abort(404, description="Sin permisos")
+
         return current_user.admin
 
     def _handle_view(self, name, **kwargs):
@@ -84,6 +93,25 @@ class AdminView(ModelView):
             return render_template("admin/denied.html")
         if not self.is_accessible:
             return render_template("admin/denied.html")
+    @action('validar', 'Validar', '¿Seguro de que quieres validar las empresas seleccionadas?')
+    def action_validar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EmpresaController.validar(_id,True)
+            count += 1
+        db.session.commit()
+        flash("{0} Empresa (s) validadada (s)".format(count))
+
+    @action('invalidar', 'Invalidar', '¿Seguro de que quieres invalidar las empresas seleccionadas?')
+    def action_invalidar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EmpresaController.validar(_id,False)
+            count += 1
+        db.session.commit()
+        flash("{0} Empresa (s) invalidada (s)".format(count))
 
 admin=Admin(app, name='Administrador',url="/admin", template_mode='bootstrap4')
 
@@ -96,7 +124,7 @@ admin.add_view(AdminView(EventoSpeedMeeting,db.session))
 
 @app.route('/')
 def index():
-    empresas = Empresa.query.filter_by(admin=False).all()
+    empresas = EmpresaController.all_query()
     return render_template('index.html',empresas=empresas)
 
 
@@ -142,7 +170,7 @@ def chulo():
     return render_template('chulo.html',empresas=empresas)
 
 def page_not_found(e):
-  return render_template('admin/denied.html'), 404
+  return render_template('admin/denied.html',message="Page not found",e=e), 404
 app.register_error_handler(404, page_not_found)
 
 

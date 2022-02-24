@@ -91,9 +91,16 @@ def delete(empresa_id):
     return 'delete'
 
 def all():
-    empresas = Empresa.query.filter_by(admin=False).all()
+    empresas = Empresa.query.filter_by(validado=True).all()
     return render_template('empresas.html',empresas=empresas)
 
+def all_query():
+    return Empresa.query.filter_by(validado=True).all()
+
+def validar(id,valor):
+    empresa = Empresa.query.filter_by(id=id).first()
+    empresa.validado = valor
+    db.session.commit()
 
 def render_picture(data):
     render_pic = base64.b64encode(data).decode('ascii')
