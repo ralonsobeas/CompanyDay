@@ -20,8 +20,7 @@ class Empresa(UserMixin,db.Model):
     codigoPostal = db.Column(db.String(15))
     pais = db.Column(db.String(120))
     urlWeb = db.Column(db.String(120))
-    logo = db.Column(db.LargeBinary)
-    render_logo = db.Column(db.Text)
+    logo = db.Column(db.String(120))
     consentimientoNombre = db.Column(db.Boolean)
     buscaCandidatos = db.Column(db.Boolean)
 
@@ -36,7 +35,7 @@ class Empresa(UserMixin,db.Model):
 
     def __init__(self, id,nombre,password,personaContacto,email,telefono,direccion, \
                         poblacion,provincia,codigoPostal,pais,urlWeb,logo, \
-                        render_logo,consentimientoNombre,buscaCandidatos):
+                        consentimientoNombre,buscaCandidatos):
         self.id = id
         self.nombre = nombre
         self.password = password
@@ -50,6 +49,5 @@ class Empresa(UserMixin,db.Model):
         self.pais = pais
         self.urlWeb = urlWeb
         self.logo = logo
-        self.render_logo = render_logo
         self.consentimientoNombre = consentimientoNombre
         self.buscaCandidatos = buscaCandidatos

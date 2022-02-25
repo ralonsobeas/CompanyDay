@@ -19,7 +19,7 @@
       <div class="brand-carousel section-padding owl-carousel">
         {% for empresa in empresas %}
         <div class="single-logo">
-          <img src="data:image/png;base64,{{empresa.render_logo}}" class="filtered" alt="">
+          <img src="{{empresa.logo}}" class="filtered" alt="ERROR">
         </div>
         {% endfor %}
       </div>

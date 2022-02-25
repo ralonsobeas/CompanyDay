@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from shared.models import login_manager
 from flask_login import login_user,login_required,current_user,logout_user
+import os
 
 
 import base64
@@ -60,15 +61,17 @@ def store():
     buscaCandidatos = True if(request.form['buscaCandidatos']=='True') else False
 
     #Guardar logo
-    file = request.files['logo']
-    logo = file.read()
-
-    render_logo = render_picture(logo)
+    logo = request.files['logo']
+    
+    #estaría bien guardar esto con paths relativos... pero por ahora funciona
+    logopath = os.path.dirname(os.path.realpath(__file__))
+    logopath = logopath.replace("controllers", "static/customlogos/"+ logo.filename)
+    logo.save(logopath)
 
     empresa = Empresa(id=id,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logo, \
-                        render_logo=render_logo,consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos)
+                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logopath, \
+                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos)
     db.session.add(empresa)
     db.session.commit()
 
