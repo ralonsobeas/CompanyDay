@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{% block title %} Formulario de registro para empresa {% endblock %}</h3>
+
+    <div class="container">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h2>Registro Empresa</h2>
+        <h2>Inscribe a tu empresa en el Company Day</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+          <form id="contact-form" class="form" action="/empresas/crear" method="POST" role="form" enctype="multipart/form-data">
+              <div id = "empresa">
+              <h3> Introduzca los datos de la empresa: </h3>
+              <div class="form-group">
+                  <label class="form-label" for="id">Id Empresa</label>
+                  <input type="text" class="form-control" id="id" name="id" placeholder="Id Empresa" tabindex="1" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="nombreEmpresa">Nombre de la empresa</label>
+                  <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa" placeholder="Nombre de la empresa" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="password">Contraseña</label>
+                  <input type="text" class="form-control" id="password" name="password" placeholder="Contraseña" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="personaContacto">Persona de contacto</label>
+                  <input type="text" class="form-control" id="personaContacto" name="personaContacto" placeholder="Persona de contacto" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" tabindex="4" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="telefono">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" tabindex="5" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="direccion">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="poblacion">Población</label>
+                <input type="text" class="form-control" id="poblacion" name="poblacion" placeholder="Población" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="provincia">Provincia</label>
+                <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Provincia" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="codigoPostal">Código postal</label>
+                <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Código postal" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pais">País</label>
+                <input type="text" class="form-control" id="pais" name="pais" placeholder="País" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="urlWeb">Url de la web corporativa</label>
+                <input type="text" class="form-control" id="urlWeb" name="urlWeb" placeholder="Url de la web corporativa" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label for="logo">Selecciona un logo:</label>
+                <input type="file" id="logo" name="logo">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="consentimientoNombre">Consiento el uso del nombre</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="consentimientoNombre" id="consentimientoNombreSi" value="True" checked/>
+                  <label class="form-check-label" for="consentimientoNombreSi"> Si </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="consentimientoNombre" id="consentimientoNombreNo" value="False"/>
+                  <label class="form-check-label" for="consentimientoNombreNo"> No </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="buscaCandidatos">La empresa se encuentra buscando candidatos</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="buscaCandidatos" id="buscaCandidatosSi" value="True" checked/>
+                  <label class="form-check-label" for="buscaCandidatosSi"> Si </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="buscaCandidatos" id="buscaCandidatosNo" value="False"/>
+                  <label class="form-check-label" for="buscaCandidatosNo"> No </label>
+                </div>
+              </div>
+              <div class="text-center">
+                  <button id="next1" onclick="pasarAPagina2()"> Siguiente </button>
+              </div>
+              </div>
+              <div id = "presentacion">
+                <h3> Introduzca los datos de su presentacion </h3>            
+                <label class="form-label" for="id">Id Empresa</label>
+                <input type="text" class="form-control" id="id" name="id" placeholder="IdPresentacion"><br><br>
+                <input type="checkbox" id="presencial" name="presencial" value="True">
+                <label for="presencial"> Presencial</label><br><br>
+                <input type="checkbox" id="videojuegos" name="videojuegos" value="True">
+                <label for="videojuegos"> Videojuegos</label><br><br>
+                <input type="checkbox" id="disenoDigital" name="disenoDigital" value="True">
+                <label for="disenoDigital"> Diseño digital</label><br><br>
+                <input type="checkbox" id="cortosAnimacion" name="cortosAnimacion" value="True">
+                <label for="cortosAnimacion"> Cortos de Animacion</label><br><br>
+                <input type="checkbox" id="ingenieria" name="ingenieria" value="True">
+                <label for="ingenieria"> Ingenieria</label><br><br>
+                <div class="text-center">
+                  <button id="next2" onclick="pasarAPagina3()">Siguiente</button>
+                  <button id="back1" onclick="volverAPagina1()">Volver Atras</button>
+                </div>
+              </div>
+              <div id = "charla"> 
+                <h3> Introduzca los datos de la charla </h3>
+                <div class="form-group">
+                    <label class="form-label" for="id">Id Charla</label>
+                    <input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="tema">Tema de la charla</label>
+                    <input type="text" class="form-control" id="tema" name="tema" placeholder="Tema de la charla" tabindex="2" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="titulo">Titulo de la charla</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo de la charla" tabindex="2" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="fecha">Fecha de la charla</label>
+                  <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la charla" tabindex="4" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="idempresa">Id de la empresa</label>
+                  <input type="text" class="form-control" id="idempresa" name="idempresa" placeholder="Id de la empresa" tabindex="5" required>
+                <div class="form-group">
+                  <label class="form-label" for="presencialidad">Presencialidad</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="presencialidad" id="presencialidadPresencial" value="True" checked/>
+                    <label class="form-check-label" for="presencialidadPresencial"> Presencial </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="presencialidad" id="presencialidadOnline" value="False"/>
+                    <label class="form-check-label" for="presencialidadOnline"> Online </label>
+                  </div>
+                </div>
+                <div class="text-center">
+                    <button id="back2" onclick="volverAPagina2()"> Volver atras </button> <br>
+                    <button type="submit" class="btn btn-start-order">Guardar</button>
+                </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("presentacion").hidden = true;
+document.getElementById("charla").hidden = true;
+  
+function pasarAPagina2(){
+    document.getElementById("empresa").hidden = true;
+    document.getElementById("presentacion").hidden = false;
+}
+
+function volverAPagina1(){
+    document.getElementById("empresa").hidden = false;
+    document.getElementById("presentacion").hidden = true;
+
+}
+
+function pasarAPagina3(){
+    document.getElementById("charla").hidden = false;
+    document.getElementById("presentacion").hidden = true;
+}
+
+function volverAPagina2(){
+    document.getElementById("charla").hidden = true;
+    document.getElementById("presentacion").hidden = false;
+}
+</script>
+
+
+{% endblock %}

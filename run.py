@@ -153,6 +153,10 @@ def registroPresentacion():
 def registroCharla():
     return render_template('charlas.html')
 
+@app.route('/registro_prueba')
+def registroFinal():
+    return render_template("registroPrueba.html")
+
 @app.route('/contacto')
 def contacto():
 

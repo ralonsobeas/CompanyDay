@@ -6,6 +6,9 @@
 -- Tiempo de generación: 22-02-2022 a las 22:42:01
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
+DROP DATABASE companyday;
+CREATE DATABASE companyday;
+USE companyday;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
