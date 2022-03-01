@@ -80,7 +80,7 @@ def store():
         logo.save(UPLOADS_PATH+"\\"+logo.filename)
     elif(platform.system()=='Linux'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
-        UPLOADS_PATH = UPLOADS_PATH.replace("controllers", "")
+        UPLOADS_PATH = UPLOADS_PATH.replace("controllers/", "")
         logo.save(UPLOADS_PATH+"/"+logo.filename)
 
 

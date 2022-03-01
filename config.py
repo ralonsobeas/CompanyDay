@@ -19,4 +19,4 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 #Carpeta para guardar imágenes
 UPLOAD_FOLDER_WINDOWS = 'static\\images\\customlogos'
-UPLOAD_FOLDER_LINUX = 'static/images/customlogo'
+UPLOAD_FOLDER_LINUX = 'static/images/customlogos'
