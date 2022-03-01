@@ -65,8 +65,9 @@ def store():
     
     #estaría bien guardar esto con paths relativos... pero por ahora funciona
     logopath = os.path.dirname(os.path.realpath(__file__))
-    logopath = logopath.replace("controllers", "static/customlogos/"+ logo.filename)
+    logopath = logopath.replace("controllers", "static/images/customlogos/"+ logo.filename)
     logo.save(logopath)
+    logopath = "/static/images/customlogos/" + logo.filename
 
     empresa = Empresa(id=id,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
