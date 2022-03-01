@@ -26,7 +26,7 @@ def login():
 
     user = Empresa.query.filter_by(id=id).first()
 
-    if not user or not check_password_hash(user.password, password):
+    if not user or not check_password_hash(password,user.password):
         flash('Please check your login details and try again.')
         return redirect(url_for('loginEmpresa'))
 
