@@ -18,4 +18,4 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://companyday:companyday@localhost/compa
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 #Carpeta para guardar imágenes
-UPLOAD_FOLDER = '/uploads'
+UPLOAD_FOLDER = '/static/images/customlogos'

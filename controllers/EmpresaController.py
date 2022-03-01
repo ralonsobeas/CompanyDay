@@ -9,6 +9,7 @@ from shared.models import login_manager
 from flask_login import login_user,login_required,current_user,logout_user
 import os
 
+from config import UPLOAD_FOLDER
 
 import base64
 
@@ -62,12 +63,16 @@ def store():
 
     #Guardar logo
     logo = request.files['logo']
-    
+
     #estaría bien guardar esto con paths relativos... pero por ahora funciona
+    """
     logopath = os.path.dirname(os.path.realpath(__file__))
     logopath = logopath.replace("controllers", "static/images/customlogos/"+ logo.filename)
     logo.save(logopath)
     logopath = "/static/images/customlogos/" + logo.filename
+    """
+    print('This is standard output: '+UPLOAD_FOLDER, file=sys.stdout)
+    logo.save(UPLOAD_FOLDER,logo.filename)
 
     empresa = Empresa(id=id,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
