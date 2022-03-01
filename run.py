@@ -79,9 +79,8 @@ from controllers import EmpresaController
 
 class AdminView(ModelView):
     ModelView.can_export = True
-    ModelView.column_exclude_list = ('password','logo','render_logo')
-    ModelView.column_export_exclude_list = ('password','logo','render_logo')
-    ModelView.form_excluded_columns = ('logo','render_logo')
+    ModelView.column_exclude_list = ('password')
+    ModelView.column_export_exclude_list = ('password')
     def is_accessible(self):
         if not current_user.is_authenticated or not current_user.admin:
             return abort(404, description="Sin permisos")
