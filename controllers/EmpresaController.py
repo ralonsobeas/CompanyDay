@@ -8,8 +8,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from shared.models import login_manager
 from flask_login import login_user,login_required,current_user,logout_user
 import os
-
-from config import UPLOAD_FOLDER
+from os.path import join, dirname, realpath
+import platform
+from config import UPLOAD_FOLDER_LINUX,UPLOAD_FOLDER_WINDOWS
 
 import base64
 
@@ -26,7 +27,7 @@ def login():
 
     user = Empresa.query.filter_by(id=id).first()
 
-    if not user or not check_password_hash(password,user.password):
+    if not user or not check_password_hash(user.password,password):
         flash('Please check your login details and try again.')
         return redirect(url_for('loginEmpresa'))
 
@@ -71,13 +72,25 @@ def store():
     logo.save(logopath)
     logopath = "/static/images/customlogos/" + logo.filename
     """
-    print('This is standard output: '+UPLOAD_FOLDER, file=sys.stdout)
-    logo.save(UPLOAD_FOLDER,logo.filename)
 
-    empresa = Empresa(id=id,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
+
+    if(platform.system()=='Windows'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
+        UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
+        logo.save(UPLOADS_PATH+"\\"+logo.filename)
+    elif(platform.system()=='Linux'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
+        UPLOADS_PATH = UPLOADS_PATH.replace("controllers", "")
+        logo.save(UPLOADS_PATH+"/"+logo.filename)
+
+
+
+    logo = logo.filename
+
+    empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logopath, \
-                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos)
+                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logo, \
+                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False)
     db.session.add(empresa)
     db.session.commit()
 

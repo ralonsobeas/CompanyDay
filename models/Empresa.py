@@ -33,10 +33,11 @@ class Empresa(UserMixin,db.Model):
     #eventosCharlas =  db.relationship('EventoCharlas'
 
 
-    def __init__(self, id,nombre,password,personaContacto,email,telefono,direccion, \
+    def __init__(self, id,validado,nombre,password,personaContacto,email,telefono,direccion, \
                         poblacion,provincia,codigoPostal,pais,urlWeb,logo, \
-                        consentimientoNombre,buscaCandidatos):
+                        consentimientoNombre,buscaCandidatos,admin):
         self.id = id
+        self.validado = validado
         self.nombre = nombre
         self.password = password
         self.personaContacto = personaContacto
@@ -51,3 +52,4 @@ class Empresa(UserMixin,db.Model):
         self.logo = logo
         self.consentimientoNombre = consentimientoNombre
         self.buscaCandidatos = buscaCandidatos
+        self.admin = admin

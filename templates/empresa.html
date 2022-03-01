@@ -9,7 +9,7 @@
     <h3>{% block title %} Datos Empresa {% endblock %}</h3>
 
     <div class="card p-0">
-        <div class="card-image"> <img src="data:image/png;base64,{{empresa.render_logo}}" alt=""> </div>
+        <div class="card-image"> <img src="/static/images/customlogos/{{empresa.logo}}" alt=""> </div>
         <div class="card-content d-flex flex-column align-items-center">
             <h4 class="pt-2">{{empresa.nombre}}</h4>
             <a href="{{empresa.urlWeb}}""> Link a la web</a>
