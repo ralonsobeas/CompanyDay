@@ -66,7 +66,8 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="nav flex-sm-column flex-row">
-                                <a class="nav-item nav-link active" href="{{ url_for('empresa_bp.userProfile') }}">Perfil</a>
+                                <a class="nav-item nav-link active" href="{{ url_for('empresa_bp.userProfile',editable=0) }}">Perfil</a>
+                                <a class="nav-item nav-link active" href="{{ url_for('empresa_bp.userProfile',editable=1) }}">Editar Perfil</a>
                                 <a class="nav-item nav-link" href="{{ url_for('empresa_bp.logout') }}">Logout</a>
                                 {% if current_user.admin %}
                                 <a class="nav-item nav-link" href="{{ url_for('admin.index') }}" style="color:red">Modo Administrador</a>

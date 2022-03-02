@@ -35,17 +35,6 @@ from routes.eventoPresentacionProyectos_bp import eventoPresentacionProyectos_bp
 from routes.eventoCharla_bp import eventoCharla_bp
 from routes.eventoSpeedMeeting_bp import eventoSpeedMeeting_bp
 
-
-"""
-MySQL
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'admin'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
-app.config['MYSQL_DATABASE_DB'] = 'prueba'
-mysql = MySQL()
-mysql.init_app(app)
-"""
-
 #SQLAlchemy
 app.config.from_object('config')
 #db = SQLAlchemy(app)
@@ -59,9 +48,6 @@ app.register_blueprint(eventoPresentacionProyectos_bp, url_prefix='/proyectos')
 app.register_blueprint(eventoCharla_bp, url_prefix='/charlas')
 app.register_blueprint(eventoSpeedMeeting_bp, url_prefix='/speedMeeting')
 
-from models import Empresa
-from models.Empresa import Empresa
-
 from models import EventoFeriaEmpresas
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 
@@ -74,6 +60,9 @@ from models.EventoCharlas import EventoCharlas
 from models import EventoSpeedMeeting
 from models.EventoSpeedMeeting import EventoSpeedMeeting
 
+from models import Empresa
+from models.Empresa import Empresa
+
 from controllers import EmpresaController
 
 
@@ -81,6 +70,11 @@ class AdminView(ModelView):
     ModelView.can_export = True
     ModelView.column_exclude_list = ('password')
     ModelView.column_export_exclude_list = ('password')
+    ModelView.export_types = ['csv','xls']
+    ModelView.column_hide_backrefs = False
+    ModelView.column_display_pk = True
+    def scaffold_sortable_columns(self):
+        return {'Empresa':'empresa_id'}
     def is_accessible(self):
         if not current_user.is_authenticated or not current_user.admin:
             return abort(404, description="Sin permisos")
@@ -175,7 +169,9 @@ def chulo():
 def page_not_found(e):
   return render_template('admin/denied.html',message="Page not found",e=e), 404
 app.register_error_handler(404, page_not_found)
-
+def not_registered(e):
+  return render_template('admin/denied.html',message="Not registered",e=e), 400
+app.register_error_handler(400, not_registered)
 
 if __name__ == '__main__':
 

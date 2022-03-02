@@ -3,6 +3,9 @@
 #db = SQLAlchemy()
 from shared.models import db
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
+from models.EventoCharlas import EventoCharlas
+from models.EventoPresentacionProyectos import EventoPresentacionProyectos
+from models.EventoSpeedMeeting import EventoSpeedMeeting
 from flask_login import UserMixin
 
 class Empresa(UserMixin,db.Model):
@@ -27,10 +30,11 @@ class Empresa(UserMixin,db.Model):
     admin = db.Column(db.Boolean)
 
     #Eventos
-    eventosFeriaEmpresas =db.relationship("EventoFeriaEmpresas")
-    #eventosPresentacionProyectos = db.relationship('EventoPresentacionProyectos')
-    #eventosSpeedMeetings = db.relationship('EventoSpeedMeetings')
-    #eventosCharlas =  db.relationship('EventoCharlas'
+    eventosFeriaEmpresas = db.relationship('EventoFeriaEmpresas', backref=db.backref('empresa'))
+    eventosPresentacionProyectos = db.relationship('EventoPresentacionProyectos', backref='empresa', lazy='dynamic')
+    eventosSpeedMeetings = db.relationship('EventoSpeedMeeting', backref='empresa', lazy='dynamic')
+    eventosCharlas = db.relationship('EventoCharlas', backref='empresa', lazy='dynamic')
+
 
 
     def __init__(self, id,validado,nombre,password,personaContacto,email,telefono,direccion, \

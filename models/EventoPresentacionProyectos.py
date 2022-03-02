@@ -12,10 +12,15 @@ class EventoPresentacionProyectos(db.Model):
     cortosAnimacion = db.Column(db.Boolean)
     ingenieria = db.Column(db.Boolean)
 
-    def __init__(self, id, presencial, videojuegos, cortosAnimacion, disenoDigital, ingenieria):
+    #Relación con empresa
+    empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
+
+    def __init__(self, id, presencial, videojuegos, cortosAnimacion, disenoDigital, ingenieria,empresa_id):
         self.id = id
         self.presencial = presencial
         self.videojuegos = videojuegos
         self.cortosAnimacion = cortosAnimacion
         self.disenoDigital = disenoDigital
         self.ingenieria = ingenieria
+
+        self.empresa_id = empresa_id

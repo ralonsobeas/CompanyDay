@@ -2,24 +2,224 @@
 
 
 {% block header %}
-  <link rel="stylesheet" type="text/css" href="/static/css/empresas.css">
+<!--  <link rel="stylesheet" type="text/css" href="/static/css/empresas.css">-->
+  <style>
+    [contenteditable="True"] {
+        background-color: #FFCC66;
+    }
+
+    [contenteditable="True"]:focus {
+        background-color: white;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
-    <h3>{% block title %} Datos Empresa {% endblock %}</h3>
 
-    <div class="card p-0">
-        <div class="card-image"> <img src="/static/images/customlogos/{{empresa.logo}}" alt=""> </div>
-        <div class="card-content d-flex flex-column align-items-center">
-            <h4 class="pt-2">{{empresa.nombre}}</h4>
-            <a href="{{empresa.urlWeb}}""> Link a la web</a>
-            <ul class="social-icons d-flex justify-content-center">
-                <li style="--i:1"> <a href="#"> <span class="fab fa-facebook"></span> </a> </li>
-                <li style="--i:2"> <a href="#"> <span class="fab fa-twitter"></span> </a> </li>
-                <li style="--i:3"> <a href="#"> <span class="fab fa-instagram"></span> </a> </li>
-            </ul>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card mb-4">
+              <div class="card-body text-center">
+                <img src="/static/images/customlogos/{{empresa.logo}}" alt="logo" class="img-fluid" style="width: 150px;">
+                <h5 class="my-3">{{empresa.nombre}}</h5>
+              </div>
+            </div>
+            <div class="card mb-4">
+              <div class="card-body p-0">
+                <ul class="list-group list-group-flush rounded-3">
+                  <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                    <i class="fas fa-globe fa-lg text-warning"></i>
+                    <a  href="{{empresa.urlWeb}}" target="_blank" class="mb-0">{{empresa.urlWeb}}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Persona de contacto</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0" contenteditable="{{editable}}">{{empresa.personaContacto}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0" contenteditable="{{editable}}" >{{empresa.email}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Teléfono</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0"  contenteditable="{{editable}}">{{empresa.telefono}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Dirección</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0"  contenteditable="{{editable}}">{{empresa.direccion}} ({{empresa.provincia}}, {{empresa.pais}}), {{empresa.codigoPostal}}</p>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Feria de empresas</span></p>
+                    <div class="container table-responsive">
+                    <table class="table table-bordered table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Presencial</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for eventoFeriaEmpresas in eventosFeriaEmpresa %}
+                        <tr>
+                          <td>{{eventoFeriaEmpresas.fecha}}</td>
+                          {% if eventoFeriaEmpresas.presencial %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Presentación de proyectos</span></p>
+                    <table class="table table-bordered table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Presencial</th>
+                          <th scope="col">Videojuegos</th>
+                          <th scope="col">Diseño digital</th>
+                          <th scope="col">Cortos de animación</th>
+                          <th scope="col">Ingeniería</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for eventoPresentacionProyectos in eventosPresentacionProyectos %}
+                        <tr>
+                          {% if eventoPresentacionProyectos.presencial %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                          {% if eventoPresentacionProyectos.videojuegos %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                          {% if eventoPresentacionProyectos.disenoDigital %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                          {% if eventoPresentacionProyectos.cortosAnimacion %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                          {% if eventoPresentacionProyectos.ingenieria %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Speed Meetings</span></p>
+                    <table class="table table-bordered table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Presencial</th>
+                          <th scope="col">Duracion</th>
+                          <th scope="col">Perfiles</th>
+                          <th scope="col">Pregunta</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for eventoSpeedMeeting in eventosSpeedMeeting %}
+                        <tr>
+                          <td>{{eventoSpeedMeeting.fecha}}</td>
+                          {% if eventoSpeedMeeting.presencial %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                          <td>{{eventoSpeedMeeting.duracion}}</td>
+                          <td>{{eventoSpeedMeeting.perfiles}}</td>
+                          <td>{{eventoSpeedMeeting.pregunta}}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Charlas</span></p>
+                    <table class="table table-bordered table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Presencial</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for eventoCharla in eventosCharla %}
+                        <tr>
+                          <td>{{eventoCharla.fecha}}</td>
+                          {% if eventoCharla.presencial %}
+                            <td>Si</td>
+                          {% else %}
+                            <td>No</td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+
 
 
 {% endblock %}

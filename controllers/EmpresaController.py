@@ -2,6 +2,10 @@ import sys
 
 from flask import render_template, redirect, url_for, request, abort, flash
 from models.Empresa import Empresa
+from models.EventoFeriaEmpresas import EventoFeriaEmpresas
+from models.EventoPresentacionProyectos import EventoPresentacionProyectos
+from models.EventoSpeedMeeting import EventoSpeedMeeting
+from models.EventoCharlas import EventoCharlas
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -96,18 +100,32 @@ def store():
 
     return 'Su informacion ha sido guardada en nuestra base de datos'
 
-@login_required
-def show(empresa_id):
+def show(empresa_id,editable=0):
+    if(editable==1):
+        editable=True
+    else:
+        editable=False
+
     empresa = Empresa.query.get(empresa_id)
+    if not empresa or empresa.admin==True:
+        return abort(404)
+    eventosFeriaEmpresa = EventoFeriaEmpresas.query.filter_by(empresa_id = empresa_id).all()
+    eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id = empresa_id).all()
+    eventosSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id = empresa_id).all()
+    eventosCharla = EventoCharlas.query.filter_by(empresa_id = empresa_id).all()
     return render_template('empresa.html',
-                            empresa=empresa)
+                            empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
+                            eventosPresentacionProyectos=eventosPresentacionProyectos, \
+                            eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
 @login_required
-def userProfile():
+def userProfile(editable=0):
+    return show(current_user.id,editable)
+
+@login_required
+def update(empresa_id):
     empresa = current_user
     return render_template('empresa.html',
-                            empresa=empresa)
-def update(empresa_id):
-    return 'update'
+                            empresa=empresa, edit=1)
 
 def delete(empresa_id):
     return 'delete'
