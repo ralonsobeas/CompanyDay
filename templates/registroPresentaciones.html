@@ -13,8 +13,8 @@
   <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
         <form form id="contact-form" class="form" action="/proyectos/crear" method="POST" role="form" enctype="multipart/form-data">
-            <label class="form-label" for="id">Id Empresa</label>
-            <input type="text" class="form-control" id="id" name="id" placeholder="IdPresentacion" tabindex="1" required>
+            <label class="form-label" for="id">Id Presentacion</label>
+            <input type="text" class="form-control" id="IdPresentacion" name="IdPresentacion" placeholder="IdPresentacion" tabindex="1" required>
             <input type="checkbox" id="presencial" name="presencial" value="True">
             <label for="presencial"> Presencial</label><br><br>
             <input type="checkbox" id="videojuegos" name="videojuegos" value="True">
@@ -25,6 +25,8 @@
             <label for="cortosAnimacion"> Cortos de Animacion</label><br><br>
             <input type="checkbox" id="ingenieria" name="ingenieria" value="True">
             <label for="ingenieria"> Ingenieria</label><br><br>
+            <label class="form-label" for="id">Id Empresa</label>
+            <input type="text" class="form-control" id="IdEmpresa" name="IdEmpresa" placeholder="IdEmpresa" tabindex="1" required>
             <input type="submit" value="Submit">
           </form>
       </div>

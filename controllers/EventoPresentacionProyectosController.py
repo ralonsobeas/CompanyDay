@@ -2,6 +2,7 @@ import sys
 
 from flask import render_template, redirect, url_for, request, abort
 from models.EventoPresentacionProyectos import EventoPresentacionProyectos
+from models.Empresa import Empresa
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import base64
@@ -13,7 +14,8 @@ def index():
     return 'index'
 
 def store():
-    id = request.form['id']
+    id = request.form['IdPresentacion']
+    empresa_id = request.form['IdEmpresa']
     #presencial = True if(request.form['presencial']=='True')
     try:
         request.form['presencial'] == 'True'
@@ -45,7 +47,7 @@ def store():
     except:
         ingenieria = False
 
-    presentacionProyectos = EventoPresentacionProyectos(id, presencial, videojuegos, disenoDigital, ingenieria, cortosAnimacion)
+    presentacionProyectos = EventoPresentacionProyectos(False ,id, presencial, videojuegos, disenoDigital, ingenieria, cortosAnimacion, empresa_id)
     db.session.add(presentacionProyectos)
     db.session.commit()
 
@@ -65,3 +67,11 @@ def delete(presentacion_id):
 def all():
     empresas = EventoPresentacionProyectos.query.all()
     return render_template('empresas.html',empresas=empresas)
+    
+def all_query():
+    listaProyectosAprobados = EventoPresentacionProyectos.query\
+    .join(Empresa, EventoPresentacionProyectos.empresa_id == Empresa.id)\
+    .add_columns(EventoPresentacionProyectos.presencial, EventoPresentacionProyectos.videojuegos, EventoPresentacionProyectos.disenoDigital, EventoPresentacionProyectos.cortosAnimacion, EventoPresentacionProyectos.ingenieria, Empresa.logo, Empresa.nombre)\
+    .filter(Empresa.validado == True)\
+    .filter(EventoPresentacionProyectos.validado == True)
+    return listaProyectosAprobados;

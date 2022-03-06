@@ -64,6 +64,8 @@ from models import Empresa
 from models.Empresa import Empresa
 
 from controllers import EmpresaController
+from controllers import EventoCharlaController
+from controllers import EventoPresentacionProyectosController
 
 
 class AdminView(ModelView):
@@ -141,10 +143,20 @@ def registroEmpresa():
 @app.route('/registro_presentacion')
 def registroPresentacion():
     return render_template('registroPresentaciones.html')
+    
+@app.route('/proyecto')
+def proyectos():
+    proyectos = EventoPresentacionProyectosController.all_query()
+    return render_template('proyectos.html',proyectos=proyectos)
 
 @app.route('/registro_charla')
 def registroCharla():
-    return render_template('charlas.html')
+    return render_template('registroCharlas.html')
+    
+@app.route('/charla')
+def charlas():
+    charlas = EventoCharlaController.all_query()
+    return render_template('charlas.html',charlas=charlas)
 
 @app.route('/registro_prueba')
 def registroFinal():
