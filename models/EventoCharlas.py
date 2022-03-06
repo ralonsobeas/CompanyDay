@@ -10,19 +10,17 @@ class EventoCharlas(db.Model):
     presencialidad  = db.Column(db.Boolean)
     titulo = db.Column(db.String(120))
     fecha = db.Column(db.Date)
-    idempresa = db.Column(db.Integer)
     aprobada = db.Column(db.Boolean)
 
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
 
-    def __init__(self, id,tema,presencialidad,titulo,fecha,idempresa,aprobada,empresa_id):
+    def __init__(self, id,tema,presencialidad,titulo,fecha,aprobada,empresa_id):
         self.id = id
         self.tema = tema
         self.presencialidad = presencialidad
         self.titulo = titulo
         self.fecha = fecha
-        self.idempresa = idempresa
         self.aprobada = aprobada
 
         self.empresa_id = empresa_id
