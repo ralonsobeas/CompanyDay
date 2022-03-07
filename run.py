@@ -142,11 +142,8 @@ def registroEmpresa():
 
 @app.route('/registro_presentacion')
 def registroPresentacion():
-    presentaciones = EventoPresentacionProyectosController.all_query()
-    print(type(presentaciones))
-    print(presentaciones)
-    items = ItemTableProyectos(presentaciones)
-    return render_template('registroPresentaciones.html', presentaciones = presentaciones)
+    eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by().all()
+    return render_template('registroPresentaciones.html', eventosPresentacionProyectos = eventosPresentacionProyectos)
     
 @app.route('/proyecto')
 def proyectos():
