@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>{% block title %} Formulario de registro para presentaciones de proyectos {% endblock %}</h3>
+<h3>{% block title %} Formulario de registro para presentaciones de proyectos {% endblock %}</h3>
 
-    <div class="container">
+<div class="container">
   <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
         <h2>Registro Presentaciones de Proyectos</h2>
@@ -31,7 +31,37 @@
           </form>
       </div>
   </div>
+  <div id = "Tabla">
+    {{presentaciones}}
+  </div>
+  <button onclick="mostrarTabla()" id ="boton">Mostrar las presentaciones</button>
+
 </div>
 
+<script>
+
+var checked = 0;
+
+function OnStart(){
+  document.getElementById("Tabla").hidden = true;
+}
+
+function mostrarTabla(){
+  if(checked == 0){
+    document.getElementById("Tabla").hidden = false;
+    document.getElementById("boton").innerHTML = "Ocultar";
+    checked = 1;
+  }
+  else{
+    document.getElementById("Tabla").hidden = true;
+    document.getElementById("boton").innerHTML = "Mostrar las presentaciones";
+    checked = 0;
+  }
+}
+  
+
+window.onload = OnStart;
+
+</script>
 
 {% endblock %}

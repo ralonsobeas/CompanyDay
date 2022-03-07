@@ -142,11 +142,16 @@ def registroEmpresa():
 
 @app.route('/registro_presentacion')
 def registroPresentacion():
-    return render_template('registroPresentaciones.html')
+    presentaciones = EventoPresentacionProyectosController.all_query()
+    print(type(presentaciones))
+    print(presentaciones)
+    items = ItemTableProyectos(presentaciones)
+    return render_template('registroPresentaciones.html', presentaciones = presentaciones)
     
 @app.route('/proyecto')
 def proyectos():
     proyectos = EventoPresentacionProyectosController.all_query()
+    print(type(proyectos))
     return render_template('proyectos.html',proyectos=proyectos)
 
 @app.route('/registro_charla')
@@ -184,6 +189,43 @@ app.register_error_handler(404, page_not_found)
 def not_registered(e):
   return render_template('admin/denied.html',message="Not registered",e=e), 400
 app.register_error_handler(400, not_registered)
+
+from flask_table import Col, Table
+
+class ItemTableEmpresas(Table):
+    password = Col('password')
+    personaContacto  = Col('personaContacto')
+    email = Col('email')
+    telefono = Col('telefono')
+    direccion = Col('direccion')
+    poblacion = Col('poblacion')
+    provincia = Col('provincia')
+    codigoPostal = Col('codigoPostal')
+    pais = Col('pais')
+    urlWeb = Col('urlWeb')
+    logo = Col('logo')
+    consentimientoNombre = Col('consentimientoNombre')
+    buscaCandidatos = Col('buscaCandidatos')
+
+    admin = Col('admin')
+
+class ItemTableProyectos(Table):
+    validado = Col('validado')
+    id = Col('id')
+    presencial = Col('presencial')
+    videojuegos = Col('videojuegos')
+    disenoDigital = Col('disenoDigital')
+    cortosAnimacion = Col('cortosAnimacion')
+    ingenieria = Col('ingenieria')
+
+@app.route('/pruebaTabla')
+def method_name():
+    empresas = EmpresaController.all_query()
+    print(type(empresas))
+    print(empresas)
+    items = ItemTableEmpresas(empresas)
+    return render_template("pruebaTablas.html", empresas = items)
+
 
 if __name__ == '__main__':
 
