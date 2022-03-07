@@ -36,3 +36,6 @@ def delete(eventoFeriaEmpresas_id):
 def all():
     eventoFeriaEmpresas = EventoFeriaEmpresas.query.all()
     return render_template('eventosFeriaEmpresas.html',eventoFeriaEmpresas=eventoFeriaEmpresas)
+
+def all_query():
+    return EventoFeriaEmpresas.query.all()

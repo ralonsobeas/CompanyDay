@@ -1,5 +1,5 @@
 from urllib import request
-from flask import Flask, render_template, url_for, request, send_from_directory,redirect, abort, flash
+from flask import Flask, render_template, url_for, request, send_from_directory,redirect, abort, flash, jsonify
 #from flaskext.mysql import MySQL
 
 from flask_migrate import Migrate
@@ -66,7 +66,7 @@ from models.Empresa import Empresa
 from controllers import EmpresaController
 from controllers import EventoCharlaController
 from controllers import EventoPresentacionProyectosController
-
+from controllers import EventoFeriaEmpresasController
 
 class AdminView(ModelView):
     ModelView.can_export = True
@@ -154,7 +154,7 @@ def proyectos():
 @app.route('/registro_charla')
 def registroCharla():
     return render_template('registroCharlas.html')
-    
+
 @app.route('/charla')
 def charlas():
     charlas = EventoCharlaController.all_query()
@@ -163,6 +163,11 @@ def charlas():
 @app.route('/registro_prueba')
 def registroFinal():
     return render_template("registroPrueba.html")
+    
+@app.route('/calendar')
+def calendar():
+    eventos = EventoFeriaEmpresasController.all_query()
+    return render_template('calendar.html',eventos=eventos)
 
 @app.route('/contacto')
 def contacto():
