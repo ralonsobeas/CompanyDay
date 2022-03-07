@@ -153,7 +153,8 @@ def proyectos():
 
 @app.route('/registro_charla')
 def registroCharla():
-    return render_template('registroCharlas.html')
+    eventosCharla = EventoCharlas.query.filter_by().all()
+    return render_template('registroCharlas.html', eventosCharla = eventosCharla)
 
 @app.route('/charla')
 def charlas():

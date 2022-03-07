@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block content %}
-    <h3>{% block title %} Formulario para Charlas de Empresa {% endblock %}</h3>
+<h3>{% block title %} Formulario para Charlas de Empresa {% endblock %}</h3>
 
-    <div class="container">
+<div class="container">
   <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
         <h2>Crea una Charla para tu Empresa</h2>
@@ -51,9 +51,69 @@
                   <button type="submit" class="btn btn-start-order">Guardar</button>
               </div>
           </form>
+          <div id = "Tabla">
+            <table class="table table-bordered table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">ID Empresa</th> 
+                  <th scope="col">Titulo</th>
+                  <th scope="col">Tema</th>
+                  <th scope="col">Presencialidad</th>
+                  <th scope="col">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for eventoCharla in eventosCharla %}
+                <tr>
+                  <td> {{eventoCharla.empresa_id}} </td>
+                  <td> {{eventoCharla.titulo}} </td>
+                  <td> {{eventoCharla.tema}} </td>
+                  {% if eventoCharla.presencialidad %}
+                    <td>Si</td>
+                  {% else %}
+                    <td>No</td>
+                  {% endif %}
+                  <td> {{eventoCharla.fecha}} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            
+          </div>
+          <br>
+          <button onclick="mostrarTabla()" id ="boton">Mostrar las presentaciones</button>
       </div>
   </div>
+
+  
+  
+
 </div>
 
+<script>
+
+var checked = 0;
+
+function OnStart(){
+  document.getElementById("Tabla").hidden = true;
+}
+
+function mostrarTabla(){
+  if(checked == 0){
+    document.getElementById("Tabla").hidden = false;
+    document.getElementById("boton").innerHTML = "Ocultar";
+    checked = 1;
+  }
+  else{
+    document.getElementById("Tabla").hidden = true;
+    document.getElementById("boton").innerHTML = "Mostrar las presentaciones";
+    checked = 0;
+  }
+}
+  
+
+window.onload = OnStart;
+
+</script>
 
 {% endblock %}
