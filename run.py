@@ -9,7 +9,7 @@ from shared.models import db,login_manager
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.actions import action
-from flask_login import current_user
+from flask_login import current_user, login_required    
 
 from flask_babelex import Babel
 
@@ -140,17 +140,19 @@ def registroEmpresa():
     # show the form, it wasn't submitted
     return render_template('registroEmpresa.html')
 
+@login_required
 @app.route('/registro_presentacion')
 def registroPresentacion():
     eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by().all()
     return render_template('registroPresentaciones.html', eventosPresentacionProyectos = eventosPresentacionProyectos)
-    
+
 @app.route('/proyecto')
 def proyectos():
     proyectos = EventoPresentacionProyectosController.all_query()
     print(type(proyectos))
     return render_template('proyectos.html',proyectos=proyectos)
 
+@login_required
 @app.route('/registro_charla')
 def registroCharla():
     eventosCharla = EventoCharlas.query.filter_by().all()
@@ -164,7 +166,7 @@ def charlas():
 @app.route('/registro_prueba')
 def registroFinal():
     return render_template("registroPrueba.html")
-    
+
 @app.route('/calendar')
 def calendar():
     eventos = EventoFeriaEmpresasController.all_query()
