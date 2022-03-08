@@ -52,7 +52,6 @@ background-color: #000 !important;
   filter: grayscale(100%);
   float: left;
   max-width: 50%;
-  border: 5px solid white;
 }
 
 .modal.left .modal-dialog {
