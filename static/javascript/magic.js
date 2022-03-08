@@ -134,8 +134,8 @@ document.addEventListener( 'mouseup', this.onMouseUp.bind( this ));
 
 onMouseDown(){
 
-this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+this.mouse.y = - ( event.clientX / window.innerWidth ) * 4 + 1;
+this.mouse.x = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 const vector = new THREE.Vector3( this.mouse.x, this.mouse.y, 0.5);
 vector.unproject( this.camera );
@@ -157,8 +157,8 @@ this.data.ease = .05;
 
 onMouseMove( ) {
 
-this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 0.5;
-this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1.3;
+this.mouse.y = - ( event.clientX / window.innerWidth ) * 4 + 1;
+this.mouse.x = - ( event.clientY / window.innerHeight ) * 2 + 1.3;
 
 }
 
