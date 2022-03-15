@@ -12,10 +12,10 @@ class Empresa(UserMixin,db.Model):
     __tablename__ = 'empresas'
     validado = db.Column(db.Boolean)
     id = db.Column(db.Integer, primary_key=True)
-    nombre  = db.Column(db.String(120))
+    nombre  = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
     personaContacto  = db.Column(db.String(120))
-    email = db.Column(db.String(120))
+    email = db.Column(db.String(120), unique=True)
     telefono = db.Column(db.String(15))
     direccion = db.Column(db.String(120))
     poblacion = db.Column(db.String(120))

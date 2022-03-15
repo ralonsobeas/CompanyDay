@@ -115,12 +115,40 @@
           </div>
           <div class="row">
             <button type="button" class="btn btn-dark m-2">Agenda</button>
-            <button type="button" class="btn btn-dark m-2">Registro</button>
+            <button type="button" class="btn btn-dark m-2" data-toggle="modal" data-target="#registroModal">Registro</button>
           </div>
      </div>
 
   </section>
 </div>
+
+<!--MODAL REGISTRO-->
+<div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog form-dark" role="document">
+<div class="modal-content card card-image" style="background-color: #0065ef;">
+  <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
+    <!--Header-->
+    <div class="modal-header text-center pb-1">
+      <h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>REGISTRO</strong></h5>
+      <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!--Body-->
+    <div class="modal-body">
+
+{% include 'modalRegistroEmpresa.html' %}
+
+    </div>
+  </div>
+</div>
+<!--/.Content-->
+</div>
+</div>
+
+
+
 
 <!-- Segundo bloque -->
   <div class="row">
@@ -141,13 +169,82 @@
 
 <!-- Cuarto Bloque-->
   <div class="row ">
+    <section class="">
+      <div class="scroll text-1">
+      <div>
+      Actividades <span>Feria de empresas</span> Charlas <span>Presentación de proyectos</span> Speed Meetings
+      <span>Actividades&nbsp;</span>
+      </div>
+      <div>
+      Actividades <span>Feria de empresas</span> Charlas <span>Presentación de proyectos</span> Speed Meetings
+      <span>Actividades&nbsp;</span>
+      </div>
+      </div>
+<!--
+      <div class="scroll text-2">
+      <div>
+      Reflection <span>Reflection</span> Reflection <span>Reflection</span> Reflection <span>Reflection</span> Reflection
+      <span>Reflection&nbsp;</span>
+      </div>
+      <div>
+      Reflection <span>Reflection</span> Reflection <span>Reflection</span> Reflection <span>Reflection</span> Reflection
+      <span>Reflection&nbsp;</span>
+      </div>
+      </div>
+
+      <div class="scroll text-3">
+      <div>
+      Experimental <span>Experimental</span> Experimental <span>Experimental</span> Experimental <span>Experimental</span> Experimental
+      <span>Experimental&nbsp;</span>
+      </div>
+      <div>
+      Experimental <span>Experimental</span> Experimental <span>Experimental</span> Experimental <span>Experimental</span> Experimental
+      <span>Experimental&nbsp;</span>
+      </div>
+      </div>
+
+      <div class="scroll text-4">
+      <div>
+      The Eye <span>The Eye</span> The Eye <span>The Eye</span> The Eye <span>The Eye</span> The Eye
+      <span>The Eye&nbsp;</span>
+      </div>
+      <div>
+      The Eye <span>The Eye</span> The Eye <span>The Eye</span> The Eye <span>The Eye</span> The Eye
+      <span>The Eye&nbsp;</span>
+      </div>
+      </div>
+
+      <div class="scroll text-5">
+      <div>
+      Portraits <span>Portraits</span> Portraits <span>Portraits</span> Portraits <span>Portraits</span> Portraits
+      <span>Portraits&nbsp;</span>
+      </div>
+      <div>
+      Portraits <span>Portraits</span> Portraits <span>Portraits</span> Portraits <span>Portraits</span> Portraits
+      <span>Portraits&nbsp;</span>
+      </div>
+      </div>
+
+      <div class="scroll text-6">
+      <div>
+      Illusion <span>Illusion</span> Illusion <span>Illusion</span> Illusion <span>Illusion</span> Illusion
+      <span>Illusion&nbsp;</span>
+      </div>
+      <div>
+      Illusion <span>Illusion</span> Illusion <span>Illusion</span> Illusion <span>Illusion</span> Illusion
+      <span>Illusion&nbsp;</span>
+      </div>
+      </div>
+    -->
+      </section>
     <div class="container">
       <div class="row">
         <!-- BREAKING NEWS -->
+        <!--
         <div class="col-md-12">
               <div class="d-flex justify-content-between align-items-center breaking-news bg-white">
-                  <!--<div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1 news"><span class="d-flex align-items-center">&nbsp;CNN News</span></div>-->
-                  <marquee class="news-scroll"  direction="left">
+                  <div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1 news"><span class="d-flex align-items-center">&nbsp;CNN News</span></div>
+                  <marquee class="news-scroll"  direction="left" >
                     <a href="#"> &emsp; ACTIVIDADES &emsp; </a>
                      <span class="dot"></span>
                      <a href="#"> &emsp; CHARLAS &emsp; </a>
@@ -160,6 +257,9 @@
                     </marquee>
               </div>
           </div>
+        -->
+
+
       </div>
       <div class="row p-2">
         <div class="container">

@@ -25,11 +25,11 @@ def index():
     return 'index'
 
 def login():
-    id = request.form['id']
+    email = request.form['mail']
     password = request.form['password']
     remember = True if (request.form.get('remember')) else False
 
-    user = Empresa.query.filter_by(id=id).first()
+    user = Empresa.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password,password):
         flash('Please check your login details and try again.')
@@ -100,19 +100,19 @@ def store():
 
     return 'Su informacion ha sido guardada en nuestra base de datos'
 
-def show(empresa_id,editable=0):
+def show(nombre,editable=0):
     if(editable==1):
         editable=True
     else:
         editable=False
 
-    empresa = Empresa.query.get(empresa_id)
+    empresa = Empresa.query.filter_by(nombre=nombre).first()
     if not empresa or empresa.admin==True:
         return abort(404)
-    eventosFeriaEmpresa = EventoFeriaEmpresas.query.filter_by(empresa_id = empresa_id).all()
-    eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id = empresa_id).all()
-    eventosSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id = empresa_id).all()
-    eventosCharla = EventoCharlas.query.filter_by(empresa_id = empresa_id).all()
+    eventosFeriaEmpresa = EventoFeriaEmpresas.query.filter_by(empresa_id = empresa.id).all()
+    eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id = empresa.id).all()
+    eventosSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id = empresa.id).all()
+    eventosCharla = EventoCharlas.query.filter_by(empresa_id = empresa.id).all()
     return render_template('empresa.html',
                             empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
                             eventosPresentacionProyectos=eventosPresentacionProyectos, \

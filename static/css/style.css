@@ -89,6 +89,7 @@ background-color: #000 !important;
 
 /* ----- MODAL STYLE ----- */
 .modal-content {
+  width: 80vh;
 	border-radius: 0;
 	border: none;
 }

@@ -11,7 +11,7 @@
 
     <div class="col-lg-4">
           <div class="card p-0">
-              <a href="{{ url_for('empresa_bp.show',empresa_id=empresa.id) }}">
+              <a href="{{ url_for('empresa_bp.show',nombre=empresa.nombre) }}">
                 <div class="card-image"> <img src="/static/images/customlogos/{{empresa.logo}}" alt=""> </div>
                 <div class="card-content d-flex flex-column align-items-center">
                     <h4 class="pt-2">{{empresa.nombre}}</h4>
