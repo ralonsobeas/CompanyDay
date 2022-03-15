@@ -52,7 +52,7 @@
               </div>
           </form>
           <div id = "Tabla">
-            <table class="table table-bordered table-hover">
+            <table id = "mytab1" class="table table-bordered table-hover">
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">ID Empresa</th> 
@@ -62,12 +62,12 @@
                   <th scope="col">Fecha</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="Cuerpo">
                 {% for eventoCharla in eventosCharla %}
-                <tr>
-                  <td> {{eventoCharla.empresa_id}} </td>
-                  <td> {{eventoCharla.titulo}} </td>
-                  <td> {{eventoCharla.tema}} </td>
+                <tr name = "{{eventoCharla.empresa_id}}">
+                  <td>{{eventoCharla.empresa_id}}</td>
+                  <td>{{eventoCharla.titulo}}</td>
+                  <td>{{eventoCharla.tema}}</td>
                   {% if eventoCharla.presencialidad %}
                     <td>Si</td>
                   {% else %}
@@ -84,22 +84,31 @@
           <button onclick="mostrarTabla()" id ="boton">Mostrar las presentaciones</button>
       </div>
   </div>
-
-  
-  
-
 </div>
 
 <script>
 
-var checked = 0;
+var checked = 0; 
+
+var listaID;
 
 function OnStart(){
   document.getElementById("Tabla").hidden = true;
+
 }
 
 function mostrarTabla(){
-  if(checked == 0){
+  if(checked == 0 && document.getElementById("idempresa").value != ""){
+    listaID = document.getElementsByName(document.getElementById("idempresa").value)
+
+    var table = document.getElementById("mytab1");
+    for (var i = 1, row; row = table.rows[i]; i++) {  
+      if(row.cells[0].innerHTML == document.getElementById("idempresa").value)
+        row.hidden = false;
+      else
+        row.hidden = true;
+    }
+
     document.getElementById("Tabla").hidden = false;
     document.getElementById("boton").innerHTML = "Ocultar";
     checked = 1;

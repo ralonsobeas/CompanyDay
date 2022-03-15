@@ -46,8 +46,8 @@
       </thead>
       <tbody>
         {% for eventoPresentacionProyectos in eventosPresentacionProyectos %}
-        <tr>
-          <td> {{eventoPresentacionProyectos.empresa_id}} </td>
+        <tr name = "{{eventoCharla.empresa_id}}">
+          <td>{{eventoPresentacionProyectos.empresa_id}}</td>
           {% if eventoPresentacionProyectos.presencial %}
             <td>Si</td>
           {% else %}
@@ -85,28 +85,42 @@
 
 <script>
 
-var checked = 0;
-
-function OnStart(){
-  document.getElementById("Tabla").hidden = true;
-}
-
-function mostrarTabla(){
-  if(checked == 0){
-    document.getElementById("Tabla").hidden = false;
-    document.getElementById("boton").innerHTML = "Ocultar";
-    checked = 1;
-  }
-  else{
-    document.getElementById("Tabla").hidden = true;
-    document.getElementById("boton").innerHTML = "Mostrar las presentaciones";
-    checked = 0;
-  }
-}
+  var checked = 0; 
   
-
-window.onload = OnStart;
-
+  var listaID;
+  
+  function OnStart(){
+    document.getElementById("Tabla").hidden = true;
+  
+  }
+  
+  function mostrarTabla(){
+    if(checked == 0 && document.getElementById("idempresa").value != ""){
+      listaID = document.getElementsByName(document.getElementById("idempresa").value)
+  
+      var table = document.getElementById("mytab1");
+      for (var i = 1, row; row = table.rows[i]; i++) {  
+        if(row.cells[0].innerHTML == document.getElementById("idempresa").value)
+          row.hidden = false;
+        else
+          row.hidden = true;
+      }
+  
+      document.getElementById("Tabla").hidden = false;
+      document.getElementById("boton").innerHTML = "Ocultar";
+      checked = 1;
+    }
+    else{
+      document.getElementById("Tabla").hidden = true;
+      document.getElementById("boton").innerHTML = "Mostrar las presentaciones";
+      checked = 0;
+    }
+  }
+    
+  
+  window.onload = OnStart;
+  
+  </script>
 </script>
 
 {% endblock %}
