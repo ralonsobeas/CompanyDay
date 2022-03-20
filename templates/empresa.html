@@ -34,14 +34,16 @@
                 </ul>
               </div>
             </div>
+            
             <div class="card mb-4">
               <div class="card-body">
+              {% if editable == 0 %}
                 <div class="row">
                   <div class="col-sm-3">
                     <p class="mb-0">Persona de contacto</p>
                   </div>
                   <div class="col-sm-9">
-                    <p class="text-muted mb-0" contenteditable="{{editable}}">{{empresa.personaContacto}}</p>
+                    <p class="text-muted mb-0">{{empresa.personaContacto}}</p>
                   </div>
                 </div>
                 <hr>
@@ -50,7 +52,7 @@
                     <p class="mb-0">Email</p>
                   </div>
                   <div class="col-sm-9">
-                    <p class="text-muted mb-0" contenteditable="{{editable}}" >{{empresa.email}}</p>
+                    <p class="text-muted mb-0">{{empresa.email}}</p>
                   </div>
                 </div>
                 <hr>
@@ -59,7 +61,7 @@
                     <p class="mb-0">Teléfono</p>
                   </div>
                   <div class="col-sm-9">
-                    <p class="text-muted mb-0"  contenteditable="{{editable}}">{{empresa.telefono}}</p>
+                    <p class="text-muted mb-0">{{empresa.telefono}}</p>
                   </div>
                 </div>
                 <hr>
@@ -68,12 +70,42 @@
                     <p class="mb-0">Dirección</p>
                   </div>
                   <div class="col-sm-9">
-                    <p class="text-muted mb-0"  contenteditable="{{editable}}">{{empresa.direccion}} ({{empresa.provincia}}, {{empresa.pais}}), {{empresa.codigoPostal}}</p>
+                    <p class="text-muted mb-0">{{empresa.direccion}} ({{empresa.provincia}}, {{empresa.pais}}), {{empresa.codigoPostal}}</p>
                   </div>
                 </div>
                 <hr>
+              {% else %}
+                <form id="contact-form" class="form" action="/empresas/update" method="POST" role="form" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label class="form-label" for="id">Persona de Contacto</label>
+                    <input type="text" class="form-control" id="personaContacto" name="personaContacto" placeholder="Persona de Contacto" value="{{empresa.personaContacto}}" tabindex="1" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="tema">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" tabindex="2" value="{{empresa.email}}" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="titulo">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" value="{{empresa.telefono}}" tabindex="2" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="direccion">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" value="{{empresa.direccion}}" tabindex="4" required>
+                    <label class="form-label" for="provincia">Provincia</label>
+                    <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Provincia" value="{{empresa.provincia}}" tabindex="4" required>
+                    <label class="form-label" for="pas">Pais</label>
+                    <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" value="{{empresa.pais}}" tabindex="4" required>
+                    <label class="form-label" for="codigoPostal">Código Postal</label>
+                    <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Código Postal" value="{{empresa.codigoPostal}}" tabindex="4" required>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-start-order">Guardar</button>
+                  </div>
+                </form>
+              {% endif %}
               </div>
             </div>
+
           </div>
           <div class="col-lg-8">
 

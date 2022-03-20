@@ -122,14 +122,17 @@ def userProfile(editable=0):
     return show(current_user.nombre,editable)
 
 @login_required
-def update(empresa_id):
-    empresa = current_user
-    return render_template('empresa.html',
-                            empresa=empresa, edit=1)
-
-def delete(empresa_id):
-    return 'delete'
-
+def update():
+    db.session.query(Empresa).filter(Empresa.id==current_user.id).update({"personaContacto":request.form['personaContacto'],\
+        "email":request.form['email'],\
+        "telefono":request.form['telefono'],\
+    	"direccion":request.form['direccion'],\
+    	"provincia":request.form['provincia'],\
+    	"pais":request.form['pais'],\
+    	"codigoPostal":request.form['codigoPostal']})
+    db.session.commit()
+    return 'Su informacion ha sido guardada en nuestra base de datos'
+    
 def all():
     empresas = Empresa.query.filter_by(validado=True).all()
     return render_template('empresas.html',empresas=empresas)
