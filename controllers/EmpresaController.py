@@ -119,7 +119,7 @@ def show(nombre,editable=0):
                             eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
 @login_required
 def userProfile(editable=0):
-    return show(current_user.id,editable)
+    return show(current_user.nombre,editable)
 
 @login_required
 def update(empresa_id):
