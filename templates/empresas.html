@@ -11,22 +11,18 @@
 
     <div class="col-lg-4">
           <div class="card p-0">
-              <div class="card-image"> <img src="data:image/png;base64,{{empresa.render_logo}}" alt=""> </div>
-              <div class="card-content d-flex flex-column align-items-center">
-                  <h4 class="pt-2">{{empresa.nombre}}</h4>
-                  <a href="{{empresa.urlWeb}}""> Link a la web</a>
-                  <ul class="social-icons d-flex justify-content-center">
-                      <li style="--i:1"> <a href="#"> <span class="fab fa-facebook"></span> </a> </li>
-                      <li style="--i:2"> <a href="#"> <span class="fab fa-twitter"></span> </a> </li>
-                      <li style="--i:3"> <a href="#"> <span class="fab fa-instagram"></span> </a> </li>
-                  </ul>
-              </div>
+              <a href="{{ url_for('empresa_bp.show',nombre=empresa.nombre) }}">
+                <div class="card-image"> <img src="/static/images/customlogos/{{empresa.logo}}" alt=""> </div>
+                <div class="card-content d-flex flex-column align-items-center">
+                    <h4 class="pt-2">{{empresa.nombre}}</h4>
+                </div>
+              </a>
           </div>
       </div>
     <!--
         <div class="card" style="min-width: 20rem; max-width: 20rem; margin-top: 5px;">
           <div style="min-width: 20rem; max-width: 20rem;">
-            <img src="data:image/png;base64,{{empresa.render_logo}}" class="img-responsive mx-auto d-block"  alt="...">
+            <img src="{{empresa.logo}}" class="img-responsive mx-auto d-block"  alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{empresa.nombre}}</h5>
                 <p class="card-text">{{empresa.descripcion}}</p>
@@ -38,7 +34,7 @@
         <!-- fasfaf -->
         <!--
         <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
-            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+            <img src="{{empresa.logo}}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{empresa.nombre}}</h5>
                 <p class="card-text">{{empresa.descripcion}}</p>
@@ -46,7 +42,7 @@
           </div>
         </div>
         <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
-            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+            <img src="{{empresa.logo}}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{empresa.nombre}}</h5>
                 <p class="card-text">{{empresa.descripcion}}</p>
@@ -54,7 +50,7 @@
           </div>
         </div>
         <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
-            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+            <img src="{{empresa.logo}}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{empresa.nombre}}</h5>
                 <p class="card-text">{{empresa.descripcion}}</p>
@@ -62,7 +58,7 @@
           </div>
         </div>
         <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
-            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+            <img src="{{empresa.logo}}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{empresa.nombre}}</h5>
                 <p class="card-text">{{empresa.descripcion}}</p>
@@ -70,7 +66,7 @@
           </div>
         </div>
         <div class="card" style="min-width: 20rem; max-width: 22rem; margin-top: 5px;">
-            <img src="data:image/png;base64,{{empresa.render_logo}}" class="card-img-top" alt="...">
+            <img src="{{empresa.logo}}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{empresa.nombre}}</h5>
                 <p class="card-text">{{empresa.descripcion}}</p>

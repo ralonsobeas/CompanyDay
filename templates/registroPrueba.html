@@ -13,6 +13,8 @@
   <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
           <form id="contact-form" class="form" action="/empresas/crear" method="POST" role="form" enctype="multipart/form-data">
+              <div id = "empresa">
+              <h3> Introduzca los datos de la empresa: </h3>
               <div class="form-group">
                   <label class="form-label" for="id">Id Empresa</label>
                   <input type="text" class="form-control" id="id" name="id" placeholder="Id Empresa" tabindex="1" required>
@@ -88,12 +90,95 @@
                 </div>
               </div>
               <div class="text-center">
-                  <button type="submit" class="btn btn-start-order">Guardar</button>
+                  <button id="next1" onclick="pasarAPagina2()"> Siguiente </button>
+              </div>
+              </div>
+              <div id = "presentacion">
+                <h3> Introduzca los datos de su presentacion </h3>            
+                <label class="form-label" for="id">Id Empresa</label>
+                <input type="text" class="form-control" id="id" name="id" placeholder="IdPresentacion"><br><br>
+                <input type="checkbox" id="presencial" name="presencial" value="True">
+                <label for="presencial"> Presencial</label><br><br>
+                <input type="checkbox" id="videojuegos" name="videojuegos" value="True">
+                <label for="videojuegos"> Videojuegos</label><br><br>
+                <input type="checkbox" id="disenoDigital" name="disenoDigital" value="True">
+                <label for="disenoDigital"> Diseño digital</label><br><br>
+                <input type="checkbox" id="cortosAnimacion" name="cortosAnimacion" value="True">
+                <label for="cortosAnimacion"> Cortos de Animacion</label><br><br>
+                <input type="checkbox" id="ingenieria" name="ingenieria" value="True">
+                <label for="ingenieria"> Ingenieria</label><br><br>
+                <div class="text-center">
+                  <button id="next2" onclick="pasarAPagina3()">Siguiente</button>
+                  <button id="back1" onclick="volverAPagina1()">Volver Atras</button>
+                </div>
+              </div>
+              <div id = "charla"> 
+                <h3> Introduzca los datos de la charla </h3>
+                <div class="form-group">
+                    <label class="form-label" for="id">Id Charla</label>
+                    <input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="tema">Tema de la charla</label>
+                    <input type="text" class="form-control" id="tema" name="tema" placeholder="Tema de la charla" tabindex="2" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="titulo">Titulo de la charla</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo de la charla" tabindex="2" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="fecha">Fecha de la charla</label>
+                  <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la charla" tabindex="4" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="idempresa">Id de la empresa</label>
+                  <input type="text" class="form-control" id="idempresa" name="idempresa" placeholder="Id de la empresa" tabindex="5" required>
+                <div class="form-group">
+                  <label class="form-label" for="presencialidad">Presencialidad</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="presencialidad" id="presencialidadPresencial" value="True" checked/>
+                    <label class="form-check-label" for="presencialidadPresencial"> Presencial </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="presencialidad" id="presencialidadOnline" value="False"/>
+                    <label class="form-check-label" for="presencialidadOnline"> Online </label>
+                  </div>
+                </div>
+                <div class="text-center">
+                    <button id="back2" onclick="volverAPagina2()"> Volver atras </button> <br>
+                    <button type="submit" class="btn btn-start-order">Guardar</button>
+                </div>
               </div>
           </form>
       </div>
   </div>
 </div>
+
+<script>
+  document.getElementById("presentacion").hidden = true;
+document.getElementById("charla").hidden = true;
+  
+function pasarAPagina2(){
+    document.getElementById("empresa").hidden = true;
+    document.getElementById("presentacion").hidden = false;
+}
+
+function volverAPagina1(){
+    document.getElementById("empresa").hidden = false;
+    document.getElementById("presentacion").hidden = true;
+
+}
+
+function pasarAPagina3(){
+    document.getElementById("charla").hidden = false;
+    document.getElementById("presentacion").hidden = true;
+}
+
+function volverAPagina2(){
+    document.getElementById("charla").hidden = true;
+    document.getElementById("presentacion").hidden = false;
+}
+</script>
 
 
 {% endblock %}

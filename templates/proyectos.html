@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+    <h3>{% block title %} Proyectos U-Tad CompanyDay {% endblock %}</h3>
+
+      <div class="container">
+      <div class="row mb-2">
+        {% for proyecto in proyectos %}
+        <div class="col-md-6">
+          <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+            <div class="card-body d-flex flex-column align-items-start">
+              <strong class="d-inline-block mb-2 text-primary">{% if proyecto.videojuegos %} "Videojuegos" {% endif %} {% if proyecto.disenoDigital %} "Diseño Digital" {% endif %} {% if proyecto.cortosAnimacion %} "Cortos Animacion" {% endif %} {% if proyecto.ingenieria %} "Ingenieria" {% endif %}</strong>
+              <h3 class="mb-0">
+                <a class="text-dark" href="#">{{proyecto.nombre}}</a>
+              </h3>
+              <div class="mb-1 text-muted">Fecha Proyecto</div>
+              <div class="mb-1 text-muted">{% if proyecto.presencial %} Presencial {% else %} Online {% endif %}</div>
+              <p class="card-text mb-auto">Tema Proyecto</p>
+              <a href="#">Mas Informacion</a>
+            </div>
+            <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="/static/images/customlogos/{{proyecto.logo}}" data-holder-rendered="true">
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      </div>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

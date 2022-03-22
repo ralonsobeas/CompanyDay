@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>{% block title %} Formulario de registro para presentaciones de proyectos {% endblock %}</h3>
+
+<div class="container">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h2>Registro Presentaciones de Proyectos</h2>
+        <h2>Descripcion</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+        <form form id="contact-form" class="form" action="/proyectos/crear" method="POST" role="form" enctype="multipart/form-data">
+            <label class="form-label" for="id">Id Presentacion</label>
+            <input type="text" class="form-control" id="IdPresentacion" name="IdPresentacion" placeholder="IdPresentacion" tabindex="1" required>
+            <input type="checkbox" id="presencial" name="presencial" value="True">
+            <label for="presencial"> Presencial</label><br><br>
+            <input type="checkbox" id="videojuegos" name="videojuegos" value="True">
+            <label for="videojuegos"> Videojuegos</label><br><br>
+            <input type="checkbox" id="disenoDigital" name="disenoDigital" value="True">
+            <label for="disenoDigital"> Diseño digital</label><br><br>
+            <input type="checkbox" id="cortosAnimacion" name="cortosAnimacion" value="True">
+            <label for="cortosAnimacion"> Cortos de Animacion</label><br><br>
+            <input type="checkbox" id="ingenieria" name="ingenieria" value="True">
+            <label for="ingenieria"> Ingenieria</label><br><br>
+            <label class="form-label" for="idEmpresa">Id Empresa</label>
+            <input type="text" class="form-control" id="IdEmpresa" name="IdEmpresa" placeholder="IdEmpresa" tabindex="1" required>
+            <input type="submit" value="Submit">
+          </form>
+      </div>
+  </div>
+  <br>
+  <div id = "Tabla">
+    <table id="mytab1" class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID Empresa</th> 
+          <th scope="col">Presencial</th>
+          <th scope="col">Videojuegos</th>
+          <th scope="col">Diseño digital</th>
+          <th scope="col">Cortos de animación</th>
+          <th scope="col">Ingeniería</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for eventoPresentacionProyectos in eventosPresentacionProyectos %}
+        <tr name = "{{eventoPresentacionProyectos.empresa_id}}">
+          <td>{{eventoPresentacionProyectos.empresa_id}}</td>
+          {% if eventoPresentacionProyectos.presencial %}
+            <td>Si</td>
+          {% else %}
+            <td>No</td>
+          {% endif %}
+          {% if eventoPresentacionProyectos.videojuegos %}
+            <td>Si</td>
+          {% else %}
+            <td>No</td>
+          {% endif %}
+          {% if eventoPresentacionProyectos.disenoDigital %}
+            <td>Si</td>
+          {% else %}
+            <td>No</td>
+          {% endif %}
+          {% if eventoPresentacionProyectos.cortosAnimacion %}
+            <td>Si</td>
+          {% else %}
+            <td>No</td>
+          {% endif %}
+          {% if eventoPresentacionProyectos.ingenieria %}
+            <td>Si</td>
+          {% else %}
+            <td>No</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <button onclick="mostrarTabla()" id ="boton">Mostrar las presentaciones</button>
+
+</div>
+
+<script>
+
+  var checked = 0; 
+  
+  var listaID;
+  
+  function OnStart(){
+    document.getElementById("Tabla").hidden = true;
+  
+  }
+  
+  function mostrarTabla(){
+    if(checked == 0 && document.getElementById("IdEmpresa").value != ""){
+      listaID = document.getElementsByName(document.getElementById("IdEmpresa").value)
+  
+      var table = document.getElementById("mytab1");
+      for (var i = 1, row; row = table.rows[i]; i++) {  
+        if(row.cells[0].innerHTML == document.getElementById("IdEmpresa").value)
+          row.hidden = false;
+        else
+          row.hidden = true;
+      }
+  
+      document.getElementById("Tabla").hidden = false;
+      document.getElementById("boton").innerHTML = "Ocultar";
+      checked = 1;
+    }
+    else{
+      document.getElementById("Tabla").hidden = true;
+      document.getElementById("boton").innerHTML = "Mostrar las presentaciones";
+      checked = 0;
+    }
+  }
+    
+  
+  window.onload = OnStart;
+  
+  </script>
+</script>
+
+{% endblock %}
