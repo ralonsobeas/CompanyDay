@@ -123,16 +123,15 @@ def userProfile(editable=0):
 
 @login_required
 def update():
-    if(request.form['cancel'] != '1'):
-        db.session.query(Empresa).filter(Empresa.id==current_user.id).update({"personaContacto":request.form['personaContacto'],\
+    db.session.query(Empresa).filter(Empresa.id==current_user.id).update({"personaContacto":request.form['personaContacto'],\
         "email":request.form['email'],\
         "telefono":request.form['telefono'],\
-        "direccion":request.form['direccion'],\
-        "provincia":request.form['provincia'],\
-        "pais":request.form['pais'],\
-        "codigoPostal":request.form['codigoPostal']})
-        db.session.commit()
-    return render_template('profileRedirect.html')
+    	"direccion":request.form['direccion'],\
+    	"provincia":request.form['provincia'],\
+    	"pais":request.form['pais'],\
+    	"codigoPostal":request.form['codigoPostal']})
+    db.session.commit()
+    return 'Su informacion ha sido guardada en nuestra base de datos'
     
 def all():
     empresas = Empresa.query.filter_by(validado=True).all()
