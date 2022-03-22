@@ -1,7 +1,6 @@
 <style>
 
 /*form styles*/
-
 #msform {
 	width: 400px;
 	margin: 50px auto;
@@ -115,6 +114,7 @@
 
 
 
+
 </style>
 
 
@@ -123,15 +123,12 @@
 <!-- multistep form -->
 <form id="msform">
   <!-- progressbar -->
-  <div style="justify-content: center;">
   <ul id="progressbar">
     <li class="active">Datos de acceso</li>
     <li>Información y contacto</li>
 		<li>Dirección</li>
-		<li> Personas</li>
     <li>Actividades</li>
   </ul>
-  </div>
   <!-- fieldsets -->
   <fieldset>
     <h2 class="fs-title">Crear cuenta de empresa</h2>
@@ -169,34 +166,17 @@
 	</fieldset>
 	<fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
-		<h3 class="fs-subtitle">Personas (opcional)</h3>
-		<div id="cajaBotones">
-			<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox1" onchange="mostrar1()"/>Persona 1</label>
-			<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox2" onchange="mostrar2()" disabled/>Persona 2</label>
-			<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox3" onchange="mostrar3()" disabled/>Persona 3</label>
-			<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox4" onchange="mostrar4()" disabled/>Persona 4</label>
-		</div>
-		  <div id="Persona1" hidden>
+		<h3 class="fs-subtitle">Personas</h3>
+		<div id="Persona1">
 			<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
 			<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-			<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
 		  </div>
-		  <div id="Persona2" hidden>
+		  <textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
+		  <div id="Persona2">
 			<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
 			<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-			<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
 		  </div>
-		  <div id="Persona3" hidden>
-			<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-			<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-			<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
-		  </div>
-		  <div id="Persona4" hidden>
-			<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-			<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-			<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
-		  </div>
-		  
+		  <textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
 		  <input type="button" name="previous" class="previous action-button" value="Anterior" />
 		  <input type="button" name="next" class="next action-button" value="Siguiente" />
 	</fieldset>
@@ -213,56 +193,6 @@
 </form>
 
 <script>
-
-function mostrar1(){
-	if(document.getElementById("miCheckBox1").checked == true){
-		document.getElementById("Persona1").removeAttribute("hidden");
-		document.getElementById("miCheckBox2").disabled = false;
-	}
-	else{
-		document.getElementById("Persona1").setAttribute("hidden", "");
-		document.getElementById("miCheckBox2").disabled = true;
-		document.getElementById("miCheckBox2").checked = false;
-		mostrar2()
-	}
-		
-}
-
-function mostrar2(){
-	if(document.getElementById("miCheckBox2").checked == true){
-		document.getElementById("Persona2").removeAttribute("hidden");
-		document.getElementById("miCheckBox3").disabled = false;
-	}
-		
-	else{
-		document.getElementById("Persona2").setAttribute("hidden", "");
-		document.getElementById("miCheckBox3").disabled = true;
-		document.getElementById("miCheckBox3").checked = false;
-		mostrar3()
-	}
-		
-}
-
-function mostrar3(){
-	if(document.getElementById("miCheckBox3").checked == true){
-		document.getElementById("Persona3").removeAttribute("hidden");
-		document.getElementById("miCheckBox4").disabled = false;
-	}	
-	else{
-		document.getElementById("Persona3").setAttribute("hidden", "");
-		document.getElementById("miCheckBox4").disabled = true;
-		document.getElementById("miCheckBox4").checked = false;
-		mostrar4()
-	}
-		
-}
-
-function mostrar4(){
-	if(document.getElementById("miCheckBox4").checked == true)
-		document.getElementById("Persona4").removeAttribute("hidden");
-	else
-		document.getElementById("Persona4").setAttribute("hidden", "");
-}
 
 //jQuery time
 var current_fs, next_fs, previous_fs; //fieldsets
