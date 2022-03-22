@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  
+{% endblock %}
+
+{% block content %}
+<h3>{% block title %} Formulario para Charlas de Empresa {% endblock %}</h3>
+
+<div class="container">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h2>Crea una Charla para tu Empresa</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+          <form id="contact-form" class="form" action="/charlas/crear" method="POST" role="form" enctype="multipart/form-data">
+              <div class="form-group">
+                  <label class="form-label" for="id">Id Charla</label>
+                  <input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="tema">Tema de la charla</label>
+                  <input type="text" class="form-control" id="tema" name="tema" placeholder="Tema de la charla" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="titulo">Titulo de la charla</label>
+                  <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo de la charla" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="fecha">Fecha de la charla</label>
+                <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la charla" tabindex="4" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="idempresa">Id de la empresa</label>
+                <input type="text" class="form-control" id="idempresa" name="idempresa" placeholder="Id de la empresa" tabindex="5" required>
+              <div class="form-group">
+                <label class="form-label" for="presencialidad">Presencialidad</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="presencialidad" id="presencialidadPresencial" value="True" checked/>
+                  <label class="form-check-label" for="presencialidadPresencial"> Presencial </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="presencialidad" id="presencialidadOnline" value="False"/>
+                  <label class="form-check-label" for="presencialidadOnline"> Online </label>
+                </div>
+              </div>
+              <div class="text-center">
+                  <button type="submit" class="btn btn-start-order">Guardar</button>
+              </div>
+          </form>
+          <div id = "Tabla">
+            <table id = "mytab1" class="table table-bordered table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">ID Empresa</th> 
+                  <th scope="col">Titulo</th>
+                  <th scope="col">Tema</th>
+                  <th scope="col">Presencialidad</th>
+                  <th scope="col">Fecha</th>
+                </tr>
+              </thead>
+              <tbody id="Cuerpo">
+                {% for eventoCharla in eventosCharla %}
+                <tr name = "{{eventoCharla.empresa_id}}">
+                  <td>{{eventoCharla.empresa_id}}</td>
+                  <td>{{eventoCharla.titulo}}</td>
+                  <td>{{eventoCharla.tema}}</td>
+                  {% if eventoCharla.presencialidad %}
+                    <td>Si</td>
+                  {% else %}
+                    <td>No</td>
+                  {% endif %}
+                  <td> {{eventoCharla.fecha}} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            
+          </div>
+          <br>
+          <button onclick="mostrarTabla()" id ="boton">Mostrar las presentaciones</button>
+      </div>
+  </div>
+</div>
+
+<script>
+
+var checked = 0; 
+
+var listaID;
+
+function OnStart(){
+  document.getElementById("Tabla").hidden = true;
+
+}
+
+function mostrarTabla(){
+  if(checked == 0 && document.getElementById("idempresa").value != ""){
+    listaID = document.getElementsByName(document.getElementById("idempresa").value)
+
+    var table = document.getElementById("mytab1");
+    for (var i = 1, row; row = table.rows[i]; i++) {  
+      if(row.cells[0].innerHTML == document.getElementById("idempresa").value)
+        row.hidden = false;
+      else
+        row.hidden = true;
+    }
+
+    document.getElementById("Tabla").hidden = false;
+    document.getElementById("boton").innerHTML = "Ocultar";
+    checked = 1;
+  }
+  else{
+    document.getElementById("Tabla").hidden = true;
+    document.getElementById("boton").innerHTML = "Mostrar las presentaciones";
+    checked = 0;
+  }
+}
+  
+
+window.onload = OnStart;
+
+</script>
+
+{% endblock %}

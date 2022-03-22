@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+
+{% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+<link rel="stylesheet" href="/static/css/index.css">
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Primer bloque -->
+<div class="container row">
+  <div class="col-6">
+  </div>
+  <div class="col-6 ">
+
+  </div>
+</div>
+
+<!-- Segundo bloque -->
+  <div class="row">
+    <div class="container">
+      <div class="brand-carousel section-padding owl-carousel">
+        {% for empresa in empresas %}
+        <div class="single-logo">
+          <img src="/static/images/customlogos/{{empresa.logo}}" class="filtered" alt="ERROR">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+
+<!-- Tercer bloque -->
+<div class="container row">
+
+</div>
+
+<script type="text/javascript" src="/static/javascript/index.js"></script>
+
+{% endblock %}
