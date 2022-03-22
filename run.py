@@ -9,7 +9,7 @@ from shared.models import db,login_manager
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.actions import action
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required    
 
 from flask_babelex import Babel
 
@@ -63,15 +63,10 @@ from models.EventoSpeedMeeting import EventoSpeedMeeting
 from models import Empresa
 from models.Empresa import Empresa
 
-from models import Persona
-from models.Persona import Persona
-
 from controllers import EmpresaController
 from controllers import EventoCharlaController
 from controllers import EventoPresentacionProyectosController
 from controllers import EventoFeriaEmpresasController
-from controllers import PersonaController
-
 
 class AdminView(ModelView):
     ModelView.can_export = True
