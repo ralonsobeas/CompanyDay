@@ -123,8 +123,7 @@ def userProfile(editable=0):
 
 @login_required
 def update():
-    if(request.form['cancel'] != '1'):
-        db.session.query(Empresa).filter(Empresa.id==current_user.id).update({"personaContacto":request.form['personaContacto'],\
+    db.session.query(Empresa).filter(Empresa.id==current_user.id).update({"personaContacto":request.form['personaContacto'],\
         "email":request.form['email'],\
         "telefono":request.form['telefono'],\
         "direccion":request.form['direccion'],\
