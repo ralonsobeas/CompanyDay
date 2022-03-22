@@ -1,6 +1,6 @@
 import sys
 
-from flask import Flask,render_template, redirect, url_for, request, abort, flash
+from flask import render_template, redirect, url_for, request, abort, flash
 from models.Empresa import Empresa
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 from models.EventoPresentacionProyectos import EventoPresentacionProyectos
@@ -15,8 +15,6 @@ import os
 from os.path import join, dirname, realpath
 import platform
 from config import UPLOAD_FOLDER_LINUX,UPLOAD_FOLDER_WINDOWS
-
-from flask_mail import Mail, Message
 
 import base64
 
@@ -100,26 +98,6 @@ def store():
     db.session.add(empresa)
     db.session.commit()
 
-
-    #Mandar EMAIL
-    """
-    app = Flask(__name__)
-
-    app.config.update(
-        MAIL_SERVER = 'smtp.gmail.com',
-        MAIL_PORT = 465,
-        MAIL_USE_SSL = True,
-        MAIL_USERNAME = 'companydayprueba@gmail.com',
-        MAIL_PASSWORD = 'companyday1.'
-    )
-
-
-    mail = Mail(app)
-
-    msg = Message('Hello from the other side!', sender =   ("CompanydayPruebas", 'companydayprueba@gmail.com'), recipients = ['companydayprueba@gmail.com'])
-    msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
-    mail.send(msg)
-"""
     return 'Su informacion ha sido guardada en nuestra base de datos'
 
 def show(nombre,editable=0):
@@ -154,7 +132,7 @@ def update():
     	"codigoPostal":request.form['codigoPostal']})
     db.session.commit()
     return 'Su informacion ha sido guardada en nuestra base de datos'
-
+    
 def all():
     empresas = Empresa.query.filter_by(validado=True).all()
     return render_template('empresas.html',empresas=empresas)
