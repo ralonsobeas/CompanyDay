@@ -12,6 +12,14 @@
         background-color: white;
     }
   </style>
+  <script>
+    function redirectEditProfile(){
+      window.location.href = '/empresas/user_profile/1';
+    }
+    function redirectCancelEditProfile(){
+      document.getElementById("cancel").value = "1";
+    }
+  </script>
 {% endblock %}
 
 {% block content %}
@@ -70,7 +78,18 @@
                     <p class="mb-0">Dirección</p>
                   </div>
                   <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{empresa.direccion}} ({{empresa.provincia}}, {{empresa.pais}}), {{empresa.codigoPostal}}</p>
+                    <p class="text-muted mb-0">{{empresa.direccion}} ({{empresa.provincia}}, {{empresa.pais}}), {{empresa.codigoPostal}}
+                    </p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-9">
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="text-center">
+                      <button class="btn btn-primary" onclick="redirectEditProfile()">Editar</button>
+                    </div>
                   </div>
                 </div>
                 <hr>
@@ -80,14 +99,17 @@
                     <label class="form-label" for="id">Persona de Contacto</label>
                     <input type="text" class="form-control" id="personaContacto" name="personaContacto" placeholder="Persona de Contacto" value="{{empresa.personaContacto}}" tabindex="1" required>
                   </div>
+                  <hr>
                   <div class="form-group">
                     <label class="form-label" for="tema">Email</label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="Email" tabindex="2" value="{{empresa.email}}" required>
                   </div>
+                  <hr>
                   <div class="form-group">
                     <label class="form-label" for="titulo">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" value="{{empresa.telefono}}" tabindex="2" required>
                   </div>
+                  <hr>
                   <div class="form-group">
                     <label class="form-label" for="direccion">Dirección</label>
                     <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" value="{{empresa.direccion}}" tabindex="4" required>
@@ -98,9 +120,19 @@
                     <label class="form-label" for="codigoPostal">Código Postal</label>
                     <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Código Postal" value="{{empresa.codigoPostal}}" tabindex="4" required>
                   </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-start-order">Guardar</button>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <input type="hidden" class="form-control" id="cancel" name="cancel" placeholder="Hidden" value="0" required>
+                      <button class="btn btn-danger" onclick="redirectCancelEditProfile()">Cancelar</button>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-3">
+                      <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
                   </div>
+                  <hr>
                 </form>
               {% endif %}
               </div>
