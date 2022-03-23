@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+<!--
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+    -->
+    {% block header %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+
+		<style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+      #magic {
+        font-family: 'Roboto' !important;
+        width: 100%;
+        height: 100vh;
+        position:relative;
+        z-index: 0;
+      }
+
+
+      /*
+      .playground{
+
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        display: block;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+
+      }
+      */
+
+
+
+
+		</style>
+    {% endblock %}
+    <!--
+	</head>
+
+	<body>
+  -->
+    {% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r115/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script src="/static/javascript/jquery.sticky.js"></script>
+    <script src="/static/javascript/pruebas.js"></script>
+
+		<script src="/static/javascript/magic.js"></script>
+<script type="x-shader/x-vertex" id="vertexshader">
+
+  attribute float size;
+  attribute vec3 customColor;
+  varying vec3 vColor;
+
+  void main() {
+
+    vColor = customColor;
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+    gl_PointSize = size * ( 300.0 / -mvPosition.z );
+    gl_Position = projectionMatrix * mvPosition;
+
+  }
+
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader">
+
+ uniform vec3 color;
+ uniform sampler2D pointTexture;
+
+ varying vec3 vColor;
+
+ void main() {
+
+   gl_FragColor = vec4( color * vColor, 1.0 );
+   gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
+
+ }
+</script>
+
+
+<!-- Primer bloque -->
+<!-- CAMBIO DE COLOR  style="color:white" -->
+<div class="row"  style="color:white">
+  <section class="container-fluid">
+
+     <div class="d-none d-lg-block container-info col-md-6" style="transform: rotate(-90deg);">
+       <div id="magic"></div>
+     </div>
+     <div class="container-main col-md-6 pt-4">
+         <div class="row" >
+           <div class='console-container'>
+             <span id='text'></span>
+              <div class='console-underscore' id='console'>&#95;</div>
+            </div>
+          </div>
+          <div class="row console-container" style="text-align:center;"  >
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/165sainbPmU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="row" style="text-align:center;">
+            <div class="container">
+              <div class="row text-center"><h3>Las empresas más punteras a tu alcance</h3></div>
+              <div class="row text-center"><h3>El mejor talento para tu empresa</h3></div>
+              <div class="row"><p>Un evento organizado por U-tad con el objetivo de poner en contacto a las empresas más punteras con nuestro mejor talento, ambos especializados en nuestras principales áreas formativas: Animación 3D, 2D y VFX, Diseño Digital, Ingeniería del Software, Matemáticas y Realidades Extendidas, Videojuegos y Productos Interactivos. </p></div>
+          </div>
+          </div>
+          <div class="row" style="z-index:+1;">
+            <!--<button type="button" class="btn btn-dark m-2">Agenda</button>-->
+            <button type="button" class="btn btn-dark m-2" data-toggle="modal" data-target="#registroModal">Registro</button>
+          </div>
+     </div>
+
+  </section>
+</div>
+
+<!--MODAL REGISTRO-->
+<div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog form-dark" role="document">
+<div class="modal-content card card-image" style="background-color: #0065ef;">
+  <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
+    <!--Header-->
+    <div class="modal-header text-center pb-1">
+      <h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>REGISTRO</strong></h5>
+      <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!--Body-->
+    <div class="modal-body">
+
+{% include 'modalRegistroEmpresa.html' %}
+
+    </div>
+  </div>
+</div>
+<!--/.Content-->
+</div>
+</div>
+<!-- Segundo bloque -->
+<div class="row">
+  <div class="col-xl-3 col-lg-6">
+        <div class="card">
+            <div class="card-statistic-3 p-4">
+                <div class="card-icon card-icon-large"><i class="fas fa-check"></i></div>
+                <div class="mb-4">
+                    <h5 class="card-title mb-0">Entrevistas realizadas</h5>
+                </div>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            372
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6">
+          <div class="card l-bg-cherry">
+              <div class="card-statistic-3 p-4">
+                  <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+                  <div class="mb-4">
+                      <h5 class="card-title mb-0">Alumnos y alumni asistentes</h5>
+                  </div>
+                  <div class="row align-items-center mb-2 d-flex">
+                      <div class="col-8">
+                          <h2 class="d-flex align-items-center mb-0">
+                              +400
+                          </h2>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+            <div class="card l-bg-cherry">
+                <div class="card-statistic-3 p-4">
+                    <div class="card-icon card-icon-large"><i class="fas fa-city"></i></div>
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0">Empresas de 8 países diferentes</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                                72
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+              <div class="card ">
+                  <div class="card-statistic-3 p-4">
+                      <div class="card-icon card-icon-large"><i class="fas fa-user-tie"></i></div>
+                      <div class="mb-4">
+                          <h5 class="card-title mb-0">Asistentes a charlas de empresas</h5>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  236
+                              </h2>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+</div>
+
+
+<!-- Segundo bloque -->
+  <div class="row">
+    <div class="container">
+      <div class="brand-carousel section-padding owl-carousel" >
+        {% for empresa in empresas %}
+        <div class="single-logo">
+          <img src="/static/images/customlogos/{{empresa.logo}}" class="filtered" alt="ERROR">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+
+<!-- Tercer Bloque-->
+  <div class="row">
+  </div>
+
+<!-- Cuarto Bloque-->
+<!-- BREAKING NEWS -->
+
+<div class="row">
+  <div class="container-fluid">
+      <div class="breaking-news">
+
+          <marquee class="news-scroll"  direction="left" >
+            <a href="#"> &emsp; ACTIVIDADES &emsp; </a>
+             <span class="dot"></span>
+             <a href="#"> &emsp; CHARLAS &emsp; </a>
+              <span class="dot"></span>
+              <a href="#"> &emsp; FERIA DE EMPRESAS &emsp; </a>
+              <span class="dot"></span>
+              <a href="#"> &emsp; PRESENTACIÓN DE PROYECTOS &emsp; </a>
+              <span class="dot"></span>
+              <a href="#"> &emsp; SPEED MEETINGS &emsp; </a>
+            </marquee>
+      </div>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="container">
+      <div class="row">
+        <section class="dark">
+        	<div class="container py-4">
+
+        		<article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://st1.u-tad.com/media/sites/2/2021/09/company-day-event-u-tad.jpeg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Feria de empresas</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">El principal punto de encuentro del evento, un espacio donde empresas y el talento U-tad podrán darse a conocer, charlar sobre sus proyectos y ponerse en valor.</div>
+        			</div>
+        		</article>
+
+            <article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://media.vandal.net/i/1200x630/11-2021/202111239321190_1.jpg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Presentación de proyectos</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">Cortos de animación y VFX, videojuegos, portfolios de diseño, apps, experiencias de realidades extendidas… Los alumnos presentan sus proyectos a las empresas.</div>
+        			</div>
+        		</article>
+
+            <article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologias-educativas.jpg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Speed meetings</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">43 empresas realizarán entrevistas de prácticas y empleo.
+
+Empresas: tendrás acceso a una base de CVs para filtrar y seleccionar los más adecuados para ti antes del evento.
+
+Estudiantes: podrás solicitar las ofertas y enviar tu perfil a las empresas que más te interese conocer.</div>
+        			</div>
+        		</article>
+
+
+            <article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologia-educativa-formacion.jpg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Charlas</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">Conoce lo que las empresas buscan y en lo que trabajan, a reclutadores y profesionales que te darán información de primera mano sobre sus procesos de selección, sectores y casos de éxito.
+
+Las charlas y ponencias se realizarán online durante toda la semana del 15 al 19 de noviembre.</div>
+        			</div>
+        		</article>
+        	</div>
+        </section>
+
+
+
+      </div>
+
+    </div>
+  </div>
+    {% endblock %}
+
+
+{% block script %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="/static/javascript/index2.js"></script>
+
+{% endblock %}

@@ -125,7 +125,7 @@ admin.add_view(AdminView(EventoSpeedMeeting,db.session))
 @app.route('/')
 def index():
     empresas = EmpresaController.all_query()
-    return render_template('index.html',empresas=empresas)
+    return render_template('index2.html',empresas=empresas)
 
 
 @app.route('/favicon.ico')

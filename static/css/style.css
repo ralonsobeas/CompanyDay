@@ -12,8 +12,14 @@ body{
   background-color:#0065ef ;
 }
 */
+
+.footer {
+    background-color: white;
+}
 .navbar{
+  /*CAMBIO DE COLOR*/
   background-color: white;
+  /*background-color: #0065ef;*/
 }
 
 .card-img-top {
