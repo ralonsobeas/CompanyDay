@@ -19,19 +19,13 @@ import urllib.request
 import os
 
 app = Flask(__name__)
-
-# LANGUAGE
 babel = Babel(app)
 @babel.localeselector
 def get_locale():
         # Put your logic here. Application can store locale in
         # user profile, cookie, session, etc.
-        #return 'es'
-    if not g.get('lang_code', None):
-        g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
-    return g.lang_code
+        return 'es'
 
-# LOGIN
 login_manager.init_app(app)
 #   admin = Admin(app)
 
@@ -45,11 +39,8 @@ from routes.eventoSpeedMeeting_bp import eventoSpeedMeeting_bp
 app.config.from_object('config')
 #db = SQLAlchemy(app)
 
-# INIT DB
 db.init_app(app)
 migrate = Migrate(app, db)
-
-# REGISTER BLUEPRINTS
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
 app.register_blueprint(eventoFeriaEmpresas_bp, url_prefix='/eventoFeriaEmpresas')
 app.register_blueprint(eventoPresentacionProyectos_bp, url_prefix='/proyectos')
@@ -81,7 +72,6 @@ from controllers import EventoFeriaEmpresasController
 from controllers import PersonaController
 
 
-# MODO ADMINISTRADOR
 class AdminView(ModelView):
     ModelView.can_export = True
     ModelView.column_exclude_list = ('password')
@@ -89,16 +79,6 @@ class AdminView(ModelView):
     ModelView.export_types = ['csv','xls']
     ModelView.column_hide_backrefs = False
     ModelView.column_display_pk = True
-
-    def cambio_id_nombre(view, context, model, name):
-        return EmpresaController.get_by_id(model.empresa_id).nombre
-
-    column_formatters = {
-        'empresa': cambio_id_nombre
-    }
-
-
-
     def scaffold_sortable_columns(self):
         return {'Empresa':'empresa_id'}
     def is_accessible(self):
@@ -139,15 +119,12 @@ admin.add_view(AdminView(EventoFeriaEmpresas,db.session))
 admin.add_view(AdminView(EventoPresentacionProyectos,db.session))
 admin.add_view(AdminView(EventoCharlas,db.session))
 admin.add_view(AdminView(EventoSpeedMeeting,db.session))
-admin.add_view(AdminView(Persona,db.session))
 
-# FIN MODO ADMINISTRADOR
 
-# ROUTING
 @app.route('/')
 def index():
     empresas = EmpresaController.all_query()
-    return render_template('index2.html',empresas=empresas)
+    return render_template('index.html',empresas=empresas)
 
 
 @app.route('/favicon.ico')
@@ -215,17 +192,12 @@ def chulo():
     empresas = Empresa.query.all()
     return render_template('chulo.html',empresas=empresas)
 
-# FINAL ROUTING
-
-# ERRORES ROUTING
 def page_not_found(e):
   return render_template('admin/denied.html',message="Page not found",e=e), 404
 app.register_error_handler(404, page_not_found)
 def not_registered(e):
   return render_template('admin/denied.html',message="Not registered",e=e), 400
 app.register_error_handler(400, not_registered)
-# FINAL ERRORES ROUTING
-
 
 from flask_table import Col, Table
 
@@ -263,7 +235,7 @@ def method_name():
     items = ItemTableEmpresas(empresas)
     return render_template("pruebaTablas.html", empresas = items)
 
-# START APP
+
 if __name__ == '__main__':
 
     with app.app_context():

@@ -1,0 +1,10 @@
+body{
+  /*CAMBIO DE COLOR*/
+  background-color:#0065ef;
+/*  background-color:white;*/
+  font-family: 'Roboto'
+}
+
+.dark{
+  background-color: #18151f;
+}

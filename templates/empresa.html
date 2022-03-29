@@ -2,6 +2,7 @@
 
 
 {% block header %}
+  <link rel="stylesheet" type="text/css" href="/static/css/empresa.css">
 <!--  <link rel="stylesheet" type="text/css" href="/static/css/empresas.css">-->
   <style>
     [contenteditable="True"] {
@@ -24,12 +25,12 @@
 
 {% block content %}
 
-        <div class="row">
+        <div class="row ">
           <div class="col-lg-4">
-            <div class="card mb-4">
+            <div class="card mb-4 ">
               <div class="card-body text-center">
                 <img src="/static/images/customlogos/{{empresa.logo}}" alt="logo" class="img-fluid" style="width: 150px;">
-                <h5 class="my-3">{{empresa.nombre}}</h5>
+                <h5 class="my-3 ">{{empresa.nombre}}</h5>
               </div>
             </div>
             <div class="card mb-4">
@@ -42,7 +43,7 @@
                 </ul>
               </div>
             </div>
-            
+
             <div class="card mb-4">
               <div class="card-body">
               {% if editable == 0 %}

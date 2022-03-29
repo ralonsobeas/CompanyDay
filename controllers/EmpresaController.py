@@ -133,7 +133,12 @@ def update():
         "codigoPostal":request.form['codigoPostal']})
         db.session.commit()
     return render_template('profileRedirect.html')
-    
+
+
+def get_by_id(id):
+    empresa = Empresa.query.filter_by(id=id).first()
+    return empresa
+
 def all():
     empresas = Empresa.query.filter_by(validado=True).all()
     return render_template('empresas.html',empresas=empresas)

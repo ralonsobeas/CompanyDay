@@ -13,6 +13,8 @@ body{
 }
 */
 
+
+
 .footer {
     background-color: white;
 }
@@ -27,6 +29,42 @@ body{
     height: 15vw;
     object-fit: cover;
 }
+
+.scrollbar
+{
+	margin-left: 22px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+/*
+ *  STYLE 1
+ */
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #18151f;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #18151f;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
 
 
 

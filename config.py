@@ -1,5 +1,7 @@
 import os
 
+LANGUAGES = ['es', 'en']
+
 SECRET_KEY = os.urandom(32)
 
 # Grabs the folder where the script runs.
