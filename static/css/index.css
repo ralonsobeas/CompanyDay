@@ -69,6 +69,14 @@
 	}
 }
 
+.btn-principal{
+	background-color: #000000;
+	color:white;
+	border-color: white;
+	border-radius: 0;
+
+}
+
 .titulo{
   font-style: normal;
   font-weight: 900;
