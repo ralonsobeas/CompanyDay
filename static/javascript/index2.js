@@ -1,3 +1,13 @@
+$(document).ready(function() {
+
+    setTimeout(function(){
+        $('#flip').hide();
+        $('#flip1').hide();
+        $('#tituloPermanente').show();
+    }, 5000);
+
+});
+
 $('.brand-carousel').owlCarousel({
   loop:true,
   margin:10,
@@ -16,6 +26,7 @@ $('.brand-carousel').owlCarousel({
 })
 
 
+/*
 // function([string1, string2],target id,[color1,color2])
  consoleText(['VIDEO GAMES.', 'SOFTWARE.', 'DIGITAL DESIGN.', 'ANIMATION.'], 'text',['tomato','rebeccapurple','lightblue']);
 
@@ -67,3 +78,4 @@ function consoleText(words, id, colors) {
     }
   }, 400)
 }
+*/

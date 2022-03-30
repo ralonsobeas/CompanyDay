@@ -1,8 +1,120 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+#preloader {
+
+	height: 100%;
+	line-height: unset !important;
+
+}
+
+
+#flip {
+	height: 90px;
+	text-align: center;
+	overflow: hidden;
+	width: Xu;
+	height: Yu;
+
+
+	/* margin-left: -(X/2)u;
+	margin-top: -(Y/2)u; */
+	color: white;
+	font-weight: bolder;
+	font-family: 'Montserrat';
+
+  font-style: normal;
+  font-weight: 900;
+  font-size: 90px;
+  line-height: 110px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+#flip>div>div {
+	/* padding: 0px 12px; */
+	/* height: 70px; */
+	/* margin-bottom: 7px; */
+	display: inline-block;
+}
+
+#flip div:first-child {
+	animation: show 5s linear;
+}
+
+@keyframes show {
+	0% {
+		margin-top: -400px;
+	}
+	15% {
+		margin-top: -360px;
+	}
+	33% {
+		margin-top: -260px;
+	}
+	48% {
+		margin-top: -150px;
+	}
+	55% {
+		margin-top: -100px;
+	}
+	61% {
+		margin-top: -50px;
+	}
+	71% {
+		margin-top: 0px;
+	}
+	100% {
+		margin-top: 0px;
+	}
+}
+
+.titulo{
+  font-style: normal;
+  font-weight: 900;
+  font-size: 90px;
+  line-height: 110px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+.bordes{
+  border-color:black;
+  border-style: solid;
+  border-width:4px !important;
+}
+
+.disenio:hover{
+  color:#FF3A3A;
+  border-color:#FF3A3A;
+}
+
+.videojuegos:hover{
+  color:#8E59FF;
+  border-color:#8E59FF;
+}
+
+.fondo{
+  background-color: black;
+  color:white;
+}
+
+.ingenieria:hover{
+  background-color: #14D2BC;
+}
+
+.animacion:hover{
+  background-color: #FFD43E;
+}
+
+
 body{
   /*CAMBIO DE COLOR*/
-  background-color:#0065ef;
-/*  background-color:white;*/
-  font-family: 'Roboto'
+  /*background-color:#0065ef;*/
+  background-color:white;
+  font-family: 'Montserrat';
+
 }
 
 .brand-carousel{
@@ -31,17 +143,10 @@ body{
   width: 100%;
   min-height: 550px;
   /*CAMBIO DE COLOR*/
-  background-color:#0065ef;
+  background-color:#000000;
 /*  background-color:white;*/
   }
-  @media (min-width: 768px) {
-    .container-main {
-      float: right;
-      /*position: fixed;*/
-      right: 0;
-      top: 0;
-      height: 100%;
-      width: 50%; } }
+
 
 
 @import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
@@ -167,10 +272,10 @@ body{
 
 
 .card {
-    font-family: 'Roboto';
+    font-family: 'Montserrat';
     /*CAMBIO DE COLOR*/
     color:white;
-    background-color: #0065ef;
+    background-color: #000000;
     border-radius: 10px;
     border: none;
     position: relative;
@@ -197,14 +302,14 @@ body{
   flex-wrap: wrap;
   display: flex;
   box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
-  border-radius: 10px;
+  /*border-radius: 10px;*/
   margin: 0 0 2rem 0;
   overflow: hidden;
   position: relative;
   color: #ffffff;
 }
 .postcard.dark {
-  background-color: #18151f;
+  background-color: #000000;
 }
 .postcard.light {
   background-color: #e1e5ea;

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+<!--
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+    -->
+    {% block header %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
+    {% endblock %}
+    <!--
+	</head>
+
+	<body>
+  -->
+    {% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r115/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script src="/static/javascript/jquery.sticky.js"></script>
+    <script src="/static/javascript/pruebas.js"></script>
+
+
+
+
+<!-- Primer bloque -->
+<!-- CAMBIO DE COLOR  style="color:white" -->
+<div class="row vh-100"  style="color:white;height:100%;">
+  <section class="container-fluid container-main" >
+    <div class="row mb-5">
+      <div class="col-md-12 d-flex justify-content-end align-items-center">
+        <h3 class="mr-5">¿DE QUÉ VA ESTO?</h3>
+        <h3 class="fas fa-arrow-right fa-5x"></h3>
+      </div>
+    </div>
+
+    <div class="container align-items-center justify-content-center h-50"  >
+       <div class="row  align-items-center justify-content-center h-50">
+          <!--<h1 class="titulo ">COMPANY DAY</h1>-->
+          <div id="preloader">
+
+          		<div id="flip">
+          		  <div>
+          			<div><h1 class="titulo ">COPANY DAY</h1></div>
+          		  </div>
+          		  <div>
+          			<div><h1 class="titulo ">ANIMACIÓN</h1></div>
+          		  </div>
+          		  <div>
+          			<div><h1 class="titulo ">VIDEOJUEGOS</h1></div>
+          		  </div>
+          		  <div>
+          			 <div><h1 class="titulo ">INGENIERÍA Y CIENCIAS</h1></div>
+          		  </div>
+          		  <div>
+          			<div><h1 class="titulo ">DISEÑO DIGITAL</h1></div>
+          		  </div>
+          		</div>
+
+            <div><h1 id="tituloPermanente" class="titulo" style="display:none">COPANY DAY</h1></div>
+
+        	</div>
+        </div>
+        <div class="row  align-items-center justify-content-center ">
+          <button type="button" class="btn btn-dark m-2" data-toggle="modal" data-target="#registroModal">REGÍSTRATE :)</button>
+         </div>
+
+     </div>
+     <a href="#talentos" style="text-decoration: none;color:white">
+     <div class="row ">
+       <div class="col-md-12 d-flex  align-items-center align-bottom">
+         <h3 class="fas fa-arrow-right fa-5x mr-5" style="transform: rotate(90deg);"></h3>
+         <h3 class="mr-5">DESCUBRE LOS TALENTOS</h3>
+       </div>
+      </a>
+  </section>
+</div>
+
+<!--MODAL REGISTRO-->
+<div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog form-dark" role="document">
+<div class="modal-content card card-image" style="background-color: #0065ef;">
+  <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
+    <!--Header-->
+    <div class="modal-header text-center pb-1">
+      <h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>REGISTRO</strong></h5>
+      <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!--Body-->
+    <div class="modal-body">
+
+{% include 'modalRegistroEmpresa.html' %}
+
+    </div>
+  </div>
+</div>
+<!--/.Content-->
+</div>
+</div>
+<!-- Segundo bloque -->
+<div class="row" style="background-color:black">
+  <div class="col-xl-3 col-lg-6">
+        <div class="card">
+            <div class="card-statistic-3 p-4">
+                <div class="card-icon card-icon-large"><i class="fas fa-check"></i></div>
+                <div class="mb-4">
+                    <h5 class="card-title mb-0">Entrevistas realizadas</h5>
+                </div>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            372
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6">
+          <div class="card l-bg-cherry">
+              <div class="card-statistic-3 p-4">
+                  <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+                  <div class="mb-4">
+                      <h5 class="card-title mb-0">Alumnos y alumni asistentes</h5>
+                  </div>
+                  <div class="row align-items-center mb-2 d-flex">
+                      <div class="col-8">
+                          <h2 class="d-flex align-items-center mb-0">
+                              +400
+                          </h2>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+            <div class="card l-bg-cherry">
+                <div class="card-statistic-3 p-4">
+                    <div class="card-icon card-icon-large"><i class="fas fa-city"></i></div>
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0">Empresas de 8 países diferentes</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                                72
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+              <div class="card ">
+                  <div class="card-statistic-3 p-4">
+                      <div class="card-icon card-icon-large"><i class="fas fa-user-tie"></i></div>
+                      <div class="mb-4">
+                          <h5 class="card-title mb-0">Asistentes a charlas de empresas</h5>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  236
+                              </h2>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+</div>
+
+<!-- Tercer Bloque-->
+  <div id="talentos" class="row mt-5" style="color:black;background-color:white">
+    <div class="container">
+      <div class="row bordes py-4 px-4 disenio" style="font-weight: 900;font-size: 60px;line-height: 73px;">
+        <h1>DISEÑO DIGITAL</h1>
+      </div>
+      <div class="row fondo justify-content-end py-4 px-4 ingenieria">
+        <h1>INGENIERÍA Y CIENCIAS</h1>
+      </div>
+      <div class="row bordes py-4 px-4 videojuegos">
+        <h1>VIDEOJUEGOS</h1>
+      </div>
+      <div class="row fondo justify-content-end py-4 px-4 animacion">
+        <h1>ANIMACIÓN</h1>
+      </div>
+    </div>
+  </div>
+<!-- Segundo bloque -->
+  <div class="row mt-5">
+    <div class="container ">
+      <div class="row  align-items-center justify-content-center">
+        <h3>ASISTEN AL EVENTO<h3>
+      </div>
+      <div class="brand-carousel section-padding owl-carousel " >
+        {% for empresa in empresas %}
+        <div class="single-logo ">
+          <img src="/static/images/customlogos/{{empresa.logo}}" class="filtered" alt="ERROR">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+
+
+<!-- Cuarto Bloque-->
+<!-- BREAKING NEWS -->
+
+  <div class="row ">
+    <div class="container">
+      <div class="row">
+        <section class="dark">
+        	<div class="container py-4">
+
+        		<article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://st1.u-tad.com/media/sites/2/2021/09/company-day-event-u-tad.jpeg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Feria de empresas</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">El principal punto de encuentro del evento, un espacio donde empresas y el talento U-tad podrán darse a conocer, charlar sobre sus proyectos y ponerse en valor.</div>
+        			</div>
+        		</article>
+
+            <article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://media.vandal.net/i/1200x630/11-2021/202111239321190_1.jpg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Presentación de proyectos</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">Cortos de animación y VFX, videojuegos, portfolios de diseño, apps, experiencias de realidades extendidas… Los alumnos presentan sus proyectos a las empresas.</div>
+        			</div>
+        		</article>
+
+            <article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologias-educativas.jpg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Speed meetings</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">43 empresas realizarán entrevistas de prácticas y empleo.
+
+Empresas: tendrás acceso a una base de CVs para filtrar y seleccionar los más adecuados para ti antes del evento.
+
+Estudiantes: podrás solicitar las ofertas y enviar tu perfil a las empresas que más te interese conocer.</div>
+        			</div>
+        		</article>
+
+
+            <article class="postcard dark blue">
+        			<a class="postcard__img_link" href="#">
+        				<img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologia-educativa-formacion.jpg" alt="Image Title" />
+        			</a>
+        			<div class="postcard__text">
+        				<h1 class="postcard__title blue"><a href="#">Charlas</a></h1>
+        				<div class="postcard__subtitle small">
+        					<time datetime="2020-05-25 12:00:00">
+        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+        					</time>
+        				</div>
+        				<div class="postcard__bar"></div>
+        				<div class="postcard__preview-txt">Conoce lo que las empresas buscan y en lo que trabajan, a reclutadores y profesionales que te darán información de primera mano sobre sus procesos de selección, sectores y casos de éxito.
+
+Las charlas y ponencias se realizarán online durante toda la semana del 15 al 19 de noviembre.</div>
+        			</div>
+        		</article>
+        	</div>
+        </section>
+
+
+
+      </div>
+
+    </div>
+  </div>
+    {% endblock %}
+
+
+{% block script %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="/static/javascript/index2.js"></script>
+
+{% endblock %}
