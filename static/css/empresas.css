@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 body{
-  background-color:#0065ef ;
+  background-color:white ;
 }
 
 .title{
   /*CAMBIO DE COLOR*/
-  color:white;
+  color:black;
 
 }
 
 .cardEmpresa {
+    background-color:white ;
     position: relative;
     padding: 0;
     margin: 10% !important;
@@ -20,7 +20,7 @@ body{
     height: 250px;
     cursor: pointer;
     border: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5)
 }
 
 .cardEmpresa .card-image {

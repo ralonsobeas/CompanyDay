@@ -2,6 +2,7 @@
 
 {% block header %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/static/css/empresa.css">
 
 
 
@@ -10,26 +11,69 @@
 
 {% block content %}
 
-    <h3>{% block title %} Proyectos U-Tad CompanyDay {% endblock %}</h3>
+    <h1  class="title text-center">{% block title %} Actividades {% endblock %}</h1>
 
       <div class="container">
-      <div class="row mb-2">
         {% for proyecto in proyectos %}
-        <div class="col-md-6">
-          <div class="card flex-md-row mb-4 shadow-sm h-md-250">
-            <div class="card-body d-flex flex-column align-items-start">
-              <strong class="d-inline-block mb-2 text-primary">{% if proyecto.videojuegos %} "Videojuegos" {% endif %} {% if proyecto.disenoDigital %} "Diseño Digital" {% endif %} {% if proyecto.cortosAnimacion %} "Cortos Animacion" {% endif %} {% if proyecto.ingenieria %} "Ingenieria" {% endif %}</strong>
-              <h3 class="mb-0">
-                <a class="text-dark" href="#">{{proyecto.nombre}}</a>
-              </h3>
-              <div class="mb-1 text-muted">Fecha Proyecto</div>
-              <div class="mb-1 text-muted">{% if proyecto.presencial %} Presencial {% else %} Online {% endif %}</div>
-              <p class="card-text mb-auto">Tema Proyecto</p>
-              <a href="#">Mas Informacion</a>
+        <article class="postcard dark blue">
+          <a class="postcard__img_link" href="#">
+            <img class="postcard__img" src="/static/images/customlogos/{{proyecto.logo}}" alt="Image Title" />
+          </a>
+          <div class="postcard__text">
+            <h1 class="postcard__title blue"><a href="#">Presentación de proyectos</a></h1>
+            <div class="postcard__subtitle small">
+              <time datetime="2020-05-25 12:00:00">
+                <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+              </time>
             </div>
-            <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="/static/images/customlogos/{{proyecto.logo}}" data-holder-rendered="true">
+            <div class="postcard__bar"></div>
+            <div class="postcard__preview-txt">
+              {% if proyecto.presencial %}
+                Presencial
+              {% else %}
+                Online
+              {% endif %}
+              <br>
+              {% if proyecto.videojuegos %}
+                Videojuegos &nbsp;
+              {% endif %}
+              {% if proyecto.disenoDigital %}
+                Diseño digital &nbsp;
+              {% endif %}
+              {% if proyecto.cortosAnimacion %}
+                Cortos de animación &nbsp;
+              {% endif %}
+              {% if proyecto.ingenieria %}
+                Ingeniería &nbsp;
+              {% endif %}
+            </div>
           </div>
-        </div>
+        </article>
+        {% endfor %}
+      <div class="row mb-2">
+
+        {% for charla in charlas %}
+        <article class="postcard dark blue">
+          <a class="postcard__img_link" href="#">
+            <img class="postcard__img" src="/static/images/customlogos/{{charla.logo}}" alt="Image Title" />
+          </a>
+          <div class="postcard__text">
+            <h1 class="postcard__title blue"><a href="#">Charlas</a></h1>
+            <div class="postcard__subtitle small">
+              <time datetime="2020-05-25 12:00:00">
+                <i class="fas fa-calendar-alt mr-2"></i>{{charla.fecha}}
+              </time>
+            </div>
+            <div class="postcard__bar"></div>
+            <div class="postcard__preview-txt">
+              {% if charla.presencial %}
+                Presencial
+              {% else %}
+                Online
+              {% endif %}
+            </div>
+          </div>
+        </article>
         {% endfor %}
       </div>
       </div>

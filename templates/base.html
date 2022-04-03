@@ -37,13 +37,7 @@
                 <a class="nav-link" href="{{ url_for('empresa_bp.all') }}">Empresas</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('proyectos') }}">Proyectos</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('charlas') }}">Charlas</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('registroEmpresa') }}">Registro Empresa</a>
+                <a class="nav-link" href="{{ url_for('proyectos') }}">Actividades</a>
             </li>
 
             {% if current_user.is_authenticated %}
@@ -74,9 +68,6 @@
                         <div class="modal-body">
                             <div class="nav flex-sm-column flex-row">
                                 <a class="nav-item nav-link active" href="{{ url_for('empresa_bp.userProfile',editable=0) }}">Perfil</a>
-                                <a class="nav-item nav-link active" href="{{ url_for('empresa_bp.userProfile',editable=1) }}">Editar Perfil</a>
-                                <a class="nav-item nav-link active" href="{{ url_for('registroPresentacion') }}">Registro Proyectos</a>
-                                <a class="nav-item nav-link active" href="{{ url_for('registroCharla') }}">Registro Charla</a>
                                 <a class="nav-item nav-link" href="{{ url_for('empresa_bp.logout') }}">Logout</a>
                                 {% if current_user.admin %}
                                 <a class="nav-item nav-link" href="{{ url_for('admin.index') }}" style="color:red">Modo Administrador</a>

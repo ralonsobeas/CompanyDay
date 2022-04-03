@@ -27,10 +27,11 @@ def get_locale():
         # Put your logic here. Application can store locale in
         # user profile, cookie, session, etc.
         #return 'es'
+        """
     if not g.get('lang_code', None):
         g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
     return g.lang_code
-
+"""
 # LOGIN
 login_manager.init_app(app)
 #   admin = Admin(app)
@@ -176,8 +177,8 @@ def registroPresentacion():
 @app.route('/proyecto')
 def proyectos():
     proyectos = EventoPresentacionProyectosController.all_query()
-    print(type(proyectos))
-    return render_template('proyectos.html',proyectos=proyectos)
+    charlas = EventoCharlaController.all_query()
+    return render_template('proyectos.html',proyectos=proyectos,charlas=charlas)
 
 @login_required
 @app.route('/registro_charla')
