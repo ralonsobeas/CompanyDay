@@ -84,7 +84,11 @@
                   </div>
                 </div>
                 <hr>
+<<<<<<< Updated upstream
                 {% if current_user.id == empresa.id %}
+=======
+                {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
+>>>>>>> Stashed changes
                 <div class="row">
                   <div class="col-sm-9">
                   </div>
@@ -130,7 +134,7 @@
                       <input type="hidden" class="form-control" id="cancel" name="cancel" placeholder="Hidden" value="0" required>
                       <button class="btn btn-danger" onclick="redirectCancelEditProfile()">Cancelar</button>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-5">
                     </div>
                     <div class="col-sm-3">
                       <button type="submit" class="btn btn-success">Guardar</button>
@@ -396,7 +400,7 @@
                         {% for eventoCharla in eventosCharla %}
                         <tr>
                           <td>{{eventoCharla.fecha}}</td>
-                          {% if eventoCharla.presencial %}
+                          {% if eventoCharla.presencialidad %}
                             <td>Si</td>
                           {% else %}
                             <td>No</td>
@@ -405,7 +409,26 @@
                         {% endfor %}
                       </tbody>
                     </table>
-                    <a class="btn btn-primary" href="{{ url_for('registroCharla') }}">Registro Charla</a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registroModal">Registro Charla</button>
+                    <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  			<div class="modal-dialog form-dark" role="document">
+			  <div class="modal-content card card-image" style="background-color: #0065ef;">
+  			    <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
+    <!--Header-->
+    			      <div class="modal-header text-center pb-1">
+      				<h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>Registro Charla</strong></h5>
+      				<button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+        			  <span aria-hidden="true">&times;</span>
+      				</button>
+    			      </div>
+    <!--Body-->
+    			   <div class="modal-body">
+{% include 'modalRegistroCharla.html' %}
+    		           </div>
+  		       </div>
+		     </div>
+		     </div>
+		   </div>
                   </div>
                 </div>
                 -->

@@ -21,6 +21,7 @@ import os
 app = Flask(__name__)
 
 # LANGUAGE
+"""
 babel = Babel(app)
 @babel.localeselector
 def get_locale():
@@ -227,7 +228,7 @@ def not_registered(e):
 app.register_error_handler(400, not_registered)
 # FINAL ERRORES ROUTING
 
-
+"""
 from flask_table import Col, Table
 
 class ItemTableEmpresas(Table):
@@ -263,6 +264,7 @@ def method_name():
     print(empresas)
     items = ItemTableEmpresas(empresas)
     return render_template("pruebaTablas.html", empresas = items)
+    """
 
 # START APP
 if __name__ == '__main__':
