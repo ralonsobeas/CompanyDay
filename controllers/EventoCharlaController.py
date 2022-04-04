@@ -20,10 +20,11 @@ def store():
     presencialidad = True if(request.form['presencialidad']=='True') else False
     titulo = request.form['titulo']
     fecha = request.form['fecha']
+    autor = request.form['autor']
     empresa_id = current_user.id
     aprobada = False
 
-    eventoCharla = EventoCharlas(tema,presencialidad,titulo,fecha,aprobada,empresa_id)
+    eventoCharla = EventoCharlas(tema,presencialidad,titulo,fecha,aprobada,autor,empresa_id)
     db.session.add(eventoCharla)
     db.session.commit()
 

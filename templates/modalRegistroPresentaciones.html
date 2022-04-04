@@ -132,29 +132,33 @@
 	
 	
 	
-	<!-- multistep form -->
-	<form id="msform" action="/charlas/crear" method="POST" role="form" enctype="multipart/form-data">
-	  <!-- progressbar -->
+
+	<form id="msform" action="/speedMeeting/crear" method="POST" role="form" enctype="multipart/form-data">
+
 	  <div style="justify-content: center;">
 	  <ul id="progressbar">
-		<li class="active">Información sobre charla</li>
+		<li class="active">Información sobre speed meeting</li>
 		<li>Fecha y presencialidad</li>
 	  </ul>
 	  </div>
-	  <!-- fieldsets -->
+
 	  <fieldset>
-		<h2 class="fs-title">Crear charla de empresa</h2>
-		<h3 class="fs-subtitle">Información sobre charla</h3>
-		<input type="text" name="titulo" placeholder="Título" />
-		<input type="text" name="autor" placeholder="Autor" />
-		<textarea rows="3" type="text" name="tema" placeholder="Tema de charla" ></textarea>
+		<h2 class="fs-title">Crear speed meeting</h2>
+		<h3 class="fs-subtitle">Información sobre speed meeting</h3>
+		<input type="text" name="pregunta" placeholder="Pregunta" />
+		<textarea rows="3" type="text" name="perfiles" placeholder="Perfiles que buscáis" ></textarea>
 		<input type="button" name="next" class="next action-button" value="Siguiente" />
 	
 	  </fieldset>
 	  <fieldset>
-		<h2 class="fs-title">Crear charla de empresa</h2>
+		<h2 class="fs-title">Crear speed meeting</h2>
 		<h3 class="fs-subtitle">Fecha y presencialidad</h3>
-		<input type="date" min="2022-05-02" max="2022-05-06" name="fecha" placeholder="Fecha de la charla" />
+		<label class="form-label" for="fecha"> Fecha de la speedmeeting </label>
+		<input type="date" min="2022-05-02" max="2022-05-06" name="fecha" id="fecha" placeholder="Fecha de la speedmeeting" />
+		<label class="form-label" for="horaInicio"> Hora de Inicio </label>
+		<input type="time" name="horaInicio" id="horaInicio" placeholder="Hora Inicio" />
+		<label class="form-label" for="horaFin"> Hora Final </label>
+		<input type="time" name="horaFin" id="horaFin" placeholder="Hora Final" />
 		<div class="form-group" id="nomargin">
 		<div class="form-check" id="nomargin">
 		  <input class="form-check-input" type="radio" name="presencialidad" id="presencialidadPresencial" value="True" checked/>

@@ -82,18 +82,18 @@
                     </p>
                   </div>
                 </div>
+                {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
                 <hr>
                 <div class="row">
                   <div class="col-sm-9">
                   </div>
                   <div class="col-sm-3">
                     <div class="text-center">
-                    {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
                       <button class="btn btn-primary" onclick="redirectEditProfile()">Editar</button>
-                    {% endif %}
                     </div>
                   </div>
                 </div>
+                {% endif %}
                 <hr>
               {% else %}
                 <form id="contact-form" class="form" action="/empresas/update" method="POST" role="form" enctype="multipart/form-data">
@@ -173,7 +173,9 @@
                   </div>
                 </div>
               </div>
+              
               <div class="col-md-12">
+              <!-- Aun no está claro si los proyectos o presentaciones son de empresas, por ahora dejo esto comentado
                 <div class="card mb-4 mb-md-0">
                   <div class="card-body">
                     <p class="mb-4"><span class="text-primary font-italic me-1">Presentaciones</span></p>
@@ -219,10 +221,31 @@
                         {% endfor %}
                       </tbody>
                     </table>
-                    <a class="btn btn-primary" href="{{ url_for('registroPresentacion') }}">Registro Presentaciones</a>
+                    {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registroModalPresentaciones">Registro Presentaciones</button>
+                    <div class="modal fade" id="registroModalPresentaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog form-dark" role="document">
+                        <div class="modal-content card card-image" style="background-color: #0065ef;">
+                          <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
+                            <div class="modal-header text-center pb-1">
+                              <h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>Registro Presentaciones</strong></h5>
+                              <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              {% include 'modalRegistroPresentaciones.html' %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
                   </div>
                 </div>
+                              -->
               </div>
+
               <div class="col-md-12">
                 <div class="card mb-4 mb-md-0">
                   <div class="card-body">
@@ -231,8 +254,9 @@
                       <thead class="thead-dark">
                         <tr>
                           <th scope="col">Fecha</th>
+                          <th scope="col">Hora Inicio</th>
+                          <th scope="col">Hora Fin</th>
                           <th scope="col">Presencial</th>
-                          <th scope="col">Duracion</th>
                           <th scope="col">Perfiles</th>
                           <th scope="col">Pregunta</th>
                         </tr>
@@ -241,18 +265,41 @@
                         {% for eventoSpeedMeeting in eventosSpeedMeeting %}
                         <tr>
                           <td>{{eventoSpeedMeeting.fecha}}</td>
-                          {% if eventoSpeedMeeting.presencial %}
+                          <td>{{eventoSpeedMeeting.horaInicio}}</td>
+                          <td>{{eventoSpeedMeeting.horaFin}}</td>
+                          {% if eventoSpeedMeeting.presencialidad %}
                             <td>Si</td>
                           {% else %}
                             <td>No</td>
                           {% endif %}
-                          <td>{{eventoSpeedMeeting.duracion}}</td>
                           <td>{{eventoSpeedMeeting.perfiles}}</td>
                           <td>{{eventoSpeedMeeting.pregunta}}</td>
                         </tr>
                         {% endfor %}
                       </tbody>
                     </table>
+                    {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registroModalSpeedMeetings">Registro Speed Meetings</button>
+                    <div class="modal fade" id="registroModalSpeedMeetings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog form-dark" role="document">
+                        <div class="modal-content card card-image" style="background-color: #0065ef;">
+                          <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
+    <!--Header-->
+                            <div class="modal-header text-center pb-1">
+                              <h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>Registro Speed Meetings</strong></h5>
+                              <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+    <!--Body-->
+                            <div class="modal-body">
+                              {% include 'modalRegistroSpeedMeetings.html' %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -265,6 +312,8 @@
                         <tr>
                           <th scope="col">Fecha</th>
                           <th scope="col">Presencial</th>
+                          <th scope="col">Autor</th>
+                          <th scope="col">Tema</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -276,36 +325,39 @@
                           {% else %}
                             <td>No</td>
                           {% endif %}
+                          <td>{{eventoCharla.autor}}</td>
+                          <td>{{eventoCharla.tema}}</td>
                         </tr>
                         {% endfor %}
                       </tbody>
                     </table>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registroModal">Registro Charla</button>
-                    <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  			<div class="modal-dialog form-dark" role="document">
-			  <div class="modal-content card card-image" style="background-color: #0065ef;">
-  			    <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
+                    {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registroModalCharla">Registro Charla</button>
+                    <div class="modal fade" id="registroModalCharla" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog form-dark" role="document">
+                        <div class="modal-content card card-image" style="background-color: #0065ef;">
+                          <div class="text-white rgba-stylish-strong py-2 px-5 z-depth-4">
     <!--Header-->
-    			      <div class="modal-header text-center pb-1">
-      				<h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>Registro Charla</strong></h5>
-      				<button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
-        			  <span aria-hidden="true">&times;</span>
-      				</button>
-    			      </div>
+                            <div class="modal-header text-center pb-1">
+                              <h5 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>Registro Charla</strong></h5>
+                              <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
     <!--Body-->
-    			   <div class="modal-body">
-{% include 'modalRegistroCharla.html' %}
-    		           </div>
-  		       </div>
-		     </div>
-		     </div>
-		   </div>
+                            <div class="modal-body">
+                              {% include 'modalRegistroCharla.html' %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
 
 
