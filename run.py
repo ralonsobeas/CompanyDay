@@ -42,6 +42,7 @@ from routes.eventoFeriaEmpresas_bp import eventoFeriaEmpresas_bp
 from routes.eventoPresentacionProyectos_bp import eventoPresentacionProyectos_bp
 from routes.eventoCharla_bp import eventoCharla_bp
 from routes.eventoSpeedMeeting_bp import eventoSpeedMeeting_bp
+from routes.form_bp import form_bp
 
 #SQLAlchemy
 app.config.from_object('config')
@@ -57,6 +58,7 @@ app.register_blueprint(eventoFeriaEmpresas_bp, url_prefix='/eventoFeriaEmpresas'
 app.register_blueprint(eventoPresentacionProyectos_bp, url_prefix='/proyectos')
 app.register_blueprint(eventoCharla_bp, url_prefix='/charlas')
 app.register_blueprint(eventoSpeedMeeting_bp, url_prefix='/speedMeeting')
+app.register_blueprint(form_bp, url_prefix = "/form")
 
 from models import EventoFeriaEmpresas
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas

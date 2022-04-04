@@ -121,7 +121,7 @@
 	
 	
 	<!-- multistep form -->
-	<form id="msform">
+	<form id="msform" class = "form" action="/form/crear" method = "POST" role = "form" enctype="multipart/form-data">
 	  <!-- progressbar -->
 	  <div style="justify-content: center;">
 	  <ul id="progressbar">
@@ -136,9 +136,10 @@
 	  <fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
 		<h3 class="fs-subtitle">Datos de acceso</h3>
-		<input type="text" name="email" placeholder="Email" />
-		<input type="text" name="nombre" placeholder="Nombre de la empresa" />
-		<input type="password" name="pass" placeholder="Password" />
+		<input type="text" id = "CIF" name="CIF" placeholder="CIF sin letra" />
+		<input type="text" id = "email" name="email" placeholder="Email" />
+		<input type="text" id = "nombreEmpresa" name="nombreEmpresa" placeholder="Nombre de la empresa" />
+		<input type="password" id = "password" name="password" placeholder="Password" />
 		<input type="password" name="cpass" placeholder="Confirmar Password" />
 		<input type="button" name="next" class="next action-button" value="Siguiente" />
 	
@@ -146,11 +147,11 @@
 	  <fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
 		<h3 class="fs-subtitle">Información y contacto</h3>
-		<input type="text" name="personaContacto" placeholder="Persona de contacto" />
-		<input type="text" name="telefono" placeholder="Teléfono" />
-			<input type="text" name="urlWeb" placeholder="Url Web" />
+		<input type="text" id = "personaContacto" name="personaContacto" placeholder="Persona de contacto" />
+		<input type="text" id = "telefono" name="telefono" placeholder="Teléfono" />
+			<input type="text" id="urlWeb" name="urlWeb" placeholder="Url Web" />
 			<label for="logo" style="color:black;">Selecciona un logo:</label>
-			<input type="file" id="logo" name="logo">
+			<input type="file" id="logo" name="logo" accept="image/png">
 	
 		<input type="button" name="previous" class="previous action-button" value="Anterior" />
 		<input type="button" name="next" class="next action-button" value="Siguiente" />
@@ -158,11 +159,11 @@
 		<fieldset>
 			<h2 class="fs-title">Crear cuenta de empresa</h2>
 			<h3 class="fs-subtitle">Dirección</h3>
-			<input type="text" name="direccion" placeholder="Dirección" />
-			<input type="text" name="poblacion" placeholder="Población" />
-			<input type="text" name="provincia" placeholder="Provincia" />
-			<input type="text" name="codigoPostal" placeholder="Código postal" />
-			<input type="text" name="pais" placeholder="País" />
+			<input type="text" id = "direccion" name="direccion" placeholder="Dirección" />
+			<input type="text" id = "poblacion" name="poblacion" placeholder="Población" />
+			<input type="text" id = "provincia" name="provincia" placeholder="Provincia" />
+			<input type="text" id = "codigoPostal" name="codigoPostal" placeholder="Código postal" />
+			<input type="text" id = "pais" name="pais" placeholder="País" />
 	
 			<input type="button" name="previous" class="previous action-button" value="Anterior" />
 			<input type="button" name="next" class="next action-button" value="Siguiente" />
@@ -171,35 +172,63 @@
 			<h2 class="fs-title">Crear cuenta de empresa</h2>
 			<h3 class="fs-subtitle">Personas (opcional)</h3>
 			<div id="cajaBotones">
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox1" onchange="mostrar1()"/>Persona 1</label>
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox2" onchange="mostrar2()" disabled/>Persona 2</label>
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox3" onchange="mostrar3()" disabled/>Persona 3</label>
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox4" onchange="mostrar4()" disabled/>Persona 4</label>
+				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox1" name = "miCheckBox1" onchange="mostrar1()"/>Persona 1</label>
+				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox2" name = "miCheckBox2" onchange="mostrar2()" disabled/>Persona 2</label>
+				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox3" name = "miCheckBox3" onchange="mostrar3()" disabled/>Persona 3</label>
+				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox4" name = "miCheckBox4" onchange="mostrar4()" disabled/>Persona 4</label>
 			</div>
 			  <div id="Persona1" hidden>
-				<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
+				<input type="text" name="nombrePersona1" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
+				<input type="text" name="puesto1" placeholder="Puesto" style="width: 40%;"/>
+				<textarea name = "comentarios1" placeholder="Comentarios" style="width: 91%;"></textarea>
 			  </div>
 			  <div id="Persona2" hidden>
-				<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
+				<input type="text" name="nombrePersona2" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
+				<input type="text" name="puesto2" placeholder="Puesto" style="width: 40%;"/>
+				<textarea name = "comentarios2" placeholder="Comentarios" style="width: 91%;"></textarea>
 			  </div>
 			  <div id="Persona3" hidden>
-				<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
+				<input type="text" name="nombrePersona3" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
+				<input type="text" name="puesto3" placeholder="Puesto" style="width: 40%;"/>
+				<textarea name = "comentarios3" placeholder="Comentarios" style="width: 91%;"></textarea>
 			  </div>
 			  <div id="Persona4" hidden>
-				<input type="text" name="nombrePersona" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios" placeholder="Comentarios" style="width: 91%;"></textarea>
+				<input type="text" name="nombrePersona4" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
+				<input type="text" name="puesto4" placeholder="Puesto" style="width: 40%;"/>
+				<textarea name = "comentarios4" placeholder="Comentarios" style="width: 91%;"></textarea>
 			  </div>
 			  
 			  <input type="button" name="previous" class="previous action-button" value="Anterior" />
 			  <input type="button" name="next" class="next action-button" value="Siguiente" />
 		</fieldset>
+
+		<fieldset>
+			<h2 class="fs-title">Crear cuenta de empresa</h2>
+			<h3 class="fs-subtitle">Charlas (opcional)</h3>
+			<!--<div>
+				<label class="form-label" for="id">Id Charla</label>
+				<input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
+			</div>-->
+			<div>
+				<label class="form-label" for="tema">Tema de la charla</label>
+				<input type="text" class="form-control" id="tema" name="tema" placeholder="Tema de la charla" tabindex="2" required>
+			</div>
+			<div>
+				<label class="form-label" for="titulo">Titulo de la charla</label>
+				<input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo de la charla" tabindex="2" required>
+			</div>
+			<div>
+			  <label class="form-label" for="fecha">Fecha de la charla</label>
+			  <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la charla" tabindex="4" required>
+			</div>
+			<div id="cajaBotones">
+				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="presencialidad" onchange="mostrar1()" name="presencialidad" value="True"/>Presencial</label>
+			</div>
+			<input type="button" name="previous" class="previous action-button" value="Anterior" />
+			<!--<input type="button" name="next" class="next action-button" value="Siguiente" />-->
+			<input type="submit" name="submit" class="btn action-button" value="Submit" />
+		</fieldset>
+	<!--
 	  <fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
 		<h3 class="fs-subtitle">Actividades</h3>
@@ -208,8 +237,8 @@
 		<input type="text" name="phone" placeholder="Phone" />
 		<textarea name="address" placeholder="Address"></textarea>
 		<input type="button" name="previous" class="previous action-button" value="Anterior" />
-		<input type="submit" name="submit" class="submit action-button" value="Submit" />
-	  </fieldset>
+		<input type="submit" name="submit" class="btn action-button" value="Submit" />
+	  </fieldset>-->
 	</form>
 	
 	<script>
