@@ -28,7 +28,7 @@ def get_locale():
         # Put your logic here. Application can store locale in
         # user profile, cookie, session, etc.
         #return 'es'
-        """
+        
     if not g.get('lang_code', None):
         g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
     return g.lang_code

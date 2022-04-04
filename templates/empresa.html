@@ -2,7 +2,6 @@
 
 
 {% block header %}
-  <link rel="stylesheet" type="text/css" href="/static/css/empresa.css">
 <!--  <link rel="stylesheet" type="text/css" href="/static/css/empresas.css">-->
   <style>
     [contenteditable="True"] {
@@ -25,12 +24,12 @@
 
 {% block content %}
 
-        <div class="row p-4">
+        <div class="row">
           <div class="col-lg-4">
-            <div class="card mb-4 ">
+            <div class="card mb-4">
               <div class="card-body text-center">
                 <img src="/static/images/customlogos/{{empresa.logo}}" alt="logo" class="img-fluid" style="width: 150px;">
-                <h5 class="my-3 ">{{empresa.nombre}}</h5>
+                <h5 class="my-3">{{empresa.nombre}}</h5>
               </div>
             </div>
             <div class="card mb-4">
@@ -43,7 +42,7 @@
                 </ul>
               </div>
             </div>
-
+            
             <div class="card mb-4">
               <div class="card-body">
               {% if editable == 0 %}
@@ -84,21 +83,17 @@
                   </div>
                 </div>
                 <hr>
-<<<<<<< Updated upstream
-                {% if current_user.id == empresa.id %}
-=======
-                {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
->>>>>>> Stashed changes
                 <div class="row">
                   <div class="col-sm-9">
                   </div>
                   <div class="col-sm-3">
                     <div class="text-center">
-                      <button class="btn btn-dark" onclick="redirectEditProfile()">Editar</button>
+                    {% if current_user.is_authenticated and current_user.nombre == empresa.nombre %}
+                      <button class="btn btn-primary" onclick="redirectEditProfile()">Editar</button>
+                    {% endif %}
                     </div>
                   </div>
                 </div>
-                {% endif %}
                 <hr>
               {% else %}
                 <form id="contact-form" class="form" action="/empresas/update" method="POST" role="form" enctype="multipart/form-data">
@@ -128,19 +123,17 @@
                     <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Código Postal" value="{{empresa.codigoPostal}}" tabindex="4" required>
                   </div>
                   <hr>
-                  {% if current_user.id == empresa.id %}
                   <div class="row">
                     <div class="col-sm-3">
                       <input type="hidden" class="form-control" id="cancel" name="cancel" placeholder="Hidden" value="0" required>
                       <button class="btn btn-danger" onclick="redirectCancelEditProfile()">Cancelar</button>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
                     </div>
                     <div class="col-sm-3">
                       <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
                   </div>
-                  {% endif %}
                   <hr>
                 </form>
               {% endif %}
@@ -150,43 +143,8 @@
           </div>
           <div class="col-lg-8">
 
-            <div class="row justify-content-center">
-
-              <h1 class=""> EVENTOS A LOS QUE ASISTE </h1>
-              {% if current_user.id == empresa.id %}
-              <div class="col-md-12 py-4">
-                <a class="btn btn-dark m-1" href="">Registro Feria empresas</a>
-                <a class="btn btn-dark m-1" href="{{ url_for('registroPresentacion') }}">Registro Presentación de proyectos</a>
-                <a class="btn btn-dark m-1" href="">Registro Speed meeting</a>
-                <a class="btn btn-dark m-1" href="{{ url_for('registroCharla') }}">Registro Charla</a>
-              </div>
-              {% endif %}
-
+            <div class="row">
               <div class="col-md-12">
-                {% for eventoFeriaEmpresas in eventosFeriaEmpresa %}
-                  <article class="postcard dark blue">
-                    <a class="postcard__img_link" href="#">
-                      <img class="postcard__img" src="https://st1.u-tad.com/media/sites/2/2021/09/company-day-event-u-tad.jpeg" alt="Image Title" />
-                    </a>
-                    <div class="postcard__text">
-                      <h1 class="postcard__title blue"><a href="#">Feria de empresas</a></h1>
-                      <div class="postcard__subtitle small">
-                        <time datetime="2020-05-25 12:00:00">
-                          <i class="fas fa-calendar-alt mr-2"></i>{{eventoFeriaEmpresas.fecha}}
-                        </time>
-                      </div>
-                      <div class="postcard__bar"></div>
-                      <div class="postcard__preview-txt">
-                        {% if eventoFeriaEmpresas.presencial %}
-                          Presencial
-                        {% else %}
-                          Online
-                        {% endif %}
-                      </div>
-                    </div>
-                  </article>
-                {% endfor %}
-                <!--
                 <div class="card mb-4 mb-md-0">
                   <div class="card-body">
                     <p class="mb-4"><span class="text-primary font-italic me-1">Feria de empresas</span></p>
@@ -214,46 +172,8 @@
                     </div>
                   </div>
                 </div>
-                -->
               </div>
               <div class="col-md-12">
-                {% for eventoPresentacionProyectos in eventosPresentacionProyectos %}
-                <article class="postcard dark blue">
-                  <a class="postcard__img_link" href="#">
-                    <img class="postcard__img" src="https://media.vandal.net/i/1200x630/11-2021/202111239321190_1.jpg" alt="Image Title" />
-                  </a>
-                  <div class="postcard__text">
-                    <h1 class="postcard__title blue"><a href="#">Presentación de proyectos</a></h1>
-                    <div class="postcard__subtitle small">
-                      <time datetime="2020-05-25 12:00:00">
-                        <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
-                      </time>
-                    </div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt">
-                      {% if eventoPresentacionProyectos.presencial %}
-                        Presencial
-                      {% else %}
-                        Online
-                      {% endif %}
-                      <br>
-                      {% if eventoPresentacionProyectos.videojuegos %}
-                        Videojuegos &nbsp;
-                      {% endif %}
-                      {% if eventoPresentacionProyectos.disenoDigital %}
-                        Diseño digital &nbsp;
-                      {% endif %}
-                      {% if eventoPresentacionProyectos.cortosAnimacion %}
-                        Cortos de animación &nbsp;
-                      {% endif %}
-                      {% if eventoPresentacionProyectos.ingenieria %}
-                        Ingeniería &nbsp;
-                      {% endif %}
-                    </div>
-                  </div>
-                </article>
-                {% endfor %}
-                <!--
                 <div class="card mb-4 mb-md-0">
                   <div class="card-body">
                     <p class="mb-4"><span class="text-primary font-italic me-1">Presentaciones</span></p>
@@ -302,32 +222,8 @@
                     <a class="btn btn-primary" href="{{ url_for('registroPresentacion') }}">Registro Presentaciones</a>
                   </div>
                 </div>
-                -->
               </div>
               <div class="col-md-12">
-                {% for eventoSpeedMeeting in eventosSpeedMeeting %}
-                <article class="postcard dark blue">
-            			<a class="postcard__img_link" href="#">
-            				<img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologias-educativas.jpg" alt="Image Title" />
-            			</a>
-            			<div class="postcard__text">
-            				<h1 class="postcard__title blue"><a href="#">Speed meetings</a></h1>
-            				<div class="postcard__subtitle small">
-            					<time datetime="2020-05-25 12:00:00">
-            						<i class="fas fa-calendar-alt mr-2"></i>{{eventoSpeedMeeting.fecha}}
-            					</time>
-                      <i class="fas fa-clock mr-2"></i>Duración: {{eventoSpeedMeeting.duracion}}
-            				</div>
-            				<div class="postcard__bar"></div>
-            				<div class="postcard__preview-txt">
-                      Perfiles: {{eventoSpeedMeeting.perfiles}}
-                      <br>
-                      Pregunta: {{eventoSpeedMeeting.pregunta}}
-                    </div>
-            			</div>
-            		</article>
-                {% endfor %}
-                <!--
                 <div class="card mb-4 mb-md-0">
                   <div class="card-body">
                     <p class="mb-4"><span class="text-primary font-italic me-1">Speed Meetings</span></p>
@@ -359,33 +255,8 @@
                     </table>
                   </div>
                 </div>
-                -->
               </div>
               <div class="col-md-12">
-                {% for eventoCharla in eventosCharla %}
-                <article class="postcard dark blue">
-                  <a class="postcard__img_link" href="#">
-                    <img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologia-educativa-formacion.jpg" alt="Image Title" />
-                  </a>
-                  <div class="postcard__text">
-                    <h1 class="postcard__title blue"><a href="#">Charlas</a></h1>
-                    <div class="postcard__subtitle small">
-                      <time datetime="2020-05-25 12:00:00">
-                        <i class="fas fa-calendar-alt mr-2"></i>{{eventoCharla.fecha}}
-                      </time>
-                    </div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt">
-                      {% if eventoCharla.presencial %}
-                        Presencial
-                      {% else %}
-                        Online
-                      {% endif %}
-                    </div>
-                  </div>
-                </article>
-                {% endfor %}
-                <!--
                 <div class="card mb-4 mb-md-0">
                   <div class="card-body">
                     <p class="mb-4"><span class="text-primary font-italic me-1">Charlas</span></p>
@@ -431,7 +302,6 @@
 		   </div>
                   </div>
                 </div>
-                -->
               </div>
             </div>
           </div>
