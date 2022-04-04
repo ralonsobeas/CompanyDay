@@ -1,6 +1,6 @@
 import sys
 
-from flask import render_template, redirect, url_for, request, abort, flash
+from flask import render_template, redirect, url_for, request, abort, flash, Flask, current_app
 from models.Empresa import Empresa
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 from models.EventoPresentacionProyectos import EventoPresentacionProyectos
@@ -15,6 +15,9 @@ import os
 from os.path import join, dirname, realpath
 import platform
 from config import UPLOAD_FOLDER_LINUX,UPLOAD_FOLDER_WINDOWS
+
+from flask_mail import Mail, Message
+from threading import Thread
 
 import base64
 
@@ -49,6 +52,11 @@ def loginManager(id):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+def async_send_mail(app, msg, mail):
+    with app.app_context():
+        mail.send(msg)
 
 def store():
     id = request.form['id']
@@ -97,6 +105,24 @@ def store():
                         consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False)
     db.session.add(empresa)
     db.session.commit()
+
+    #Mail
+    app = Flask(__name__)
+
+    app.config['MAIL_SERVER']='smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USERNAME'] = 'companydayprueba@gmail.com'
+    app.config['MAIL_PASSWORD'] = 'apledwryroqsrwxz'
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+
+
+    mail= Mail(app)
+
+    msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = [ 'companydayprueba@gmail.com'])
+    msg.html = render_template('templateMail.html')
+    thr = Thread(target=async_send_mail, args=[app, msg, mail])
+    thr.start()
 
     return 'Su informacion ha sido guardada en nuestra base de datos'
 
