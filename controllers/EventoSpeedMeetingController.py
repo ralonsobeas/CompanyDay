@@ -29,7 +29,7 @@ def store():
     db.session.add(eventoSpeedMeeting)
     db.session.commit()
 
-    return 'Su informacion ha sido guardada en nuestra base de datos'
+    return redirect(url_for('empresa_bp.userProfile',editable=0))
 
 def show(empresa_id):
     return 'show'

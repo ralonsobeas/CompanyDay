@@ -138,68 +138,6 @@ def store():
 
     return render_template('index3.html')
 
-"""
-    id = request.form['CIF']
-    nombre = request.form['nombreEmpresa']
-    password = request.form['password']
-    personaContacto = request.form['personaContacto']
-    email = request.form['email']
-    telefono = request.form['telefono']
-    direccion = request.form['direccion']
-    poblacion = request.form['poblacion']
-    provincia = request.form['provincia']
-    codigoPostal = request.form['codigoPostal']
-    pais = request.form['pais']
-    urlWeb = request.form['urlWeb']
-    consentimientoNombre = True if(request.form['consentimientoNombre']=='True') else False
-    buscaCandidatos = True if(request.form['buscaCandidatos']=='True') else False
-
-    #Guardar logo
-    logo = request.files['logo']
-
-
-
-    if(platform.system()=='Windows'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
-        UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
-        logo.save(UPLOADS_PATH+"\\"+logo.filename)
-    elif(platform.system()=='Linux'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
-        UPLOADS_PATH = UPLOADS_PATH.replace("controllers/", "")
-        logo.save(UPLOADS_PATH+"/"+logo.filename)
-
-
-
-    logo = logo.filename
-
-    empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
-                        personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logo, \
-                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False)
-    db.session.add(empresa)
-    db.session.commit()
-
-    #Mail
-    app = Flask(__name__)
-
-    app.config['MAIL_SERVER']='smtp.gmail.com'
-    app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = 'companydayprueba@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'apledwryroqsrwxz'
-    app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USE_SSL'] = True
-
-
-    mail= Mail(app)
-
-    msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = [ 'companydayprueba@gmail.com'])
-    msg.html = render_template('templateMail.html')
-    thr = Thread(target=async_send_mail, args=[app, msg, mail])
-    thr.start()
-
-    return 'Su informacion ha sido guardada en nuestra base de datos'
-"""
-
 def show(nombre,editable=0):
     if(editable==1):
         editable=True
