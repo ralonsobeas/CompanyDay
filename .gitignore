@@ -2,3 +2,7 @@
 *.pyc
 *.pyc
 *.pyc
+controllers/__pycache__/EmpresaController.cpython-38.pyc
+models/__pycache__/Empresa.cpython-38.pyc
+routes/__pycache__/empresa_bp.cpython-38.pyc
+shared/__pycache__/models.cpython-38.pyc

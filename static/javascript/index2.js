@@ -26,6 +26,18 @@ $('.brand-carousel').owlCarousel({
 })
 
 
+//Codigo Para Flechas Carousel
+var owl = $('.owl-carousel');
+owl.owlCarousel();
+// Siguiente
+$('.customNextBtn').click(function() {
+    owl.trigger('next.owl.carousel');
+})
+// Atras
+$('.customPrevBtn').click(function() {
+    owl.trigger('prev.owl.carousel');
+})
+
 /*
 // function([string1, string2],target id,[color1,color2])
  consoleText(['VIDEO GAMES.', 'SOFTWARE.', 'DIGITAL DESIGN.', 'ANIMATION.'], 'text',['tomato','rebeccapurple','lightblue']);

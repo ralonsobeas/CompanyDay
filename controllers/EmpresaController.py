@@ -75,41 +75,27 @@ def store():
     buscaCandidatos = True 
 
     logo = request.files['logo']
-
-    #estaría bien guardar esto con paths relativos... pero por ahora funciona
-    """
-    logopath = os.path.dirname(os.path.realpath(__file__))
-    logopath = logopath.replace("controllers", "static/images/customlogos/"+ logo.filename)
-    logo.save(logopath)
-    logopath = "/static/images/customlogos/" + logo.filename
-    """
-
+    logoFileName = id + ".png";
 
     if(platform.system()=='Windows'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
         UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
-        logo.save(UPLOADS_PATH+"\\"+logo.filename)
+        logo.save(UPLOADS_PATH+"\\"+logoFileName)
     elif(platform.system()=='Linux'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
         UPLOADS_PATH = UPLOADS_PATH.replace("controllers/", "")
-        logo.save(UPLOADS_PATH+"/"+logo.filename)
-
-
-
-    logo = logo.filename
+        logo.save(UPLOADS_PATH+"/"+logoFileName)
 
     empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logo, \
+                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
                         consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False)
     db.session.add(empresa)
     db.session.commit()
 
-    #id2 = request.form['id']
     tema = request.form['tema']
     presencialidad = True if(request.form['presencialidad']=='True') else False
     titulo = request.form['titulo']
-    #titulo = 'aa'
     fecha = request.form['fecha']
     aprobada = False
     autor = ''

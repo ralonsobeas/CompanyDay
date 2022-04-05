@@ -202,15 +202,23 @@
       <div class="row  align-items-center justify-content-center">
         <h3>ASISTEN AL EVENTO<h3>
       </div>
-      <div class="brand-carousel section-padding owl-carousel " >
-        {% for empresa in empresas %}
-        <div class="single-logo ">
-          <img src="/static/images/customlogos/{{empresa.logo}}" class="filtered" alt="ERROR">
+      <div class="row">
+        <div class="col-sm-1 carousel-arrow">
+          <img class="customPrevBtn" src='/static/images/arrowLeft.png' width='64' height='64'> Anterior
         </div>
-        {% endfor %}
+        <div class="col-sm-10 brand-carousel section-padding owl-carousel " >
+          {% for empresa in empresas %}
+          <div class="single-logo ">
+            <img src="/static/images/customlogos/{{empresa.logo}}" class="filtered" alt="ERROR">
+          </div>
+          {% endfor %}
+        </div>
+        <div class="col-sm-1 carousel-arrow">
+          <img class="customNextBtn" src='/static/images/arrowRight.png' width='64' height='64'> Siguiente
+        </div>
       </div>
     </div>
-</div>
+  </div>
 
 
 <!-- Cuarto Bloque-->
