@@ -44,29 +44,39 @@
 
 @keyframes show {
 	0% {
-		margin-top: -400px;
+		margin-top: -500px;
 	}
-	15% {
-		margin-top: -360px;
+	10% {
+		margin-top: -450px;
 	}
-	33% {
-		margin-top: -260px;
-	}
-	48% {
-		margin-top: -150px;
-	}
-	55% {
-		margin-top: -100px;
-	}
-	61% {
-		margin-top: -50px;
-	}
-	71% {
-		margin-top: 0px;
-	}
-	100% {
-		margin-top: 0px;
-	}
+  20%{
+    margin-top: -400px;
+  }
+  30%{
+    margin-top: -350px;
+  }
+  40%{
+    margin-top: -300px;
+  }
+  50%{
+    margin-top: -250px;
+  }
+  60%{
+    margin-top: -200px;
+  }
+  70%{
+    margin-top: -150px;
+  }
+  80%{
+    margin-top: -100px;
+  }
+  90%{
+    margin-top: -50px;
+  }
+  100%{
+    margin-top: 0px;
+  }
+	
 }
 
 .btn-principal{
