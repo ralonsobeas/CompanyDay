@@ -50,7 +50,6 @@
           </div>
         </article>
         {% endfor %}
-      <div class="row mb-2">
 
         {% for charla in charlas %}
         <article class="postcard dark blue">
@@ -66,16 +65,22 @@
             </div>
             <div class="postcard__bar"></div>
             <div class="postcard__preview-txt">
+              {{charla.titulo}}
+              </br>
               {% if charla.presencial %}
                 Presencial
               {% else %}
                 Online
               {% endif %}
+              </br>
+              Autor: {{charla.autor}}
+              </br>
+              </br>
+              {{charla.tema}}
             </div>
           </div>
         </article>
         {% endfor %}
-      </div>
       </div>
 
 {% endblock %}

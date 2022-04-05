@@ -28,7 +28,7 @@ def store():
     db.session.add(eventoCharla)
     db.session.commit()
 
-    return 'Su informacion ha sido guardada en nuestra base de datos'
+    return redirect(url_for('empresa_bp.userProfile',editable=0))
 
 def show(empresa_id):
     return 'show'
@@ -46,7 +46,7 @@ def all():
 def all_query():
     listaCharlasAprobadas = EventoCharlas.query\
     .join(Empresa, EventoCharlas.empresa_id == Empresa.id)\
-    .add_columns(EventoCharlas.tema, EventoCharlas.presencialidad, EventoCharlas.titulo, EventoCharlas.fecha, Empresa.logo, Empresa.nombre)\
+    .add_columns(EventoCharlas.tema, EventoCharlas.presencialidad, EventoCharlas.titulo, EventoCharlas.fecha, EventoCharlas.autor, Empresa.logo, Empresa.nombre)\
     .filter(Empresa.validado == True)\
     .filter(EventoCharlas.aprobada == True)
     return listaCharlasAprobadas;
