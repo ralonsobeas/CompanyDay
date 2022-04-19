@@ -27,6 +27,12 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
+"""
+    Login de empresa
+
+    Recibe mail y password, busca el usuario y compara el password.
+    Si es correcto redirige al index.
+"""
 def login():
     email = request.form['mail']
     password = request.form['password']
@@ -43,21 +49,31 @@ def login():
 
     return redirect(url_for('index'))
 
-
+"""
+    Login manager para flask_login
+"""
 @login_manager.user_loader
 def loginManager(id):
     return Empresa.query.get(id)
 
+"""
+    Logout
+"""
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
+"""
+    Mail asíncrono
+"""
 def async_send_mail(app, msg, mail):
     with app.app_context():
         mail.send(msg)
 
+"""
+    Guardar empresa en BBDD
+"""
 def store():
     id = request.form['CIF']
     nombre = request.form['nombreEmpresa']
@@ -71,12 +87,13 @@ def store():
     codigoPostal = request.form['codigoPostal']
     pais = request.form['pais']
     urlWeb = request.form['urlWeb']
-    consentimientoNombre = True 
-    buscaCandidatos = True 
+    consentimientoNombre = True
+    buscaCandidatos = True
 
     logo = request.files['logo']
     logoFileName = id + ".png";
 
+    # Cambiar barras dependiendo del sistema operativo
     if(platform.system()=='Windows'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
         UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
@@ -105,6 +122,7 @@ def store():
 
     db.session.commit()
 
+    # Mandar mail
     app = Flask(__name__)
 
     app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -124,6 +142,9 @@ def store():
 
     return render_template('index3.html')
 
+"""
+    Mostrar perfil. Si editable 1, editable.
+"""
 def show(nombre,editable=0):
     if(editable==1):
         editable=True
@@ -141,10 +162,17 @@ def show(nombre,editable=0):
                             empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
                             eventosPresentacionProyectos=eventosPresentacionProyectos, \
                             eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
+
+"""
+    Mostrar perfil del usuario actual.
+"""
 @login_required
 def userProfile(editable=0):
     return show(current_user.nombre,editable)
 
+"""
+    Actualizar usuario de empresa.
+"""
 @login_required
 def update():
     if(request.form['cancel'] != '1'):
@@ -158,23 +186,30 @@ def update():
         db.session.commit()
     return render_template('profileRedirect.html')
 
-
+"""
+    Obtener empresa por id.
+"""
 def get_by_id(id):
     empresa = Empresa.query.filter_by(id=id).first()
     return empresa
 
+"""
+    Obtener todas las empresas validadas. Renderizar en html.
+"""
 def all():
     empresas = Empresa.query.filter_by(validado=True).all()
     return render_template('empresas.html',empresas=empresas)
 
+"""
+    Obtener todas las empresas.
+"""
 def all_query():
     return Empresa.query.filter_by(validado=True).all()
 
+"""
+    Validar empresa.
+"""
 def validar(id,valor):
     empresa = Empresa.query.filter_by(id=id).first()
     empresa.validado = valor
     db.session.commit()
-
-def render_picture(data):
-    render_pic = base64.b64encode(data).decode('ascii')
-    return render_pic
