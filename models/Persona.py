@@ -3,7 +3,9 @@
 #db = SQLAlchemy()
 from shared.models import db
 
-
+"""
+    Modelo Persona
+"""
 class Persona(db.Model):
     __tablename__ = 'personas'
     id = db.Column(db.Integer, primary_key=True)

@@ -8,6 +8,9 @@ from models.EventoPresentacionProyectos import EventoPresentacionProyectos
 from models.EventoSpeedMeeting import EventoSpeedMeeting
 from flask_login import UserMixin
 
+"""
+    Modelo de Empresa
+"""
 class Empresa(UserMixin,db.Model):
     __tablename__ = 'empresas'
     validado = db.Column(db.Boolean)
