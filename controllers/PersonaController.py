@@ -13,6 +13,9 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
+"""
+    Guardar Persona.
+"""
 def store():
     id = request.form['id']
     nombre = request.form['nombre']
@@ -27,6 +30,8 @@ def store():
 
     return 'Su informacion ha sido guardada en nuestra base de datos'
 
-
+"""
+    Buscar todas las personas
+"""
 def all_query():
     return Persona.query.all()

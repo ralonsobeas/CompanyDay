@@ -14,6 +14,9 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
+"""
+    Guardar EventoSpeedMeetingController
+"""
 @login_required
 def store():
     pregunta = request.form['pregunta']
@@ -31,6 +34,7 @@ def store():
 
     return redirect(url_for('empresa_bp.userProfile',editable=0))
 
+
 def show(empresa_id):
     return 'show'
 
@@ -40,10 +44,16 @@ def update(empresa_id):
 def delete(empresa_id):
     return 'delete'
 
+"""
+    Mostrar todos los EventoSpeedMeeting. Renderizar en registroSpeedMetting.html
+"""
 def all():
     eventoSpeedMeeting = EventoSpeedMeeting.query.all()
     return render_template('registroSpeedMeeting.html',eventoSpeedMeeting=eventoSpeedMeeting)
-    
+
+"""
+    Buscar todos los EventoSpeedMeeting.
+"""
 def all_query():
     listaSpeedMeetingsAprobadas = EventoSpeedMeeting.query\
     .join(Empresa, EventoSpeedMeeting.empresa_id == Empresa.id)\

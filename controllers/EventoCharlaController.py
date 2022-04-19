@@ -14,6 +14,9 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
+"""
+    Guardar EventoCharla en BBDD
+"""
 @login_required
 def store():
     tema = request.form['tema']
@@ -39,10 +42,16 @@ def update(empresa_id):
 def delete(empresa_id):
     return 'delete'
 
+"""
+    Mostrar todos los EventoCharlas. Renderiza en registroCharlas.html
+"""
 def all():
     eventoCharlas = EventoCharlas.query.all()
     return render_template('registroCharlas.html',eventoCharlas=eventoCharlas)
-    
+
+"""
+    Buscar todos los EventoCharlas.
+"""
 def all_query():
     listaCharlasAprobadas = EventoCharlas.query\
     .join(Empresa, EventoCharlas.empresa_id == Empresa.id)\

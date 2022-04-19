@@ -13,6 +13,9 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
+"""
+    Guardar EventoPresentacionProyectos
+"""
 def store():
     id = request.form['IdPresentacion']
     empresa_id = request.form['IdEmpresa']
@@ -53,6 +56,9 @@ def store():
 
     return 'Su informacion ha sido guardada en nuestra base de datos'
 
+"""
+    Mostrar EventoPresentacionProyectos por id. Renderizar en empresa.html
+"""
 def show(presentacion_id):
     presentacionProyectos = EventoPresentacionProyectos.query.get(presentacion_id)
     return render_template('empresa.html',
@@ -64,10 +70,16 @@ def update(presentacion_id):
 def delete(presentacion_id):
     return 'delete'
 
+"""
+    Mostrar todas las empresas. Renderizar en empresas.html
+"""
 def all():
     empresas = EventoPresentacionProyectos.query.all()
     return render_template('empresas.html',empresas=empresas)
-    
+
+"""
+    Buscar todas las empresas.
+"""
 def all_query():
     listaProyectosAprobados = EventoPresentacionProyectos.query\
     .join(Empresa, EventoPresentacionProyectos.empresa_id == Empresa.id)\
