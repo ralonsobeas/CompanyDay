@@ -104,13 +104,13 @@
 }
 
 .disenio:hover{
-  color:#FF3A3A;
-  border-color:#FF3A3A;
+  color:#0065EF;
+  border-color:#0065EF;
 }
 
 .videojuegos:hover{
-  color:#8E59FF;
-  border-color:#8E59FF;
+  color:#0065EF;
+  border-color:#0065EF;
 }
 
 .fondo{
@@ -119,11 +119,11 @@
 }
 
 .ingenieria:hover{
-  background-color: #14D2BC;
+  background-color: #0065EF;
 }
 
 .animacion:hover{
-  background-color: #FFD43E;
+  background-color:#0065EF;
 }
 
 .carousel-arrow{
@@ -179,7 +179,7 @@ body{
   position: relative;
   width: 100vmin;
   height: 30vmin;
-  font-family: 'Roboto'
+  font-family: 'Roboto';
   /*CAMBIO DE COLOR*/
   color:white;
   /*color:#0065ef;*/
@@ -266,7 +266,7 @@ body{
 
   position: relative;
 
-  font-family: 'Roboto'
+  font-family: 'Roboto';
   /*CAMBIO DE COLOR*/
   color:white;
   /*color:#0065ef;*/
