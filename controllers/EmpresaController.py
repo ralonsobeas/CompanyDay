@@ -128,17 +128,22 @@ def store():
     app.config['MAIL_SERVER']='smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USERNAME'] = 'companydayprueba@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'apledwryroqsrwxz'
+    app.config['MAIL_PASSWORD'] = 'upcmiwagffbilunq'
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
 
 
     mail= Mail(app)
 
-    msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = [ 'companydayprueba@gmail.com'])
+    msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = ['companydayprueba@gmail.com'])
     msg.html = render_template('templateMail.html')
     thr = Thread(target=async_send_mail, args=[app, msg, mail])
     thr.start()
+
+    #with app.app_context():
+     #   msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = ['companydayprueba@gmail.com'])
+        #msg.html = render_template('templateMail.html')
+      #  mail.send(msg)
 
     return render_template('index3.html')
 
