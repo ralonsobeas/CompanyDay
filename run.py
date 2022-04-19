@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from shared.models import db,login_manager
 from flask_admin import Admin
+from flask_admin.base import expose
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.actions import action
 from flask_login import current_user, login_required
@@ -86,6 +87,41 @@ from controllers import PersonaController
 
 
 # MODO ADMINISTRADOR
+
+class EmpresaView(ModelView):
+    export_types = ['csv','xls']
+    column_exclude_list = ['password', ]
+    column_searchable_list = ['nombre', 'email']
+    @action('validar', 'Validar', '¿Seguro de que quieres validar las empresas seleccionadas?')
+    def action_validar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EmpresaController.validar(_id,True)
+            count += 1
+        db.session.commit()
+        flash("{0} Empresa (s) validadada (s)".format(count))
+
+    @action('invalidar', 'Invalidar', '¿Seguro de que quieres invalidar las empresas seleccionadas?')
+    def action_invalidar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EmpresaController.validar(_id,False)
+            count += 1
+        db.session.commit()
+        flash("{0} Empresa (s) invalidada (s)".format(count))
+    @expose('/new/', methods=('GET', 'POST'))
+    def create_view(self):
+        """Custom create view."""
+        return self.render('registroEmpresa.html',edit=0)
+    @expose('/edit/', methods=('GET', 'POST'))
+    def create_view(self):
+        """Custom create view."""
+        return self.render('registroEmpresa.html',edit=1,EmpresaController=EmpresaController)
+
+Empresa_View = EmpresaView(Empresa,db.session)
+
 class AdminView(ModelView):
     ModelView.can_export = True
     ModelView.column_exclude_list = ('password')
@@ -136,14 +172,22 @@ class AdminView(ModelView):
         db.session.commit()
         flash("{0} Empresa (s) invalidada (s)".format(count))
 
-admin=Admin(app, name='Administrador',url="/admin", template_mode='bootstrap4')
 
-admin.add_view(AdminView(Empresa,db.session))
-admin.add_view(AdminView(EventoFeriaEmpresas,db.session))
-admin.add_view(AdminView(EventoPresentacionProyectos,db.session))
-admin.add_view(AdminView(EventoCharlas,db.session))
-admin.add_view(AdminView(EventoSpeedMeeting,db.session))
-admin.add_view(AdminView(Persona,db.session))
+
+EventoFeriaEmpresas_View = AdminView(EventoFeriaEmpresas,db.session)
+EventoPresentacionProyectos_View = AdminView(EventoPresentacionProyectos,db.session)
+EventoCharlas_View = AdminView(EventoCharlas,db.session)
+EventoSpeedMeeting_View = AdminView(EventoSpeedMeeting,db.session)
+Persona_View = AdminView(Persona,db.session)
+
+
+admin=Admin(app, name='Administrador',url="/admin", template_mode='bootstrap4')
+admin.add_view(Empresa_View)
+admin.add_view(EventoFeriaEmpresas_View)
+admin.add_view(EventoPresentacionProyectos_View)
+admin.add_view(EventoCharlas_View)
+admin.add_view(EventoSpeedMeeting_View)
+admin.add_view(Persona_View)
 
 # FIN MODO ADMINISTRADOR
 
@@ -222,12 +266,14 @@ def chulo():
 # FINAL ROUTING
 
 # ERRORES ROUTING
+
 def page_not_found(e):
   return render_template('admin/denied.html',message="Page not found",e=e), 404
 app.register_error_handler(404, page_not_found)
 def not_registered(e):
   return render_template('admin/denied.html',message="Not registered",e=e), 400
 app.register_error_handler(400, not_registered)
+
 # FINAL ERRORES ROUTING
 
 """
