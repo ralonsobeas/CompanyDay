@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.EmpresaController import index, login, userProfile, logout, store, storeAdmin, show, update, updateAdmin,all
+from controllers.EmpresaController import index, login, userProfile, logout, store, storeAdmin, show, update, updateAdmin,all, confirmUser
 
 """
     Blueprints para Empresa
@@ -27,3 +27,5 @@ empresa_bp.route('/<nombre>', methods=['GET','POST'])(show)
 #empresa_bp.route('/<int:empresa_id>', methods=['DELETE'])(delete)
 # Mostrar todas las Empresas
 empresa_bp.route('/all', methods=['GET'])(all)
+#Confirmar usuario
+empresa_bp.route('/confirmuser/<username>/<userhash>', methods=['GET','POST'])(confirmUser)

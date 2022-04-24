@@ -29,7 +29,7 @@ def get_locale():
         # Put your logic here. Application can store locale in
         # user profile, cookie, session, etc.
         #return 'es'
-        
+
     if not g.get('lang_code', None):
         g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
     return g.lang_code
@@ -273,6 +273,9 @@ app.register_error_handler(404, page_not_found)
 def not_registered(e):
   return render_template('admin/denied.html',message="Not registered",e=e), 400
 app.register_error_handler(400, not_registered)
+def invalid_url(e):
+  return render_template('admin/denied.html',message="Invalid url",e=e), 403
+app.register_error_handler(403, invalid_url)
 
 # FINAL ERRORES ROUTING
 
