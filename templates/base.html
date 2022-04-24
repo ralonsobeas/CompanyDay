@@ -21,6 +21,16 @@
     {% block header %}{% endblock %}
   </head>
   <body >
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <div class="container">
+          {% for message in get_flashed_messages() %}
+          <div class="alert alert-warning">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ message }}
+          </div>
+          {% endfor %}
+      </div>
+    </div>
 
 
     <nav class="navbar navbar-expand-md navbar-light sticky-top "  >
@@ -59,6 +69,7 @@
           <!--<img class="" src="/static/images/logo-CompanyDay.png"  >-->
         </a>
     </nav>
+
 
     <!-- Modal -->
 

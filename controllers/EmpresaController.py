@@ -142,6 +142,7 @@ def store():
     """
     #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
     send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
+    flash('Te has registrado! Revista tu email para confirmar tu cuenta.')
     """
     mail= Mail(app)
 
@@ -175,13 +176,11 @@ def confirmUser(username,userhash):
             db.session.query(Empresa).filter(Empresa.nombre==username).update({"confirmed":1,\
             "userHash":''})
             db.session.commit()
-            #flash('Has confirmado el usuario!')
-            print("CONFIRMUSER")
+            flash('Has confirmado el usuario!')
         except:
             abort(500, description="An error has occurred.")
 
-# Cambiar a una redirección "Bonita"
-    return redirect(url_for('loginEmpresa'))
+    return render_template('index3.html')
 
 
 """
