@@ -66,122 +66,9 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-"""
-    Mail asíncrono
-"""
-def async_send_mail(app, msg, mail):
-    with app.app_context():
-        mail.send(msg)
-
-"""
-    Guardar empresa en BBDD
-"""
-def store():
-    id = request.form['CIF']
-    nombre = request.form['nombreEmpresa']
-    password = request.form['password']
-    personaContacto = request.form['personaContacto']
-    email = request.form['email']
-    telefono = request.form['telefono']
-    direccion = request.form['direccion']
-    poblacion = request.form['poblacion']
-    provincia = request.form['provincia']
-    codigoPostal = request.form['codigoPostal']
-    pais = request.form['pais']
-    urlWeb = request.form['urlWeb']
-    consentimientoNombre = True
-    buscaCandidatos = True
-
-    logo = request.files['logo']
-    logoFileName = id + ".png";
-
-    # Cambiar barras dependiendo del sistema operativo
-    if(platform.system()=='Windows'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
-        UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
-        logo.save(UPLOADS_PATH+"\\"+logoFileName)
-    elif(platform.system()=='Linux'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
-        UPLOADS_PATH = UPLOADS_PATH.replace("controllers/", "")
-        logo.save(UPLOADS_PATH+"/"+logoFileName)
-
-
-    #Proceso validación usuario
-    userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
-    url = 'http://{}/empresas/confirmuser/{}/{}'.format(request.host,nombre,userHash)
-
-    empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
-                        personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
-                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False,userHash=userHash)
+def store(empresa):
     db.session.add(empresa)
     db.session.commit()
-
-    tema = request.form['tema']
-    presencialidad = True if(request.form['presencialidad']=='True') else False
-    titulo = request.form['titulo']
-    fecha = request.form['fecha']
-    aprobada = False
-    autor = ''
-
-    eventoCharla = EventoCharlas(tema = tema,presencialidad = presencialidad,titulo = titulo,fecha = fecha,aprobada = aprobada, empresa_id = id, autor = autor)
-    db.session.add(eventoCharla)
-
-    db.session.commit()
-
-    # Mandar mail
-
-    """
-    app = Flask(__name__)
-    app.config['MAIL_SERVER']='smtp.gmail.com'
-    app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = 'companydayprueba@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'upcmiwagffbilunq'
-    app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USE_SSL'] = True
-    """
-    #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
-    send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
-    flash('Te has registrado! Revista tu email para confirmar tu cuenta.')
-    """
-    mail= Mail(app)
-
-    msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = ['companydayprueba@gmail.com'])
-    msg.html = render_template('templateMail.html')
-    thr = Thread(target=async_send_mail, args=[app, msg, mail])
-    thr.start()
-    """
-    #with app.app_context():
-     #   msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = ['companydayprueba@gmail.com'])
-        #msg.html = render_template('templateMail.html')
-      #  mail.send(msg)
-
-    return render_template('index3.html')
-
-def confirmUser(username,userhash):
-    empresa = Empresa.query.filter_by(nombre=username).first()
-
-    print(empresa.nombre)
-
-    if not empresa:
-        abort(403, description="Invalid url.")
-    elif len(empresa.userHash) == 0 or empresa.userHash != userhash:
-        abort(403, description="Invalid url.")
-    else:
-        try:
-            print(empresa.nombre)
-            empresa.confirmed = 1
-            empresa.userHash = ''
-            #No me funciona sin esta query (DEBERIA)
-            db.session.query(Empresa).filter(Empresa.nombre==username).update({"confirmed":1,\
-            "userHash":''})
-            db.session.commit()
-            flash('Has confirmado el usuario!')
-        except:
-            abort(500, description="An error has occurred.")
-
-    return render_template('index3.html')
-
 
 """
     Guardar empresa en BBDD ADMIN
@@ -306,6 +193,13 @@ def get_by_id(id):
     return empresa
 
 """
+    Obtener empresa por nombre.
+"""
+def get_by_name(nombre):
+    empresa = Empresa.query.filter_by(nombre=nombre).first()
+    return empresa
+
+"""
     Obtener todas las empresas validadas. Renderizar en html.
 """
 def all():
@@ -326,24 +220,14 @@ def validar(id,valor):
     empresa.validado = valor
     db.session.commit()
 
-from flask import current_app
+"""
+    Confirmar empresa.
+"""
+def confirmar(nombre):
 
-def send_email(to, subject, template, url, **kwargs):
-    app = Flask(__name__)
+    empresa= db.session.query(Empresa).filter_by(nombre=nombre).first()
 
-    app.config['MAIL_SERVER']='smtp.gmail.com'
-    app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = 'companydayprueba@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'ghcjtlcchwhjbuyw'
-    app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USE_SSL'] = True
+    empresa.confirmed = 1
+    empresa.userHash = ''
 
-    mail = Mail(current_app)
-    app.config.from_object('config')
-    msg = Message(subject, sender=app.config['MAIL_USERNAME'], recipients=[to])
-    #msg.body = render_template(template + '.txt', **kwargs, url=url)
-    msg.html = render_template(template + '.html', **kwargs, url=url)
-    # flash("send_email: {}".format(url))
-    mail.send(msg)
-    #thr = Thread(target=async_send_mail, args=[app, msg, mail])
-    #thr.start()
+    db.session.commit()

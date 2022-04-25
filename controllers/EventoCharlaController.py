@@ -14,11 +14,15 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
+def store(eventoCharla):
+    db.session.add(eventoCharla)
+    db.session.commit()
+
 """
     Guardar EventoCharla en BBDD
 """
 @login_required
-def store():
+def storeTemp():
     tema = request.form['tema']
     presencialidad = True if(request.form['presencialidad']=='True') else False
     titulo = request.form['titulo']

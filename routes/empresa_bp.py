@@ -1,6 +1,7 @@
 from flask import Blueprint
-from controllers.EmpresaController import index, login, userProfile, logout, store, storeAdmin, show, update, updateAdmin,all, confirmUser
+from controllers.EmpresaController import index, login, userProfile, logout, storeAdmin, show, update, updateAdmin,all
 
+from modules.moduleRegistro.moduleRegistro import store, confirmUser
 """
     Blueprints para Empresa
 """
