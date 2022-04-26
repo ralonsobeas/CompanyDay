@@ -83,8 +83,9 @@ def store():
     perfiles = request.form['perfiles']
     pregunta = request.form['pregunta']
     aprobado = False
+    eventoSpeedMeeting=SpeedMeeting(presencialidad = presencial, fecha = dia, horaInicio = horaInicio, horaFin = horaFin, perfiles = perfiles, pregunta = pregunta, aprobada = aprobado, empresa_id = id)
+    
 
-    SpeedMeeting(presencialidad = presencial, fecha = dia, horaInicio = horaInicio, horaFin = horaFin, perfiles = perfiles, pregunta = pregunta, aprobada = aprobado, empresa_id = id)
 
     EventoSpeedMeetingController.store(eventoSpeedMeeting)
     # Mandar mail

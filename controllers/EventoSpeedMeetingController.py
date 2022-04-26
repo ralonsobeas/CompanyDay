@@ -17,8 +17,12 @@ def index():
 """
     Guardar EventoSpeedMeetingController
 """
+def store(eventoSpeedMeeting):
+    db.session.add(eventoSpeedMeeting)
+    db.session.commit()
+
 @login_required
-def store():
+def storeTemp():
     pregunta = request.form['pregunta']
     perfiles = request.form['perfiles']
     fecha = request.form['fecha']
