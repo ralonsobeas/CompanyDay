@@ -111,6 +111,8 @@ class GeneralView(SecureView):
     column_display_pk = True
 
     def cambio_id_nombre(view, context, model, name):
+        if model.empresa_id is None:
+            return 'None'
         return EmpresaController.get_by_id(model.empresa_id).nombre
 
 
@@ -164,7 +166,7 @@ EventoFeriaEmpresas_View = EventoFeriaEmpresasView(EventoFeriaEmpresas,db.sessio
 
 class EventoPresentacionProyectosView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'Validado', 'Presencial','Videojuegos','DisenoDigital','CortosAnimacion','Ingenieria']
+    column_list = ['empresa_id', 'validado', 'presencial','videojuegos','disenoDigital','cortosAnimacion','ingenieria']
     column_sortable_list = ['empresa_id', 'validado', 'presencial','videojuegos','disenoDigital','cortosAnimacion','ingenieria']
 
     column_formatters = {
@@ -176,7 +178,7 @@ EventoPresentacionProyectos_View = EventoPresentacionProyectosView(EventoPresent
 
 class EventoCharlasView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'Aprobada', 'Fecha','Titulo','Tema','Autor','Presencialidad']
+    column_list = ['empresa_id', 'aprobada', 'fecha','titulo','tema','autor','presencialidad']
     column_sortable_list = ['empresa_id', 'fecha','aprobada']
 
     column_formatters = {
@@ -188,7 +190,7 @@ EventoCharlas_View = EventoCharlasView(EventoCharlas,db.session)
 
 class EventoSpeedMeetingView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'Aprobada', 'Fecha','Pregunta','Perfiles','Horainicio','Horafin']
+    column_list = ['empresa_id', 'aprobada', 'fecha','pregunta','perfiles','horaInicio','horaFin']
     column_sortable_list = ['empresa_id', 'fecha','aprobada','horaInicio','horaFin']
 
     column_formatters = {
@@ -200,8 +202,8 @@ EventoSpeedMeeting_View = EventoSpeedMeetingView(EventoSpeedMeeting,db.session)
 
 class PersonaView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'Nombre', 'Puesto','Comentario']
-    column_sortable_list = ['empresa_id', 'nombre']
+    column_list = ['empresa_id','nombre', 'puesto','comentario']
+    column_sortable_list = ['empresa_id','nombre']
 
     column_formatters = {
         'empresa_id': GeneralView.cambio_id_nombre
