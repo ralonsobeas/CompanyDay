@@ -65,3 +65,8 @@ class Empresa(UserMixin,db.Model):
         self.buscaCandidatos = buscaCandidatos
         self.admin = admin
         self.userHash = userHash
+        
+    def __unicode__(self):
+        return self.nombre
+    def __repr__(self):
+        return self.nombre

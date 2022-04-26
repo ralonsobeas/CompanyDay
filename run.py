@@ -87,11 +87,38 @@ from controllers import PersonaController
 
 
 # MODO ADMINISTRADOR
+class SecureView(ModelView):
+    def is_accessible(self):
+        if not current_user.is_authenticated or not current_user.admin:
+            return abort(404, description="Sin permisos")
+        # only accessible if admin field is True
+        if current_user.is_authenticated and not current_user.is_anonymous:
+            return current_user.admin
 
-class EmpresaView(ModelView):
+        return False
+    def _handle_view(self, name, **kwargs):
+        if not current_user.is_authenticated:
+            return abort(404, description="Sin permisos")
+        if not self.is_accessible:
+            return abort(404, description="Sin permisos")
+
+class GeneralView(SecureView):
+    can_export = True
+    column_exclude_list = ('password')
+    column_export_exclude_list = ('password')
     export_types = ['csv','xls']
-    column_exclude_list = ['password', ]
+    column_hide_backrefs = False
+    column_display_pk = True
+
+    def cambio_id_nombre(view, context, model, name):
+        return EmpresaController.get_by_id(model.empresa_id).nombre
+
+
+class EmpresaView(GeneralView):
+    column_exclude_list = ['userHash']
     column_searchable_list = ['nombre', 'email']
+    column_sortable_list = ['validado','confirmed','admin']
+    column_list = ['validado', 'confirmed', 'nombre', 'email', 'Personacontacto', 'Telefono', 'Direccion', 'Poblacion', 'Provincia', 'CodigoPostal', 'Pais', 'Consentimientonombre', 'Buscacandidatos','Admin']
     @action('validar', 'Validar', '¿Seguro de que quieres validar las empresas seleccionadas?')
     def action_validar(self, ids):
         count = 0
@@ -122,63 +149,65 @@ class EmpresaView(ModelView):
 
 Empresa_View = EmpresaView(Empresa,db.session)
 
-class AdminView(ModelView):
-    ModelView.can_export = True
-    ModelView.column_exclude_list = ('password')
-    ModelView.column_export_exclude_list = ('password')
-    ModelView.export_types = ['csv','xls']
-    ModelView.column_hide_backrefs = False
-    ModelView.column_display_pk = True
 
-    def cambio_id_nombre(view, context, model, name):
-        return EmpresaController.get_by_id(model.empresa_id).nombre
+class EventoFeriaEmpresasView(GeneralView):
+    column_exclude_list = ['id']
+    column_list = ['empresa_id', 'fecha', 'presencial']
+    column_sortable_list = ['empresa_id', 'fecha']
 
     column_formatters = {
-        'empresa': cambio_id_nombre
+        'empresa_id': GeneralView.cambio_id_nombre
+    }
+    
+EventoFeriaEmpresas_View = EventoFeriaEmpresasView(EventoFeriaEmpresas,db.session)
+
+
+class EventoPresentacionProyectosView(GeneralView):
+    column_exclude_list = ['id']
+    column_list = ['empresa_id', 'Validado', 'Presencial','Videojuegos','DisenoDigital','CortosAnimacion','Ingenieria']
+    column_sortable_list = ['empresa_id', 'validado', 'presencial','videojuegos','disenoDigital','cortosAnimacion','ingenieria']
+
+    column_formatters = {
+        'empresa_id': GeneralView.cambio_id_nombre
     }
 
+EventoPresentacionProyectos_View = EventoPresentacionProyectosView(EventoPresentacionProyectos,db.session)
 
 
-    def scaffold_sortable_columns(self):
-        return {'Empresa':'empresa_id'}
-    def is_accessible(self):
-        if not current_user.is_authenticated or not current_user.admin:
-            return abort(404, description="Sin permisos")
+class EventoCharlasView(GeneralView):
+    column_exclude_list = ['id']
+    column_list = ['empresa_id', 'Aprobada', 'Fecha','Titulo','Tema','Autor','Presencialidad']
+    column_sortable_list = ['empresa_id', 'fecha','aprobada']
 
-        return current_user.admin
+    column_formatters = {
+        'empresa_id': GeneralView.cambio_id_nombre
+    }
 
-    def _handle_view(self, name, **kwargs):
-        if not current_user.is_authenticated:
-            return render_template("admin/denied.html")
-        if not self.is_accessible:
-            return render_template("admin/denied.html")
-    @action('validar', 'Validar', '¿Seguro de que quieres validar las empresas seleccionadas?')
-    def action_validar(self, ids):
-        count = 0
-        for _id in ids:
-            # Do some work with the id, e.g. call a service method
-            EmpresaController.validar(_id,True)
-            count += 1
-        db.session.commit()
-        flash("{0} Empresa (s) validadada (s)".format(count))
-
-    @action('invalidar', 'Invalidar', '¿Seguro de que quieres invalidar las empresas seleccionadas?')
-    def action_invalidar(self, ids):
-        count = 0
-        for _id in ids:
-            # Do some work with the id, e.g. call a service method
-            EmpresaController.validar(_id,False)
-            count += 1
-        db.session.commit()
-        flash("{0} Empresa (s) invalidada (s)".format(count))
+EventoCharlas_View = EventoCharlasView(EventoCharlas,db.session)
 
 
+class EventoSpeedMeetingView(GeneralView):
+    column_exclude_list = ['id']
+    column_list = ['empresa_id', 'Aprobada', 'Fecha','Pregunta','Perfiles','Horainicio','Horafin']
+    column_sortable_list = ['empresa_id', 'fecha','aprobada','horaInicio','horaFin']
 
-EventoFeriaEmpresas_View = AdminView(EventoFeriaEmpresas,db.session)
-EventoPresentacionProyectos_View = AdminView(EventoPresentacionProyectos,db.session)
-EventoCharlas_View = AdminView(EventoCharlas,db.session)
-EventoSpeedMeeting_View = AdminView(EventoSpeedMeeting,db.session)
-Persona_View = AdminView(Persona,db.session)
+    column_formatters = {
+        'empresa_id': GeneralView.cambio_id_nombre
+    }
+
+EventoSpeedMeeting_View = EventoSpeedMeetingView(EventoSpeedMeeting,db.session)
+
+
+class PersonaView(GeneralView):
+    column_exclude_list = ['id']
+    column_list = ['empresa_id', 'Nombre', 'Puesto','Comentario']
+    column_sortable_list = ['empresa_id', 'nombre']
+
+    column_formatters = {
+        'empresa_id': GeneralView.cambio_id_nombre
+    }
+    
+Persona_View = PersonaView(Persona,db.session)
 
 
 admin=Admin(app, name='Administrador',url="/admin", template_mode='bootstrap4')

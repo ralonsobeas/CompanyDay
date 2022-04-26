@@ -21,3 +21,4 @@ class EventoFeriaEmpresas(db.Model):
         self.presencial = presencial
 
         self.empresa_id = empresa_id
+        
