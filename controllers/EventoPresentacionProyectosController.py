@@ -87,3 +87,12 @@ def all_query():
     .filter(Empresa.validado == True)\
     .filter(EventoPresentacionProyectos.validado == True)
     return listaProyectosAprobados;
+    
+"""
+    Validar para Admin
+"""
+
+def validar(id,valor):
+    presentacion = EventoPresentacionProyectos.query.filter_by(id=id).first()
+    presentacion.validado = valor
+    db.session.commit()

@@ -84,6 +84,7 @@ from controllers import EventoCharlaController
 from controllers import EventoPresentacionProyectosController
 from controllers import EventoFeriaEmpresasController
 from controllers import PersonaController
+from controllers import EventoSpeedMeetingController
 
 
 # MODO ADMINISTRADOR
@@ -172,6 +173,25 @@ class EventoPresentacionProyectosView(GeneralView):
     column_formatters = {
         'empresa_id': GeneralView.cambio_id_nombre
     }
+    @action('validar', 'Validar', '¿Seguro de que quieres validar las presentaciones seleccionadas?')
+    def action_validar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EventoPresentacionProyectosController.validar(_id,True)
+            count += 1
+        db.session.commit()
+        flash("{0} Presentacion (s) validadada (s)".format(count))
+
+    @action('invalidar', 'Invalidar', '¿Seguro de que quieres invalidar las presentaciones seleccionadas?')
+    def action_invalidar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EventoPresentacionProyectosController.validar(_id,False)
+            count += 1
+        db.session.commit()
+        flash("{0} Presentacion (s) invalidada (s)".format(count))
 
 EventoPresentacionProyectos_View = EventoPresentacionProyectosView(EventoPresentacionProyectos,db.session)
 
@@ -184,6 +204,25 @@ class EventoCharlasView(GeneralView):
     column_formatters = {
         'empresa_id': GeneralView.cambio_id_nombre
     }
+    @action('validar', 'Validar', '¿Seguro de que quieres validar las charlas seleccionadas?')
+    def action_validar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EventoCharlaController.validar(_id,True)
+            count += 1
+        db.session.commit()
+        flash("{0} Charla (s) validadada (s)".format(count))
+
+    @action('invalidar', 'Invalidar', '¿Seguro de que quieres invalidar las charlas seleccionadas?')
+    def action_invalidar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EventoCharlaController.validar(_id,False)
+            count += 1
+        db.session.commit()
+        flash("{0} Charla (s) invalidada (s)".format(count))
 
 EventoCharlas_View = EventoCharlasView(EventoCharlas,db.session)
 
@@ -196,6 +235,25 @@ class EventoSpeedMeetingView(GeneralView):
     column_formatters = {
         'empresa_id': GeneralView.cambio_id_nombre
     }
+    @action('validar', 'Validar', '¿Seguro de que quieres validar las speedmeetings seleccionadas?')
+    def action_validar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EventoSpeedMeetingController.validar(_id,True)
+            count += 1
+        db.session.commit()
+        flash("{0} SpeedMeeting (s) validadada (s)".format(count))
+
+    @action('invalidar', 'Invalidar', '¿Seguro de que quieres invalidar las speedmeetings seleccionadas?')
+    def action_invalidar(self, ids):
+        count = 0
+        for _id in ids:
+            # Do some work with the id, e.g. call a service method
+            EventoSpeedMeetingController.validar(_id,False)
+            count += 1
+        db.session.commit()
+        flash("{0} SpeedMeeting (s) invalidada (s)".format(count))
 
 EventoSpeedMeeting_View = EventoSpeedMeetingView(EventoSpeedMeeting,db.session)
 
