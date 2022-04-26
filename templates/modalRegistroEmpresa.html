@@ -203,6 +203,27 @@
 		</fieldset>
 
 		<fieldset>
+			<h2 class="fs-title">Crear speed meeting</h2>
+			<h3 class="fs-subtitle">Información sobre speed meeting</h3>
+			<div id="cajaBotones">
+				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="siSpeedMeeting" name="siSpeedMeeting" value="True"/>¿SpeedMeeting?</label>
+			</div>
+			<input type="text" name="pregunta" placeholder="Pregunta">
+			<textarea rows="3" type="text" name="perfiles" id = "perfiles" placeholder="Perfiles que buscáis" ></textarea>
+			<label class="form-label" for="fecha" style = "color:black"> Fecha de la speedmeeting </label>
+			<input type="date" min="2022-05-02" max="2022-05-06" name="dia" id="dia" placeholder="Fecha de la speedmeeting" />
+			<label class="form-label" for="horaInicio" style="color: black"> Hora de Inicio </label>
+			<input type="time" name="horaInicio" id="horaInicio" placeholder="Hora Inicio" />
+			<label class="form-label" for="horaFin" style="color:black"> Hora Final </label>
+			<input type="time" name="horaFin" id="horaFin" placeholder="Hora Final" />
+			<div id="cajaBotones">
+				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="presencial" name="presencial" value="True"/>Presencial</label>
+			</div>
+			<input type="button" name="previous" class="previous action-button" value="Anterior" />
+			<input type="button" name="next" class="next action-button" value="Siguiente" />
+		</fieldset>
+
+		<fieldset>
 			<h2 class="fs-title">Crear cuenta de empresa</h2>
 			<h3 class="fs-subtitle">Charlas (opcional)</h3>
 			<!--<div>

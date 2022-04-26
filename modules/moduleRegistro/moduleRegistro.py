@@ -12,9 +12,12 @@ from threading import Thread
 
 from models.Empresa import Empresa
 from models.EventoCharlas import EventoCharlas
+from models.EventoSpeedMeeting import EventoSpeedMeeting as SpeedMeeting
+
 
 from controllers import EmpresaController
 from controllers import EventoCharlaController
+from controllers import EventoSpeedMeetingController
 
 
 import random
@@ -73,6 +76,17 @@ def store():
 
     EventoCharlaController.store(eventoCharla)
 
+    presencial = True if(request.form['presencialidad']=='True') else False
+    dia = request.form['dia']
+    horaInicio = request.form['horaInicio']
+    horaFin = request.form['horaFin']
+    perfiles = request.form['perfiles']
+    pregunta = request.form['pregunta']
+    aprobado = False
+
+    SpeedMeeting(presencialidad = presencial, fecha = dia, horaInicio = horaInicio, horaFin = horaFin, perfiles = perfiles, pregunta = pregunta, aprobada = aprobado, empresa_id = id)
+
+    EventoSpeedMeetingController.store(eventoSpeedMeeting)
     # Mandar mail
     #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
     send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
