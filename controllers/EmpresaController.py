@@ -1,6 +1,6 @@
 import sys
 
-from flask import render_template, redirect, url_for, request, abort, flash
+from flask import render_template, redirect, url_for, request, abort, flash, Flask, current_app
 from models.Empresa import Empresa
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 from models.EventoPresentacionProyectos import EventoPresentacionProyectos
@@ -16,7 +16,12 @@ from os.path import join, dirname, realpath
 import platform
 from config import UPLOAD_FOLDER_LINUX,UPLOAD_FOLDER_WINDOWS
 
+from flask_mail import Mail, Message
+from threading import Thread
+
 import base64
+
+import random
 
 db = SQLAlchemy()
 
@@ -24,6 +29,12 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
+"""
+    Login de empresa
+
+    Recibe mail y password, busca el usuario y compara el password.
+    Si es correcto redirige al index.
+"""
 def login():
     email = request.form['mail']
     password = request.form['password']
@@ -40,18 +51,31 @@ def login():
 
     return redirect(url_for('index'))
 
-
+"""
+    Login manager para flask_login
+"""
 @login_manager.user_loader
 def loginManager(id):
     return Empresa.query.get(id)
 
+"""
+    Logout
+"""
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-def store():
-    id = request.form['id']
+def store(empresa):
+    db.session.add(empresa)
+    db.session.commit()
+
+"""
+    Guardar empresa en BBDD ADMIN
+"""
+
+def storeAdmin():
+    id = request.form['CIF']
     nombre = request.form['nombreEmpresa']
     password = request.form['password']
     personaContacto = request.form['personaContacto']
@@ -63,43 +87,34 @@ def store():
     codigoPostal = request.form['codigoPostal']
     pais = request.form['pais']
     urlWeb = request.form['urlWeb']
-    consentimientoNombre = True if(request.form['consentimientoNombre']=='True') else False
-    buscaCandidatos = True if(request.form['buscaCandidatos']=='True') else False
+    consentimientoNombre = True
+    buscaCandidatos = True
 
-    #Guardar logo
     logo = request.files['logo']
-
-    #estaría bien guardar esto con paths relativos... pero por ahora funciona
-    """
-    logopath = os.path.dirname(os.path.realpath(__file__))
-    logopath = logopath.replace("controllers", "static/images/customlogos/"+ logo.filename)
-    logo.save(logopath)
-    logopath = "/static/images/customlogos/" + logo.filename
-    """
-
+    logoFileName = id + ".png";
 
     if(platform.system()=='Windows'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
         UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
-        logo.save(UPLOADS_PATH+"\\"+logo.filename)
+        logo.save(UPLOADS_PATH+"\\"+logoFileName)
     elif(platform.system()=='Linux'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
         UPLOADS_PATH = UPLOADS_PATH.replace("controllers/", "")
-        logo.save(UPLOADS_PATH+"/"+logo.filename)
-
-
-
-    logo = logo.filename
+        logo.save(UPLOADS_PATH+"/"+logoFileName)
 
     empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logo, \
+                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
                         consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False)
     db.session.add(empresa)
     db.session.commit()
+    return redirect('../admin/empresa')
 
-    return 'Su informacion ha sido guardada en nuestra base de datos'
 
+
+"""
+    Mostrar perfil. Si editable 1, editable.
+"""
 def show(nombre,editable=0):
     if(editable==1):
         editable=True
@@ -117,10 +132,17 @@ def show(nombre,editable=0):
                             empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
                             eventosPresentacionProyectos=eventosPresentacionProyectos, \
                             eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
+
+"""
+    Mostrar perfil del usuario actual.
+"""
 @login_required
 def userProfile(editable=0):
     return show(current_user.nombre,editable)
 
+"""
+    Actualizar usuario de empresa.
+"""
 @login_required
 def update():
     if(request.form['cancel'] != '1'):
@@ -133,19 +155,79 @@ def update():
         "codigoPostal":request.form['codigoPostal']})
         db.session.commit()
     return render_template('profileRedirect.html')
-    
+
+"""
+    Actualizar usuario de empresa Admin.
+"""
+
+def updateAdmin():
+    if request.form['consentimientoNombre'] == 'True':
+        consentimientoNombre = True;
+    else:
+        consentimientoNombre = False;
+    if request.form['buscaCandidatos'] == 'True':
+        buscaCandidatos = True;
+    else:
+        buscaCandidatos = False;
+    db.session.query(Empresa).filter(Empresa.id==request.form['CIF']).update({\
+        "nombre":request.form['nombreEmpresa'],\
+        "personaContacto":request.form['personaContacto'],\
+        "email":request.form['email'],\
+        "telefono":request.form['telefono'],\
+        "direccion":request.form['direccion'],\
+        "poblacion":request.form['poblacion'],\
+        "provincia":request.form['provincia'],\
+        "pais":request.form['pais'],\
+        "codigoPostal":request.form['codigoPostal'],\
+        "urlWeb":request.form['urlWeb'],\
+        "consentimientoNombre":consentimientoNombre,\
+        "buscaCandidatos":buscaCandidatos})
+    db.session.commit()
+    return redirect('../admin/empresa')
+
+"""
+    Obtener empresa por id.
+"""
+def get_by_id(id):
+    empresa = Empresa.query.filter_by(id=id).first()
+    return empresa
+
+"""
+    Obtener empresa por nombre.
+"""
+def get_by_name(nombre):
+    empresa = Empresa.query.filter_by(nombre=nombre).first()
+    return empresa
+
+"""
+    Obtener todas las empresas validadas. Renderizar en html.
+"""
 def all():
     empresas = Empresa.query.filter_by(validado=True).all()
     return render_template('empresas.html',empresas=empresas)
 
+"""
+    Obtener todas las empresas.
+"""
 def all_query():
     return Empresa.query.filter_by(validado=True).all()
 
+"""
+    Validar empresa.
+"""
 def validar(id,valor):
     empresa = Empresa.query.filter_by(id=id).first()
     empresa.validado = valor
     db.session.commit()
 
-def render_picture(data):
-    render_pic = base64.b64encode(data).decode('ascii')
-    return render_pic
+"""
+    Confirmar empresa.
+"""
+def confirmar(nombre):
+
+    empresa= db.session.query(Empresa).filter_by(nombre=nombre).first()
+
+    empresa.confirmed = 1
+    empresa.userHash = ''
+
+    db.session.commit()

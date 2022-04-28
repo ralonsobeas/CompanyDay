@@ -8,6 +8,9 @@ from models.EventoPresentacionProyectos import EventoPresentacionProyectos
 from models.EventoSpeedMeeting import EventoSpeedMeeting
 from flask_login import UserMixin
 
+"""
+    Modelo de Empresa
+"""
 class Empresa(UserMixin,db.Model):
     __tablename__ = 'empresas'
     validado = db.Column(db.Boolean)
@@ -29,6 +32,10 @@ class Empresa(UserMixin,db.Model):
 
     admin = db.Column(db.Boolean)
 
+    #Validación de usuario
+    confirmed = db.Column(db.Integer, default=0)
+    userHash = db.Column(db.String(50))
+
     #Eventos
     eventosFeriaEmpresas = db.relationship('EventoFeriaEmpresas', backref=db.backref('empresa'))
     eventosPresentacionProyectos = db.relationship('EventoPresentacionProyectos', backref='empresa', lazy='dynamic')
@@ -39,7 +46,7 @@ class Empresa(UserMixin,db.Model):
 
     def __init__(self, id,validado,nombre,password,personaContacto,email,telefono,direccion, \
                         poblacion,provincia,codigoPostal,pais,urlWeb,logo, \
-                        consentimientoNombre,buscaCandidatos,admin):
+                        consentimientoNombre,buscaCandidatos,admin,userHash):
         self.id = id
         self.validado = validado
         self.nombre = nombre
@@ -57,3 +64,9 @@ class Empresa(UserMixin,db.Model):
         self.consentimientoNombre = consentimientoNombre
         self.buscaCandidatos = buscaCandidatos
         self.admin = admin
+        self.userHash = userHash
+        
+    def __unicode__(self):
+        return self.nombre
+    def __repr__(self):
+        return self.nombre

@@ -1,21 +1,106 @@
-{% extends 'base.html' %}
+{% extends 'admin/master.html' %}
 
-{% block content %}
+{% block body %}
     <h3>{% block title %} Formulario de registro para empresa {% endblock %}</h3>
 
-    <div class="container">
-  <div class="row">
+  <div class="container">
+    <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
         <h2>Registro Empresa</h2>
         <h2>Inscribe a tu empresa en el Company Day</h2>
       </div>
-  </div>
+    </div>
+  {% if edit == 1 %}
+  {% set empresa = EmpresaController.get_by_id(request.args.get('id')) %}
+  
   <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
-          <form id="contact-form" class="form" action="/empresas/crear" method="POST" role="form" enctype="multipart/form-data">
+          <form id="contact-form" class="form" action="/empresas/updateAdmin" method="POST" role="form" enctype="multipart/form-data">
               <div class="form-group">
-                  <label class="form-label" for="id">Id Empresa</label>
-                  <input type="text" class="form-control" id="id" name="id" placeholder="Id Empresa" tabindex="1" required>
+                  <label class="form-label" for="CIF">CIF Empresa</label>
+                  <input type="text" class="form-control" id="CIF" name="CIF" value="{{empresa.id}}" placeholder="CIF Empresa" tabindex="1" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="nombreEmpresa">Nombre de la empresa</label>
+                  <input type="text" class="form-control" id="nombreEmpresa" value="{{empresa.nombre}}" name="nombreEmpresa" placeholder="Nombre de la empresa" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="personaContacto">Persona de contacto</label>
+                  <input type="text" class="form-control" id="personaContacto" value="{{empresa.personaContacto}}" name="personaContacto" placeholder="Persona de contacto" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{empresa.email}}" placeholder="Email" tabindex="4" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="telefono">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{empresa.telefono}}" placeholder="Teléfono" tabindex="5" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="direccion">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" value="{{empresa.direccion}}" placeholder="Dirección" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="poblacion">Población</label>
+                <input type="text" class="form-control" id="poblacion" name="poblacion" value="{{empresa.poblacion}}" placeholder="Población" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="provincia">Provincia</label>
+                <input type="text" class="form-control" id="provincia" name="provincia" value="{{empresa.provincia}}" placeholder="Provincia" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="codigoPostal">Código postal</label>
+                <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" value="{{empresa.codigoPostal}}" placeholder="Código postal" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pais">País</label>
+                <input type="text" class="form-control" id="pais" name="pais" value="{{empresa.pais}}" placeholder="País" tabindex="6" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="urlWeb">Url de la web corporativa</label>
+                <input type="text" class="form-control" id="urlWeb" name="urlWeb" value="{{empresa.urlWeb}}" placeholder="Url de la web corporativa" tabindex="6" required>
+              </div>
+              <!-- 
+              <div class="form-group">
+                <label for="logo">Selecciona un logo:</label>
+                <input type="file" id="logo" name="logo">
+              </div>
+              -->
+              <div class="form-group">
+                <label class="form-label" for="consentimientoNombre">Consiento el uso del nombre</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="consentimientoNombre" id="consentimientoNombreSi" value="{{empresa.consentimientoNombre}}" checked/>
+                  <label class="form-check-label" for="consentimientoNombreSi"> Si </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="consentimientoNombre" id="consentimientoNombreNo" value="{{not empresa.consentimientoNombre}}"/>
+                  <label class="form-check-label" for="consentimientoNombreNo"> No </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="buscaCandidatos">La empresa se encuentra buscando candidatos</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="buscaCandidatos" id="buscaCandidatosSi" value="{{empresa.buscaCandidatos}}" checked/>
+                  <label class="form-check-label" for="buscaCandidatosSi"> Si </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="buscaCandidatos" id="buscaCandidatosNo" value="{{not empresa.buscaCandidatos}}"/>
+                  <label class="form-check-label" for="buscaCandidatosNo"> No </label>
+                </div>
+              </div>
+              <div class="text-center">
+                  <button type="submit" class="btn btn-start-order">Guardar</button>
+              </div>
+          </form>
+      </div>
+  </div>
+  {% else %}
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+          <form id="contact-form" class="form" action="/empresas/crearAdmin" method="POST" role="form" enctype="multipart/form-data">
+              <div class="form-group">
+                  <label class="form-label" for="CIF">CIF Empresa</label>
+                  <input type="text" class="form-control" id="CIF" name="CIF" placeholder="CIF Empresa" tabindex="1" required>
               </div>
               <div class="form-group">
                   <label class="form-label" for="nombreEmpresa">Nombre de la empresa</label>
@@ -93,6 +178,7 @@
           </form>
       </div>
   </div>
+  {% endif %}
 </div>
 
 

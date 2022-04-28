@@ -5,6 +5,7 @@ from models.EventoCharlas import EventoCharlas
 from models.Empresa import Empresa
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from flask_login import login_required,current_user
 import base64
 
 db = SQLAlchemy()
@@ -13,20 +14,28 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
-def store():
-    id = request.form['id']
+def store(eventoCharla):
+    db.session.add(eventoCharla)
+    db.session.commit()
+
+"""
+    Guardar EventoCharla en BBDD
+"""
+@login_required
+def storeTemp():
     tema = request.form['tema']
     presencialidad = True if(request.form['presencialidad']=='True') else False
     titulo = request.form['titulo']
     fecha = request.form['fecha']
-    empresa_id = request.form['idempresa']
+    autor = request.form['autor']
+    empresa_id = current_user.id
     aprobada = False
 
-    eventoCharla = EventoCharlas(id,tema,presencialidad,titulo,fecha,aprobada,empresa_id)
+    eventoCharla = EventoCharlas(tema,presencialidad,titulo,fecha,aprobada,autor,empresa_id)
     db.session.add(eventoCharla)
     db.session.commit()
 
-    return 'Su informacion ha sido guardada en nuestra base de datos'
+    return redirect(url_for('empresa_bp.userProfile',editable=0))
 
 def show(empresa_id):
     return 'show'
@@ -37,14 +46,29 @@ def update(empresa_id):
 def delete(empresa_id):
     return 'delete'
 
+"""
+    Mostrar todos los EventoCharlas. Renderiza en registroCharlas.html
+"""
 def all():
     eventoCharlas = EventoCharlas.query.all()
     return render_template('registroCharlas.html',eventoCharlas=eventoCharlas)
-    
+
+"""
+    Buscar todos los EventoCharlas.
+"""
 def all_query():
     listaCharlasAprobadas = EventoCharlas.query\
     .join(Empresa, EventoCharlas.empresa_id == Empresa.id)\
-    .add_columns(EventoCharlas.tema, EventoCharlas.presencialidad, EventoCharlas.titulo, EventoCharlas.fecha, Empresa.logo, Empresa.nombre)\
+    .add_columns(EventoCharlas.tema, EventoCharlas.presencialidad, EventoCharlas.titulo, EventoCharlas.fecha, EventoCharlas.autor, Empresa.logo, Empresa.nombre)\
     .filter(Empresa.validado == True)\
     .filter(EventoCharlas.aprobada == True)
     return listaCharlasAprobadas;
+    
+"""
+    Validar para Admin
+"""
+
+def validar(id,valor):
+    charla = EventoCharlas.query.filter_by(id=id).first()
+    charla.aprobada = valor
+    db.session.commit()

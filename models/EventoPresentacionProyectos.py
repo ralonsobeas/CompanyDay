@@ -3,6 +3,9 @@
 #db = SQLAlchemy()
 from shared.models import db
 
+"""
+    Modelo EventoPresentacionProyectos
+"""
 class EventoPresentacionProyectos(db.Model):
     __tablename__ = 'presentacionProyectos'
     validado = db.Column(db.Boolean)

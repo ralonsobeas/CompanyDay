@@ -1,0 +1,23 @@
+{% extends 'admin/master.html' %}
+
+{% block head_css %}
+  {{super()}}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/flask_admin.css') }}">
+
+{% endblock %}
+
+{% block body %}
+  <h2 class="text-center">Página de administrador</h2>
+
+  <h3>Manual de usuario</h3>
+  Si quiere validar una empresa seleciónela en la tabla Empresa y seleccione la opción: With Selected > Validar
+
+  </br></br>
+  Si desea crear una empresa de manera manual dirigase a la tabla empresa y seleccione la opción: Create
+  </br>
+  Si desea crear un perfil de administración seleccione la opción Admin a la hora de crear una empresa
+  </br></br>
+  Si busca editar o borrar un perfil haga click en el lápiz o en la papelera que aparece al lado en la fila del mismo
+  </br></br>
+  Todo esto se aplica también a todas las demás tablas: Charlas, Speed Meetings y Presentaión
+{% endblock %}
