@@ -21,6 +21,16 @@ import os
 
 app = Flask(__name__)
 
+#Route for the GitHub webhook
+@app.route('/update_server', methods=['POST'])
+def git_update():
+  repo = git.Repo('./CompanyDay')
+  origin = repo.remotes.origin
+  repo.create_head('main', 
+  origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+  origin.pull()
+  return '', 200
+
 # LANGUAGE
 """
 babel = Babel(app)
