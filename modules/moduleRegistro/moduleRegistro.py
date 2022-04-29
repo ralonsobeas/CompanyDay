@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, abort, flash, Flask, current_app
+from flask import render_template, redirect, url_for, request, abort, flash, Flask, current_app, Blueprint
 from config import UPLOAD_FOLDER_LINUX,UPLOAD_FOLDER_WINDOWS
 
 from werkzeug.utils import secure_filename
@@ -19,8 +19,13 @@ from controllers import EmpresaController
 from controllers import EventoCharlaController
 from controllers import EventoSpeedMeetingController
 
+from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm
+
 
 import random
+
+moduleRegistro = Blueprint("moduleRegistro", __name__,static_folder="static",template_folder="templates")
+
 """
     Guardar empresa en BBDD
 """
@@ -84,7 +89,7 @@ def store():
     pregunta = request.form['pregunta']
     aprobado = False
     eventoSpeedMeeting=SpeedMeeting(presencialidad = presencial, fecha = dia, horaInicio = horaInicio, horaFin = horaFin, perfiles = perfiles, pregunta = pregunta, aprobada = aprobado, empresa_id = id)
-    
+
 
 
     EventoSpeedMeetingController.store(eventoSpeedMeeting)
@@ -93,12 +98,7 @@ def store():
     send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
     flash('Te has registrado! Revista tu email para confirmar tu cuenta.')
 
-    #with app.app_context():
-     #   msg = Message('Bienvenido al Company Day en U-Tad', sender =  'companydayprueba@gmail.com', recipients = ['companydayprueba@gmail.com'])
-        #msg.html = render_template('templateMail.html')
-      #  mail.send(msg)
-
-    return render_template('index3.html')
+    return  redirect(url_for('index'))
 
 """
     Confirmar usuario
@@ -114,18 +114,12 @@ def confirmUser(username,userhash):
         try:
             EmpresaController.confirmar(username)
             flash('Has confirmado el usuario!')
+            #Mandar mail a admin
         except:
             abort(500, description="An error has occurred.")
 
-    return render_template('index3.html')
+    return  redirect(url_for('index'))
 
-
-"""
-    Mail asíncrono
-"""
-def async_send_mail(app, msg, mail):
-    with app.app_context():
-        mail.send(msg)
 
 from flask import current_app
 
@@ -149,5 +143,57 @@ def send_email(to, subject, template, url, **kwargs):
     msg.html = render_template(template + '.html', **kwargs, url=url)
     # flash("send_email: {}".format(url))
     mail.send(msg)
-    #thr = Thread(target=async_send_mail, args=[current_app, msg, mail])
-    #thr.start()
+
+"""
+    Resetear password mandar mail
+"""
+def resetpassword():
+    form =  ResetPasswordForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            empresa = EmpresaController.get_by_email(form.email.data)
+            if empresa:
+                    empresa.userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
+                    url = 'http://{}/empresas/setnewpassword/{}/{}'.format(request.host,empresa.nombre,empresa.userHash)
+                    #send_email(form.email.data,'Confirmar cambio de contraseña.', 'templateMail',url=url)
+                    send_email("companydayprueba@gmail.com",'Confirmar cambio de contraseña.', 'templateMail',url=url)
+                    EmpresaController.store(empresa)
+
+            flash('Se ha enviado un mensaje al correo electrónico si existe')
+    return render_template("resetpassword.html", form=form)
+
+"""
+    Set password
+"""
+def setnewpassword_get(username,userhash):
+    form = SetNewPasswordForm()
+    empresa = EmpresaController.get_by_name(username)
+    if not empresa:
+        flash('Url inválida.')
+    elif len(empresa.userHash)==0 or empresa.userHash != userhash:
+        flash('Url inválida.')
+    else:
+        form.username.data = username
+        form.userhash.data = userhash
+    return render_template("setnewpassword.html", form=form)
+
+
+def setnewpassword_post():
+    form = SetNewPasswordForm()
+    if form.validate_on_submit():
+        empresa = EmpresaController.get_by_name(form.username.data)
+        if not empresa:
+            flash('Url inválida.')
+            return  redirect(url_for('index'))
+        elif len(empresa.userHash)==0 or empresa.userHash != form.userhash.data:
+            flash('Url inválida.')
+            return  redirect(url_for('index'))
+        else:
+            empresa.userHash = ''
+            empresa.password = generate_password_hash(form.password.data)
+            empresa.confirmed = 1
+            EmpresaController.store(empresa)
+            flash('Contraseña cambiada.')
+            return  redirect(url_for('index'))
+
+    return render_template("setnewpassword.html", form=form)

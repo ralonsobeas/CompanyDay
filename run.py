@@ -13,14 +13,14 @@ from flask_admin.actions import action
 from flask_login import current_user, login_required
 
 from flask_babelex import Babel
-
+from flask_bootstrap import Bootstrap
 import urllib
 import urllib.request
 
 import os
 
 app = Flask(__name__)
-
+bootstrap = Bootstrap(app)
 # LANGUAGE
 """
 babel = Babel(app)
@@ -59,7 +59,6 @@ app.register_blueprint(eventoFeriaEmpresas_bp, url_prefix='/eventoFeriaEmpresas'
 app.register_blueprint(eventoPresentacionProyectos_bp, url_prefix='/proyectos')
 app.register_blueprint(eventoCharla_bp, url_prefix='/charlas')
 app.register_blueprint(eventoSpeedMeeting_bp, url_prefix='/speedMeeting')
-app.register_blueprint(form_bp, url_prefix = "/form")
 
 from models import EventoFeriaEmpresas
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
@@ -161,7 +160,7 @@ class EventoFeriaEmpresasView(GeneralView):
     column_formatters = {
         'empresa_id': GeneralView.cambio_id_nombre
     }
-    
+
 EventoFeriaEmpresas_View = EventoFeriaEmpresasView(EventoFeriaEmpresas,db.session)
 
 
@@ -266,7 +265,7 @@ class PersonaView(GeneralView):
     column_formatters = {
         'empresa_id': GeneralView.cambio_id_nombre
     }
-    
+
 Persona_View = PersonaView(Persona,db.session)
 
 

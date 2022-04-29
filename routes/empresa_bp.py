@@ -1,13 +1,13 @@
 from flask import Blueprint
 from controllers.EmpresaController import index, login, userProfile, logout, storeAdmin, show, update, updateAdmin,all
 
-from modules.moduleRegistro.moduleRegistro import store, confirmUser
+from modules.moduleRegistro.moduleRegistro import moduleRegistro, store, confirmUser, resetpassword, setnewpassword_get, setnewpassword_post
 """
     Blueprints para Empresa
 """
 
 empresa_bp = Blueprint('empresa_bp', __name__)
-
+empresa_bp.register_blueprint(moduleRegistro)
 #empresa_bp.route('/', methods=['GET'])(index)
 
 # Login de Empresa
@@ -30,3 +30,7 @@ empresa_bp.route('/<nombre>', methods=['GET','POST'])(show)
 empresa_bp.route('/all', methods=['GET'])(all)
 #Confirmar usuario
 empresa_bp.route('/confirmuser/<username>/<userhash>', methods=['GET','POST'])(confirmUser)
+#Cambiar contraseña
+empresa_bp.route('/resetpassword', methods=['GET','POST'])(resetpassword)
+empresa_bp.route('/setnewpassword/<username>/<userhash>', methods=['GET'])(setnewpassword_get)
+empresa_bp.route('/setnewpassword', methods=['POST'])(setnewpassword_post)

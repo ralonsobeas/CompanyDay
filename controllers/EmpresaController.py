@@ -66,6 +66,9 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+"""
+    Store
+"""
 def store(empresa):
     db.session.add(empresa)
     db.session.commit()
@@ -196,7 +199,14 @@ def get_by_id(id):
     Obtener empresa por nombre.
 """
 def get_by_name(nombre):
-    empresa = Empresa.query.filter_by(nombre=nombre).first()
+    empresa =   db.session.query(Empresa).filter(Empresa.nombre==nombre).first()
+    return empresa
+
+"""
+    Obtener empresa por nombre.
+"""
+def get_by_email(email):
+    empresa =  db.session.query(Empresa).filter(Empresa.email==email).first()
     return empresa
 
 """
