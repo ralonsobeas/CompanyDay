@@ -1,7 +1,7 @@
 from flask import Blueprint
 from controllers.EmpresaController import index, login, userProfile, logout, storeAdmin, show, update, updateAdmin,all
 
-from modules.moduleRegistro.moduleRegistro import moduleRegistro, store, confirmUser, resetpassword, setnewpassword_get, setnewpassword_post
+from modules.moduleRegistro.moduleRegistro import moduleRegistro, store, store2, confirmUser, resetpassword, setnewpassword_get, setnewpassword_post
 """
     Blueprints para Empresa
 """
@@ -17,7 +17,7 @@ empresa_bp.route('/user_profile/<int:editable>', methods=['GET','POST'])(userPro
 # Logout de Empresa
 empresa_bp.route('/logout', methods=['GET'])(logout)
 # Crear Empresa
-empresa_bp.route('/crear', methods=['GET','POST'])(store)
+empresa_bp.route('/crear', methods=['GET','POST'])(store2)
 empresa_bp.route('/crearAdmin', methods=['GET','POST'])(storeAdmin)
 # Actualizar Empresa
 empresa_bp.route('/update', methods=['GET','POST'])(update)

@@ -19,7 +19,7 @@ from controllers import EmpresaController
 from controllers import EventoCharlaController
 from controllers import EventoSpeedMeetingController
 
-from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm
+from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm, RegisterForm
 
 
 import random
@@ -93,6 +93,61 @@ def store():
 
 
     EventoSpeedMeetingController.store(eventoSpeedMeeting)
+    # Mandar mail
+    #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
+    send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
+    flash('Te has registrado! Revista tu email para confirmar tu cuenta.')
+
+    return  redirect(url_for('index'))
+
+"""
+    Guardar empresa en BBDD con WTForm
+"""
+def store2():
+    form = RegisterForm()
+
+    id = form.cif.data
+    nombre = form.nombre.data
+    password = generate_password_hash(form.password.data)
+    personaContacto = form.personaContacto.data
+    email = form.email.data
+    telefono = form.telefono.data
+    direccion = form.direccion.data
+    poblacion = form.poblacion.data
+    provincia = form.provincia.data
+    codigoPostal = form.codigoPostal.data
+    pais = form.pais.data
+    urlWeb = form.urlWeb.data
+    consentimientoNombre = True
+    buscaCandidatos = True
+
+    logo = form.logo.data
+    logoFileName = str(id) + ".png";
+
+    # Cambiar barras dependiendo del sistema operativo
+    if(platform.system()=='Windows'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
+        UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
+        logo.save(UPLOADS_PATH+"\\"+logoFileName)
+    elif(platform.system()=='Linux'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
+        UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
+        logo.save(UPLOADS_PATH+"/"+logoFileName)
+
+
+    #Proceso validación usuario
+    userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
+    url = 'http://{}/empresas/confirmuser/{}/{}'.format(request.host,nombre,userHash)
+
+    empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
+                        personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
+                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
+                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False,userHash=userHash)
+
+    EmpresaController.store(empresa)
+
+    #FALTA AÑADIR LOS EVENTOS MEDIANTE WTF FORM
+
     # Mandar mail
     #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
     send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)

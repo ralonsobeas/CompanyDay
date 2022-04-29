@@ -279,11 +279,13 @@ admin.add_view(Persona_View)
 
 # FIN MODO ADMINISTRADOR
 
+from modules.moduleRegistro.forms import RegisterForm
 # ROUTING
 @app.route('/')
 def index():
     empresas = EmpresaController.all_query()
-    return render_template('index3.html',empresas=empresas)
+    form = RegisterForm()
+    return render_template('index3.html',empresas=empresas,form=form)
 
 
 @app.route('/favicon.ico')
