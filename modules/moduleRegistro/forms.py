@@ -1,8 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, HiddenField, IntegerField, FileField#, SelectField,
+from wtforms import StringField, PasswordField, BooleanField, HiddenField, IntegerField, FileField, DateField, TimeField#, SelectField,
+from wtforms.widgets import TextArea
 from wtforms.validators import InputRequired, Length, Email,EqualTo
 
-class RegisterForm(FlaskForm):
+
+
+
+class EmpresaRegisterForm(FlaskForm):
     #Parte 1 form
     cif = IntegerField("CIF", validators=[InputRequired(message="CIF no es válido!"),Length(max=50)])
     email = StringField("E-mail", validators=[InputRequired(),Email(message="Email no es válido!"),Length(max=120)])
@@ -23,7 +27,38 @@ class RegisterForm(FlaskForm):
     codigoPostal = StringField("Código postal", validators=[Length(max=15)])
     pais = StringField("País", validators=[Length(max=120)])
 
-    #Parte 4 form
+
+
+class EventoCharlasRegisterForm(FlaskForm):
+    tema = StringField("Tema", validators=[Length(max=4096)])
+    presencialidad = BooleanField("Presencial")
+    titulo = StringField("Título", validators=[Length(max=120)])
+    fecha =  DateField('Fecha')
+    autor = StringField("Autor", validators=[Length(max=516)])
+
+class EventoFeriaEmpresasRegisterForm(FlaskForm):
+    fecha =  DateField('Fecha')
+    presencialidad = BooleanField("Presencial")
+
+class EventoPresentacionProyectosRegisterForm(FlaskForm):
+    presencial = BooleanField("Presencial")
+    videojuegos = BooleanField("Videojuegos")
+    disenoDigital = BooleanField("Diesño digital")
+    cortosAnimacion = BooleanField("Cortos de animación")
+    ingenieria = BooleanField("Ingeniería")
+
+class EventoSpeedMeetingRegisterForm(FlaskForm):
+    presencialidad = BooleanField("Presencial")
+    fecha =  DateField('Fecha') #Añadir restricciones en los dias
+    horaInicio = TimeField("Hora de inicio")
+    horaFin = TimeField("Hora de finalización")
+    perfiles = StringField("Perfiles que se buscan", widget=TextArea(), validators=[Length(max=4096)])
+    pregunta = StringField("Pregunta", validators=[Length(max=4096)])
+
+class PersonaRegisterForm(FlaskForm):
+    nombre = StringField("Nombre", validators=[Length(max=500)])
+    puesto = StringField("Puesto", validators=[Length(max=120)])
+    comentario = StringField("Comentario", widget=TextArea(), validators=[Length(max=500)])
 
 
 

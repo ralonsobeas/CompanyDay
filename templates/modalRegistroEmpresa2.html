@@ -118,13 +118,13 @@
 	</style>
 
 
-	{% if form %}
+	{% if formEmpresa %}
 	    {% import "bootstrap/wtf.html" as wtf %}
 
 
 	<!-- multistep form -->
 	<form style="color:black" id="msform" class = "form" action="/empresas/crear" method = "POST" role = "form" enctype="multipart/form-data">
-		{{ form.hidden_tag() }}
+		{{ formEmpresa.hidden_tag() }}
 	  <!-- progressbar -->
 	  <div style="justify-content: center;">
 	  <ul id="progressbar">
@@ -139,22 +139,22 @@
 	  <fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
 		<h3 class="fs-subtitle">Datos de acceso</h3>
-		{{ wtf.form_field(form.cif) }}
-		{{ wtf.form_field(form.email) }}
-		{{ wtf.form_field(form.nombre) }}
-		{{ wtf.form_field(form.password) }}
-		{{ wtf.form_field(form.confirm_password) }}
+		{{ wtf.form_field(formEmpresa.cif) }}
+		{{ wtf.form_field(formEmpresa.email) }}
+		{{ wtf.form_field(formEmpresa.nombre) }}
+		{{ wtf.form_field(formEmpresa.password) }}
+		{{ wtf.form_field(formEmpresa.confirm_password) }}
 		<input type="button" name="next" class="next action-button" value="Siguiente" />
 
 	  </fieldset>
 	  <fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
 		<h3 class="fs-subtitle">Información y contacto</h3>
-		{{ wtf.form_field(form.personaContacto) }}
-		{{ wtf.form_field(form.telefono) }}
-		{{ wtf.form_field(form.urlWeb) }}
+		{{ wtf.form_field(formEmpresa.personaContacto) }}
+		{{ wtf.form_field(formEmpresa.telefono) }}
+		{{ wtf.form_field(formEmpresa.urlWeb) }}
 			<label for="logo" style="color:black;">Selecciona un logo:</label>
-		{{ wtf.form_field(form.logo) }}
+		{{ wtf.form_field(formEmpresa.logo) }}
 
 		<input type="button" name="previous" class="previous action-button" value="Anterior" />
 		<input type="button" name="next" class="next action-button" value="Siguiente" />
@@ -162,11 +162,11 @@
 		<fieldset>
 			<h2 class="fs-title">Crear cuenta de empresa</h2>
 			<h3 class="fs-subtitle">Dirección</h3>
-			{{ wtf.form_field(form.direccion) }}
-			{{ wtf.form_field(form.poblacion) }}
-			{{ wtf.form_field(form.provincia) }}
-			{{ wtf.form_field(form.codigoPostal) }}
-			{{ wtf.form_field(form.pais) }}
+			{{ wtf.form_field(formEmpresa.direccion) }}
+			{{ wtf.form_field(formEmpresa.poblacion) }}
+			{{ wtf.form_field(formEmpresa.provincia) }}
+			{{ wtf.form_field(formEmpresa.codigoPostal) }}
+			{{ wtf.form_field(formEmpresa.pais) }}
 
 			<input type="button" name="previous" class="previous action-button" value="Anterior" />
 			<input type="button" name="next" class="next action-button" value="Siguiente" />
@@ -181,24 +181,28 @@
 				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox4" name = "miCheckBox4" onchange="mostrar4()" disabled/>Persona 4</label>
 			</div>
 			  <div id="Persona1" hidden>
-				<input type="text" name="nombrePersona1" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto1" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios1" placeholder="Comentarios" style="width: 91%;"></textarea>
+				{{ formPersona1.hidden_tag() }}
+				{{ wtf.form_field(formPersona1.nombre) }}
+				{{ wtf.form_field(formPersona1.puesto) }}
+				{{ wtf.form_field(formPersona1.comentario) }}
 			  </div>
 			  <div id="Persona2" hidden>
-				<input type="text" name="nombrePersona2" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto2" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios2" placeholder="Comentarios" style="width: 91%;"></textarea>
+					{{ formPersona2.hidden_tag() }}
+					{{ wtf.form_field(formPersona2.nombre) }}
+					{{ wtf.form_field(formPersona2.puesto) }}
+					{{ wtf.form_field(formPersona2.comentario) }}
 			  </div>
 			  <div id="Persona3" hidden>
-				<input type="text" name="nombrePersona3" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto3" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios3" placeholder="Comentarios" style="width: 91%;"></textarea>
+					{{ formPersona3.hidden_tag() }}
+					{{ wtf.form_field(formPersona3.nombre) }}
+					{{ wtf.form_field(formPersona3.puesto) }}
+					{{ wtf.form_field(formPersona3.comentario) }}
 			  </div>
 			  <div id="Persona4" hidden>
-				<input type="text" name="nombrePersona4" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto4" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios4" placeholder="Comentarios" style="width: 91%;"></textarea>
+					{{ formPersona4.hidden_tag() }}
+					{{ wtf.form_field(formPersona4.nombre) }}
+					{{ wtf.form_field(formPersona4.puesto) }}
+					{{ wtf.form_field(formPersona4.comentario) }}
 			  </div>
 
 			  <input type="button" name="previous" class="previous action-button" value="Anterior" />
@@ -207,47 +211,48 @@
 
 		<fieldset>
 			<h2 class="fs-title">Crear speed meeting</h2>
-			<h3 class="fs-subtitle">Información sobre speed meeting</h3>
+			<h3 class="fs-subtitle">Speed meeting (opcional)</h3>
 			<div id="cajaBotones">
 				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="siSpeedMeeting" name="siSpeedMeeting" value="True"/>¿SpeedMeeting?</label>
 			</div>
-			<input type="text" name="pregunta" placeholder="Pregunta">
-			<textarea rows="3" type="text" name="perfiles" id = "perfiles" placeholder="Perfiles que buscáis" ></textarea>
-			<label class="form-label" for="fecha" style = "color:black"> Fecha de la speedmeeting </label>
-			<input type="date" min="2022-05-02" max="2022-05-06" name="dia" id="dia" placeholder="Fecha de la speedmeeting" />
-			<label class="form-label" for="horaInicio" style="color: black"> Hora de Inicio </label>
-			<input type="time" name="horaInicio" id="horaInicio" placeholder="Hora Inicio" />
-			<label class="form-label" for="horaFin" style="color:black"> Hora Final </label>
-			<input type="time" name="horaFin" id="horaFin" placeholder="Hora Final" />
-			<div id="cajaBotones">
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="presencial" name="presencial" value="True"/>Presencial</label>
-			</div>
+			{{ formEventoSpeedMeeting.hidden_tag() }}
+			{{ wtf.form_field(formEventoSpeedMeeting.pregunta) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.perfiles) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.fecha) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.horaInicio) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.horaFin) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.presencialidad) }}
 			<input type="button" name="previous" class="previous action-button" value="Anterior" />
 			<input type="button" name="next" class="next action-button" value="Siguiente" />
 		</fieldset>
 
 		<fieldset>
-			<h2 class="fs-title">Crear cuenta de empresa</h2>
+			<h2 class="fs-title">Crear charla</h2>
 			<h3 class="fs-subtitle">Charlas (opcional)</h3>
 			<!--<div>
 				<label class="form-label" for="id">Id Charla</label>
 				<input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
 			</div>-->
-			<div>
-				<label class="form-label" for="tema">Tema de la charla</label>
-				<input type="text" class="form-control" id="tema" name="tema" placeholder="Tema de la charla" tabindex="2" required>
-			</div>
-			<div>
-				<label class="form-label" for="titulo">Titulo de la charla</label>
-				<input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo de la charla" tabindex="2" required>
-			</div>
-			<div>
-			  <label class="form-label" for="fecha">Fecha de la charla</label>
-			  <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la charla" tabindex="4" required>
-			</div>
-			<div id="cajaBotones">
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="presencialidad" onchange="mostrar1()" name="presencialidad" value="True"/>Presencial</label>
-			</div>
+			{{ formEventoCharlas.hidden_tag() }}
+			{{ wtf.form_field(formEventoCharlas.tema) }}
+			{{ wtf.form_field(formEventoCharlas.titulo) }}
+			{{ wtf.form_field(formEventoCharlas.fecha) }}
+			{{ wtf.form_field(formEventoCharlas.presencialidad) }}
+			<input type="button" name="previous" class="previous action-button" value="Anterior" />
+			<input type="button" name="next" class="next action-button" value="Siguiente" />
+			<!--<input type="submit" name="submit" class="btn action-button" value="Submit" />-->
+		</fieldset>
+
+		<fieldset>
+			<h2 class="fs-title">Inscribirse a Feria de empresas</h2>
+			<h3 class="fs-subtitle">Feria de empresas (opcional)</h3>
+			<!--<div>
+				<label class="form-label" for="id">Id Charla</label>
+				<input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
+			</div>-->
+			{{ formEventoFeriaEmpresas.hidden_tag() }}
+			{{ wtf.form_field(formEventoFeriaEmpresas.fecha) }}
+			{{ wtf.form_field(formEventoFeriaEmpresas.presencialidad) }}
 			<input type="button" name="previous" class="previous action-button" value="Anterior" />
 			<!--<input type="button" name="next" class="next action-button" value="Siguiente" />-->
 			<input type="submit" name="submit" class="btn action-button" value="Submit" />

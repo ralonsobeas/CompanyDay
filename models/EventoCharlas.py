@@ -19,12 +19,12 @@ class EventoCharlas(db.Model):
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
 
-    def __init__(self,tema,presencialidad,titulo,fecha,aprobada,autor,empresa_id):
+    def __init__(self,tema,presencialidad,titulo,fecha,autor,empresa_id):
         self.tema = tema
         self.presencialidad = presencialidad
         self.titulo = titulo
         self.fecha = fecha
-        self.aprobada = aprobada
+        self.aprobada = False
         self.autor = autor
 
         self.empresa_id = empresa_id

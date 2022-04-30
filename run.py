@@ -43,7 +43,7 @@ from routes.eventoFeriaEmpresas_bp import eventoFeriaEmpresas_bp
 from routes.eventoPresentacionProyectos_bp import eventoPresentacionProyectos_bp
 from routes.eventoCharla_bp import eventoCharla_bp
 from routes.eventoSpeedMeeting_bp import eventoSpeedMeeting_bp
-from routes.form_bp import form_bp
+
 
 #SQLAlchemy
 app.config.from_object('config')
@@ -279,13 +279,28 @@ admin.add_view(Persona_View)
 
 # FIN MODO ADMINISTRADOR
 
-from modules.moduleRegistro.forms import RegisterForm
+from modules.moduleRegistro.forms import EmpresaRegisterForm, EventoCharlasRegisterForm,\
+ EventoFeriaEmpresasRegisterForm, EventoPresentacionProyectosRegisterForm,\
+ EventoSpeedMeetingRegisterForm, PersonaRegisterForm
 # ROUTING
 @app.route('/')
 def index():
     empresas = EmpresaController.all_query()
-    form = RegisterForm()
-    return render_template('index3.html',empresas=empresas,form=form)
+    formEmpresa = EmpresaRegisterForm()
+    formPersona1 = PersonaRegisterForm()
+    formPersona2 = PersonaRegisterForm()
+    formPersona3 = PersonaRegisterForm()
+    formPersona4 = PersonaRegisterForm()
+    formEventoCharlas = EventoCharlasRegisterForm()
+    formEventoFeriaEmpresas = EventoFeriaEmpresasRegisterForm()
+    formEventoPresentacionProyectos = EventoPresentacionProyectosRegisterForm()
+    formEventoSpeedMeeting = EventoSpeedMeetingRegisterForm()
+
+    return render_template('index3.html',empresas=empresas,formEmpresa=formEmpresa,\
+    formPersona1=formPersona1,formPersona2=formPersona2,formPersona3=formPersona3,\
+    formPersona4=formPersona4,formEventoCharlas=formEventoCharlas,\
+    formEventoFeriaEmpresas=formEventoFeriaEmpresas,formEventoPresentacionProyectos=formEventoPresentacionProyectos,\
+    formEventoSpeedMeeting=formEventoSpeedMeeting)
 
 
 @app.route('/favicon.ico')

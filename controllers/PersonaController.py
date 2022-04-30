@@ -16,19 +16,10 @@ def index():
 """
     Guardar Persona.
 """
-def store():
-    id = request.form['id']
-    nombre = request.form['nombre']
-    puesto = request.form['puesto']
-    comentario = request.form['comentario']
-
-    empresa_id = request.form['idempresa']
-
-    persona = Persona(id,nombre,puesto,comentario,empresa_id)
+def store(persona):
     db.session.add(persona)
     db.session.commit()
 
-    return 'Su informacion ha sido guardada en nuestra base de datos'
 
 """
     Buscar todas las personas

@@ -12,14 +12,21 @@ from threading import Thread
 
 from models.Empresa import Empresa
 from models.EventoCharlas import EventoCharlas
-from models.EventoSpeedMeeting import EventoSpeedMeeting as SpeedMeeting
+from models.EventoFeriaEmpresas import EventoFeriaEmpresas
+from models.EventoPresentacionProyectos import EventoPresentacionProyectos
+from models.EventoSpeedMeeting import EventoSpeedMeeting
+from models.Persona import Persona
 
 
 from controllers import EmpresaController
 from controllers import EventoCharlaController
+from controllers import EventoFeriaEmpresasController
+from controllers import EventoPresentacionProyectosController
 from controllers import EventoSpeedMeetingController
+from controllers import PersonaController
 
-from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm, RegisterForm
+from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm, EmpresaRegisterForm, PersonaRegisterForm,\
+EventoSpeedMeetingRegisterForm, EventoCharlasRegisterForm, EventoFeriaEmpresasRegisterForm
 
 
 import random
@@ -88,7 +95,7 @@ def store():
     perfiles = request.form['perfiles']
     pregunta = request.form['pregunta']
     aprobado = False
-    eventoSpeedMeeting=SpeedMeeting(presencialidad = presencial, fecha = dia, horaInicio = horaInicio, horaFin = horaFin, perfiles = perfiles, pregunta = pregunta, aprobada = aprobado, empresa_id = id)
+    eventoSpeedMeeting=EventoSpeedMeeting(presencialidad = presencial, fecha = dia, horaInicio = horaInicio, horaFin = horaFin, perfiles = perfiles, pregunta = pregunta, aprobada = aprobado, empresa_id = id)
 
 
 
@@ -104,24 +111,24 @@ def store():
     Guardar empresa en BBDD con WTForm
 """
 def store2():
-    form = RegisterForm()
+    formEmpresa = EmpresaRegisterForm()
 
-    id = form.cif.data
-    nombre = form.nombre.data
-    password = generate_password_hash(form.password.data)
-    personaContacto = form.personaContacto.data
-    email = form.email.data
-    telefono = form.telefono.data
-    direccion = form.direccion.data
-    poblacion = form.poblacion.data
-    provincia = form.provincia.data
-    codigoPostal = form.codigoPostal.data
-    pais = form.pais.data
-    urlWeb = form.urlWeb.data
+    id = formEmpresa.cif.data
+    nombre = formEmpresa.nombre.data
+    password = generate_password_hash(formEmpresa.password.data)
+    personaContacto = formEmpresa.personaContacto.data
+    email = formEmpresa.email.data
+    telefono = formEmpresa.telefono.data
+    direccion = formEmpresa.direccion.data
+    poblacion = formEmpresa.poblacion.data
+    provincia = formEmpresa.provincia.data
+    codigoPostal = formEmpresa.codigoPostal.data
+    pais = formEmpresa.pais.data
+    urlWeb = formEmpresa.urlWeb.data
     consentimientoNombre = True
     buscaCandidatos = True
 
-    logo = form.logo.data
+    logo = formEmpresa.logo.data
     logoFileName = str(id) + ".png";
 
     # Cambiar barras dependiendo del sistema operativo
@@ -146,7 +153,57 @@ def store2():
 
     EmpresaController.store(empresa)
 
-    #FALTA AÑADIR LOS EVENTOS MEDIANTE WTF FORM
+    #Añadir personas
+    formPersona1 = PersonaRegisterForm()
+    saveFormPersona(formPersona1,empresa.id)
+
+    formPersona2 = PersonaRegisterForm()
+    saveFormPersona(formPersona2,empresa.id)
+
+    formPersona3 = PersonaRegisterForm()
+    saveFormPersona(formPersona3,empresa.id)
+
+    formPersona4 = PersonaRegisterForm()
+    saveFormPersona(formPersona4,empresa.id)
+
+    #Añadir eventos
+    formEventoSpeedMeeting = EventoSpeedMeetingRegisterForm()
+    if formEventoSpeedMeeting.pregunta.data != '':
+        presencialidad = formEventoSpeedMeeting.presencialidad.data
+        fecha = formEventoSpeedMeeting.fecha.data
+        horaInicio = formEventoSpeedMeeting.horaInicio.data
+        horaFin = formEventoSpeedMeeting.horaFin.data
+        perfiles = formEventoSpeedMeeting.perfiles.data
+        pregunta = formEventoSpeedMeeting.pregunta.data
+
+        eventoSpeedMeeting = EventoSpeedMeeting(presencialidad=presencialidad,fecha=fecha,\
+        horaInicio=horaInicio,horaFin=horaFin,perfiles=perfiles,pregunta=pregunta,empresa_id=empresa.id)
+
+        EventoSpeedMeetingController.store(eventoSpeedMeeting)
+
+    formEventoCharlas = EventoCharlasRegisterForm()
+    if formEventoCharlas.tema.data != '':
+        tema = formEventoCharlas.tema.data
+        presencialidad = formEventoCharlas.presencialidad.data
+        titulo = formEventoSpeedMeeting.titulo.data
+        fecha = formEventoSpeedMeeting.fecha.data
+        autor = formEventoSpeedMeeting.autor.data
+
+
+        eventoCharlas = EventoCharlas(tema=tema,presencialidad=presencialidad,titulo=titulo,\
+        fecha=fecha,autor=autor,empresa_id=empresa.id)
+
+        EventoCharlaController.store(eventoCharlas)
+
+    formEventoFeriaEmpresas = EventoFeriaEmpresasRegisterForm()
+    if formEventoFeriaEmpresas.fecha.data != None:
+        fecha = fformEventoFeriaEmpresas.fecha.data
+        presencialidad = formEventoCharlas.presencialidad.data
+
+        eventoFeriaEmpresas = EventoFeriaEmpresas(fecha=fecha,presencialidad=presencialidad,empresa_id=empresa.id)
+
+        EventoFeriaEmpresasController.store(eventoCharlas)
+    #formEventoPresentacionProyectos = EventoPresentacionProyectosRegisterForm()
 
     # Mandar mail
     #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
@@ -154,6 +211,19 @@ def store2():
     flash('Te has registrado! Revista tu email para confirmar tu cuenta.')
 
     return  redirect(url_for('index'))
+
+"""
+    Guardar formulario persona
+"""
+def saveFormPersona(formPersona,id):
+    if formPersona.nombre.data != '':
+        nombre = formPersona.nombre.data
+        puesto = formPersona.puesto.data
+        comentario = formPersona.comentario.data
+
+        persona = Persona(nombre=nombre,puesto=puesto,comentario=comentario,empresa_id=id)
+
+        PersonaController.store(persona)
 
 """
     Confirmar usuario
@@ -170,6 +240,7 @@ def confirmUser(username,userhash):
             EmpresaController.confirmar(username)
             flash('Has confirmado el usuario!')
             #Mandar mail a admin
+            send_email("companydayprueba@gmail.com",'Se ha registrado un nuevo usuario al CompanyDay', 'templateMail',url=username)
         except:
             abort(500, description="An error has occurred.")
 
