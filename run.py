@@ -308,23 +308,6 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static/images/favicon'), 'favicon.ico')
 
 
-@app.route('/login_empresa')
-def loginEmpresa():
-
-    # show the form, it wasn't submitted
-    return render_template('login.html')
-
-@app.route('/registro_empresa')
-def registroEmpresa():
-
-    # show the form, it wasn't submitted
-    return render_template('registroEmpresa.html')
-
-@login_required
-@app.route('/registro_presentacion')
-def registroPresentacion():
-    eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by().all()
-    return render_template('registroPresentaciones.html', eventosPresentacionProyectos = eventosPresentacionProyectos)
 
 @app.route('/proyecto')
 def proyectos():
@@ -332,41 +315,17 @@ def proyectos():
     charlas = EventoCharlaController.all_query()
     return render_template('proyectos.html',proyectos=proyectos,charlas=charlas)
 
-@login_required
-@app.route('/registro_charla')
-def registroCharla():
-    eventosCharla = EventoCharlas.query.filter_by().all()
-    return render_template('registroCharlas.html', eventosCharla = eventosCharla)
 
-@app.route('/charla')
-def charlas():
-    charlas = EventoCharlaController.all_query()
-    return render_template('charlas.html',charlas=charlas)
+from modules.moduleLogin.forms import LoginForm
+"""
+    Crear variable global en jinja2 con el login form
+"""
+@app.context_processor
+def login():
+    loginForm = LoginForm()
+    return dict(loginForm=loginForm)
 
-@app.route('/registro_prueba')
-def registroFinal():
-    return render_template("registroPrueba.html")
 
-@app.route('/calendar')
-def calendar():
-    eventos = EventoFeriaEmpresasController.all_query()
-    return render_template('calendar.html',eventos=eventos)
-
-@app.route('/contacto')
-def contacto():
-
-    # show the form, it wasn't submitted
-    return render_template('contacto.html')
-
-@app.route('/pruebajs')
-def pruebajs():
-    empresas = Empresa.query.all()
-    return render_template('prueba.html',empresas=empresas)
-
-@app.route('/chulo')
-def chulo():
-    empresas = Empresa.query.all()
-    return render_template('chulo.html',empresas=empresas)
 
 # FINAL ROUTING
 
@@ -421,6 +380,8 @@ def method_name():
     items = ItemTableEmpresas(empresas)
     return render_template("pruebaTablas.html", empresas = items)
     """
+
+
 
 # START APP
 if __name__ == '__main__':
