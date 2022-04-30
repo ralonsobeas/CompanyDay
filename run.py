@@ -40,6 +40,9 @@ app.config.from_object('config')
 # INIT DB
 db.init_app(app)
 migrate = Migrate(app, db)
+# He cambiado esto para lanzar bien migracion $env:FLASK_APP = "run.py"
+# Para migración se lanza en consola "flask db init" inicialmente. Para actualizar version "flask db migrate"
+# Para actualizar BBDD "flask db upgrade". Para bajar de versión "flask db downgrade"
 
 # REGISTER BLUEPRINTS
 from routes.empresa_bp import empresa_bp
