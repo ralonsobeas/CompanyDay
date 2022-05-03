@@ -14,7 +14,7 @@ DEBUG = True
 SECRET_KEY = "hardsecretkey"
 
 # Connect to the database
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://companyday:companyday@localhost/companyday'
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://gennakk:companyday@gennakk.mysql.pythonanywhere-services.com/gennakk$companyday"
 
 # Turn off the Flask-SQLAlchemy event system and warning
 SQLALCHEMY_TRACK_MODIFICATIONS = False
