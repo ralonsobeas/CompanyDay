@@ -70,7 +70,7 @@ class EmpresaView(GeneralView):
     column_exclude_list = ['userHash']
     column_searchable_list = ['nombre', 'email']
     column_sortable_list = ['validado','confirmed','admin']
-    column_list = ['validado', 'confirmed', 'nombre', 'email', 'Personacontacto', 'Telefono', 'Direccion', 'Poblacion', 'Provincia', 'CodigoPostal', 'Pais', 'Consentimientonombre', 'Buscacandidatos','Admin']
+    column_list = ['validado', 'confirmed', 'nombre', 'email', 'personacontacto', 'telefono', 'direccion', 'poblacion', 'provincia', 'codigoPostal', 'pais', 'consentimientonombre', 'buscacandidatos','admin']
     @action('validar', 'Validar', '¿Seguro de que quieres validar las empresas seleccionadas?')
     def action_validar(self, ids):
         count = 0
