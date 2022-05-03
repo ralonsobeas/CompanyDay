@@ -16,8 +16,7 @@ class Persona(db.Model):
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
 
-    def __init__(self, id,nombre,puesto,comentario,empresa_id):
-        self.id = id
+    def __init__(self,nombre,puesto,comentario,empresa_id):
         self.nombre = nombre
         self.puesto = puesto
         self.comentario = comentario

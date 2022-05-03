@@ -182,35 +182,7 @@
                     </div>
                   </article>
                 {% endfor %}
-                <!--
-                <div class="card mb-4 mb-md-0">
-                  <div class="card-body">
-                    <p class="mb-4"><span class="text-primary font-italic me-1">Feria de empresas</span></p>
-                    <div class="container table-responsive">
-                    <table class="table table-bordered table-hover">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">Fecha</th>
-                          <th scope="col">Presencial</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for eventoFeriaEmpresas in eventosFeriaEmpresa %}
-                        <tr>
-                          <td>{{eventoFeriaEmpresas.fecha}}</td>
-                          {% if eventoFeriaEmpresas.presencial %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                    </div>
-                  </div>
-                </div>
-                -->
+
               </div>
               <div class="col-md-12">
                 {% for eventoPresentacionProyectos in eventosPresentacionProyectos %}
@@ -249,56 +221,7 @@
                   </div>
                 </article>
                 {% endfor %}
-                <!--
-                <div class="card mb-4 mb-md-0">
-                  <div class="card-body">
-                    <p class="mb-4"><span class="text-primary font-italic me-1">Presentaciones</span></p>
-                    <table class="table table-bordered table-hover">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">Presencial</th>
-                          <th scope="col">Videojuegos</th>
-                          <th scope="col">Diseño digital</th>
-                          <th scope="col">Cortos de animación</th>
-                          <th scope="col">Ingeniería</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for eventoPresentacionProyectos in eventosPresentacionProyectos %}
-                        <tr>
-                          {% if eventoPresentacionProyectos.presencial %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                          {% if eventoPresentacionProyectos.videojuegos %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                          {% if eventoPresentacionProyectos.disenoDigital %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                          {% if eventoPresentacionProyectos.cortosAnimacion %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                          {% if eventoPresentacionProyectos.ingenieria %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                    <a class="btn btn-primary" href="{{ url_for('registroPresentacion') }}">Registro Presentaciones</a>
-                  </div>
-                </div>
-                -->
+
               </div>
               <div class="col-md-12">
                 {% for eventoSpeedMeeting in eventosSpeedMeeting %}
@@ -324,39 +247,7 @@
             			</div>
             		</article>
                 {% endfor %}
-                <!--
-                <div class="card mb-4 mb-md-0">
-                  <div class="card-body">
-                    <p class="mb-4"><span class="text-primary font-italic me-1">Speed Meetings</span></p>
-                    <table class="table table-bordered table-hover">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">Fecha</th>
-                          <th scope="col">Presencial</th>
-                          <th scope="col">Duracion</th>
-                          <th scope="col">Perfiles</th>
-                          <th scope="col">Pregunta</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for eventoSpeedMeeting in eventosSpeedMeeting %}
-                        <tr>
-                          <td>{{eventoSpeedMeeting.fecha}}</td>
-                          {% if eventoSpeedMeeting.presencial %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                          <td>{{eventoSpeedMeeting.duracion}}</td>
-                          <td>{{eventoSpeedMeeting.perfiles}}</td>
-                          <td>{{eventoSpeedMeeting.pregunta}}</td>
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                -->
+
               </div>
               <div class="col-md-12">
                 {% for eventoCharla in eventosCharla %}
@@ -389,34 +280,7 @@
                   </div>
                 </article>
                 {% endfor %}
-                <!--
-                <div class="card mb-4 mb-md-0">
-                  <div class="card-body">
-                    <p class="mb-4"><span class="text-primary font-italic me-1">Charlas</span></p>
-                    <table class="table table-bordered table-hover">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">Fecha</th>
-                          <th scope="col">Presencial</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for eventoCharla in eventosCharla %}
-                        <tr>
-                          <td>{{eventoCharla.fecha}}</td>
-                          {% if eventoCharla.presencial %}
-                            <td>Si</td>
-                          {% else %}
-                            <td>No</td>
-                          {% endif %}
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                    <a class="btn btn-primary" href="{{ url_for('registroCharla') }}">Registro Charla</a>
-                  </div>
-                </div>
-                -->
+
               </div>
             </div>
           </div>

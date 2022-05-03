@@ -20,13 +20,13 @@ class EventoSpeedMeeting(db.Model):
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
 
-    def __init__(self,presencialidad,fecha,horaInicio,horaFin,perfiles,pregunta,aprobada,empresa_id):
+    def __init__(self,presencialidad,fecha,horaInicio,horaFin,perfiles,pregunta,empresa_id):
         self.presencialidad = presencialidad
         self.fecha = fecha
         self.horaInicio = horaInicio
         self.horaFin = horaFin
         self.perfiles = perfiles
         self.pregunta = pregunta
-        self.aprobada = aprobada
+        self.aprobada = False
 
         self.empresa_id = empresa_id

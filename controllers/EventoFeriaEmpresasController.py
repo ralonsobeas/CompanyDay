@@ -15,11 +15,6 @@ def index():
     Guardar EventoFeriaEmpresas
 """
 def store():
-    id = request.form['id']
-    fecha = request.form['fecha']
-    presencial = True if(request.form['presencial']=='True') else False
-
-    eventoFeriaEmpresas = EventoFeriaEmpresas(id,fecha,presencial)
     db.session.add(eventoFeriaEmpresas)
     db.session.commit()
 
