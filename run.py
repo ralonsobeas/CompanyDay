@@ -12,6 +12,17 @@ from urllib import request
 
 import os
 
+import git
+#Route for the GitHub webhook
+@app.route('/update_server', methods=['POST'])
+def git_update():
+  repo = git.Repo('./CompanyDay')
+  origin = repo.remotes.origin
+  repo.create_head('main',
+  origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+  origin.pull()
+  return '', 200
+
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 # LANGUAGE
