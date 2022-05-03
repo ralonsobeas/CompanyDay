@@ -18,7 +18,7 @@ def loginForm():
 
     if not empresa or not check_password_hash(empresa.password,password):
         flash('Usuario incorrecto.')
-        return
+        return  redirect(url_for('index'))
 
     login_user(empresa,remember=remember)
 
