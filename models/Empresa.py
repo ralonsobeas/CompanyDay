@@ -16,7 +16,7 @@ class Empresa(UserMixin,db.Model):
     validado = db.Column(db.Boolean)
     id = db.Column(db.Integer, primary_key=True)
     nombre  = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(120))
+    password = db.Column(db.String(256))
     personaContacto  = db.Column(db.String(120))
     email = db.Column(db.String(120), unique=True)
     telefono = db.Column(db.String(15))
@@ -65,7 +65,7 @@ class Empresa(UserMixin,db.Model):
         self.buscaCandidatos = buscaCandidatos
         self.admin = admin
         self.userHash = userHash
-        
+
     def __unicode__(self):
         return self.nombre
     def __repr__(self):
