@@ -13,6 +13,10 @@ from urllib import request
 import os
 
 import git
+
+app = Flask(__name__)
+bootstrap = Bootstrap(app)
+
 #Route for the GitHub webhook
 @app.route('/update_server', methods=['POST'])
 def git_update():
@@ -23,8 +27,6 @@ def git_update():
   origin.pull()
   return '', 200
 
-app = Flask(__name__)
-bootstrap = Bootstrap(app)
 # LANGUAGE
 """
 babel = Babel(app)
@@ -82,6 +84,13 @@ from controllers import EventoSpeedMeetingController
 from modules.moduleRegistro.forms import EmpresaRegisterForm, EventoCharlasRegisterForm,\
  EventoFeriaEmpresasRegisterForm, EventoPresentacionProyectosRegisterForm,\
  EventoSpeedMeetingRegisterForm, PersonaRegisterForm
+
+from modules.moduleRegistro.moduleRegistro import moduleRegistro
+app.register_blueprint(moduleRegistro, url_prefix="/moduleRegistro")
+
+from modules.moduleLogin.moduleLogin import moduleLogin
+app.register_blueprint(moduleLogin, url_prefix="/moduleLogin")
+
 # ROUTING
 @app.route('/')
 def index():
@@ -138,3 +147,9 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(port = 3001, debug=True)
+
+from modules.moduleRegistro.moduleRegistro import moduleRegistro
+app.register_blueprint(moduleRegistro, url_prefix="/moduleRegistro")
+
+from modules.moduleLogin.moduleLogin import moduleLogin
+app.register_blueprint(moduleLogin, url_prefix="/moduleLogin")
