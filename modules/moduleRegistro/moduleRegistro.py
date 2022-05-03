@@ -323,3 +323,8 @@ def setnewpassword_post():
             return  redirect(url_for('index'))
 
     return render_template("setnewpassword.html", form=form)
+
+@moduleRegistro.route('/test')
+def moduleRegistro_test():
+    return 'OK'
+

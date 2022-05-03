@@ -38,3 +38,8 @@ def loginManager(id):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@moduleLogin.route('/test')
+def moduleLogin_test():
+    return 'OK'
+
