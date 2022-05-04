@@ -207,7 +207,7 @@ def store2():
 
     # Mandar mail
     #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
-    send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
+    send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'mail/templateMail',url=url)
     flash('Te has registrado! Revista tu email para confirmar tu cuenta.')
 
     return  redirect(url_for('index'))
@@ -240,7 +240,7 @@ def confirmUser(username,userhash):
             EmpresaController.confirmar(username)
             flash('Has confirmado el usuario!')
             #Mandar mail a admin
-            send_email("companydayprueba@gmail.com",'Se ha registrado un nuevo usuario al CompanyDay', 'templateMail',url=username)
+            send_email("companydayprueba@gmail.com",'Se ha registrado un nuevo usuario al CompanyDay', 'mail/templateMail',nombre=username)
         except:
             abort(500, description="An error has occurred.")
 
@@ -282,7 +282,7 @@ def resetpassword():
                     empresa.userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
                     url = 'http://{}/empresas/setnewpassword/{}/{}'.format(request.host,empresa.nombre,empresa.userHash)
                     #send_email(form.email.data,'Confirmar cambio de contraseña.', 'templateMail',url=url)
-                    send_email("companydayprueba@gmail.com",'Confirmar cambio de contraseña.', 'templateMail',url=url)
+                    send_email("companydayprueba@gmail.com",'Confirmar cambio de contraseña.', 'mail/templateMailContrasenia',url=url)
                     EmpresaController.store(empresa)
 
             flash('Se ha enviado un mensaje al correo electrónico si existe')
@@ -327,4 +327,3 @@ def setnewpassword_post():
 @moduleRegistro.route('/test')
 def moduleRegistro_test():
     return 'OK'
-
