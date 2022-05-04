@@ -7,6 +7,7 @@ from models.EventoPresentacionProyectos import EventoPresentacionProyectos
 from models.EventoSpeedMeeting import EventoSpeedMeeting
 from models.EventoCharlas import EventoCharlas
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import exc
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from shared.models import login_manager
@@ -22,6 +23,7 @@ from threading import Thread
 import base64
 
 import random
+import re
 
 db = SQLAlchemy()
 
@@ -71,8 +73,25 @@ def logout():
 """
 def store(empresa):
     db.session.add(empresa)
-    db.session.commit()
 
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        if re.match("(.*)Duplicate entry(.*)for key 'empresa.nombre'", error.args[0]):
+            return False, "error, nombre repetido (%s)" % empresa.nombre
+        elif re.match("(.*)Duplicate entry(.*)for key 'PRIMARY'", error.args[0]):
+            return False, "error, cif repetido (%s)" % empresa.id
+        elif re.match("(.*)Duplicate entry(.*)for key 'empresa.mail'", error.args[0]):
+            return False, "error, mail repetido (%s)" % empresa.mail
+            """
+        elif "FOREIGN KEY constraint failed" in str(error):
+            return False, "supplier does not exist"
+            """
+        else:
+            return False, str(error)
+
+    return True, "";
 """
     Guardar empresa en BBDD ADMIN
 """

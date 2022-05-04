@@ -151,7 +151,10 @@ def store2():
                         poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
                         consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False,userHash=userHash)
 
-    EmpresaController.store(empresa)
+    aniadido, msg = EmpresaController.store(empresa)
+    if not aniadido:
+        flash(msg)
+        return redirect(url_for('index'))
 
     #Añadir personas
     formPersona1 = PersonaRegisterForm()
@@ -324,6 +327,5 @@ def setnewpassword_post():
 
     return render_template("setnewpassword.html", form=form)
 
-@moduleRegistro.route('/test')
 def moduleRegistro_test():
     return 'OK'
