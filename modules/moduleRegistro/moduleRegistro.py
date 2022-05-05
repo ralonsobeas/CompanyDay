@@ -26,7 +26,7 @@ from controllers import EventoSpeedMeetingController
 from controllers import PersonaController
 
 from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm, EmpresaRegisterForm, PersonaRegisterForm,\
-EventoSpeedMeetingRegisterForm, EventoCharlasRegisterForm, EventoFeriaEmpresasRegisterForm
+EventoSpeedMeetingRegisterForm, EventoCharlasRegisterForm, EventoFeriaEmpresasRegisterForm, EditEmpresaForm
 
 
 import random
@@ -326,6 +326,38 @@ def setnewpassword_post():
             return  redirect(url_for('index'))
 
     return render_template("setnewpassword.html", form=form)
+
+def editEmpresa():
+    formEdit = EditEmpresaForm()
+    id = formEdit.id.data
+    empresa = EmpresaController.get_by_id(id)
+    nombre = formEdit.nombre.data
+    telefono = formEdit.telefono.data
+    direccion = formEdit.direccion.data
+    poblacion = formEdit.poblacion.data
+    provincia = formEdit.provincia.data
+    codigoPostal = formEdit.codigoPostal.data
+    pais = formEdit.pais.data
+    urlWeb = formEdit.urlWeb.data
+    consentimientoNombre = True
+    buscaCandidatos = True
+
+    logo = formEdit.logo.data
+    logoFileName = str(id) + ".png";
+
+    # Cambiar barras dependiendo del sistema operativo
+    if(platform.system()=='Windows'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
+        UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
+        logo.save(UPLOADS_PATH+"\\"+logoFileName)
+    elif(platform.system()=='Linux'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
+        UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
+        logo.save(UPLOADS_PATH+"/"+logoFileName)
+    EmpresaController.update(empresa.nombre, nombre, telefono, direccion, poblacion, provincia, codigoPostal, pais, urlWeb, consentimientoNombre, buscaCandidatos, logoFileName)
+    return redirect(url_for('empresa_bp.show',nombre=nombre))
+    
+    
 
 def moduleRegistro_test():
     return 'OK'
