@@ -146,7 +146,7 @@ def store2():
     userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
     url = 'http://{}/empresas/confirmuser/{}/{}'.format(request.host,nombre,userHash)
 
-    empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
+    empresa = Empresa(id=id,validado=False,nombre=nombre,password=password, method='sha256', \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
                         poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
                         consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False,userHash=userHash)

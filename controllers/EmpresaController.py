@@ -78,11 +78,11 @@ def store(empresa):
         db.session.commit()
     except exc.IntegrityError as error:
         db.session.rollback()
-        if re.match("(.*)Duplicate entry(.*)for key 'empresa.nombre'", error.args[0]):
+        if re.match("(.*)Duplicate entry(.*)for key 'nombre'", error.args[0]):
             return False, "error, nombre repetido (%s)" % empresa.nombre
         elif re.match("(.*)Duplicate entry(.*)for key 'PRIMARY'", error.args[0]):
             return False, "error, cif repetido (%s)" % empresa.id
-        elif re.match("(.*)Duplicate entry(.*)for key 'empresa.mail'", error.args[0]):
+        elif re.match("(.*)Duplicate entry(.*)for key 'email'", error.args[0]):
             return False, "error, mail repetido (%s)" % empresa.mail
             """
         elif "FOREIGN KEY constraint failed" in str(error):
