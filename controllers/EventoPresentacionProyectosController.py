@@ -54,15 +54,7 @@ def store():
     db.session.add(presentacionProyectos)
     db.session.commit()
 
-    return 'Su informacion ha sido guardada en nuestra base de datos'
 
-"""
-    Mostrar EventoPresentacionProyectos por id. Renderizar en empresa.html
-"""
-def show(presentacion_id):
-    presentacionProyectos = EventoPresentacionProyectos.query.get(presentacion_id)
-    return render_template('empresa.html',
-                            empresa=presentacionProyectos)
 
 def update(presentacion_id):
     return 'update'
@@ -70,15 +62,9 @@ def update(presentacion_id):
 def delete(presentacion_id):
     return 'delete'
 
-"""
-    Mostrar todas las empresas. Renderizar en empresas.html
-"""
-def all():
-    empresas = EventoPresentacionProyectos.query.all()
-    return render_template('empresas.html',empresas=empresas)
 
 """
-    Buscar todas las empresas.
+    Buscar todos los EventoPresentacionProyectos.
 """
 def all_query():
     listaProyectosAprobados = EventoPresentacionProyectos.query\
@@ -87,12 +73,18 @@ def all_query():
     .filter(Empresa.validado == True)\
     .filter(EventoPresentacionProyectos.validado == True)
     return listaProyectosAprobados;
-    
-"""
-    Validar para Admin
-"""
 
+"""
+    Validar para Admin EventoPresentacionProyectos
+"""
 def validar(id,valor):
     presentacion = EventoPresentacionProyectos.query.filter_by(id=id).first()
     presentacion.validado = valor
     db.session.commit()
+
+"""
+    Obtener EventoPresentacionProyectos por id de empresa.
+"""
+def get_by_empresa_id_all(empresa_id):
+    eventoPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id=empresa_id).all()
+    return eventoPresentacionProyectos

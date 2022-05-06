@@ -63,7 +63,7 @@ def all_query():
     .filter(Empresa.validado == True)\
     .filter(EventoCharlas.aprobada == True)
     return listaCharlasAprobadas;
-    
+
 """
     Validar para Admin
 """
@@ -72,3 +72,10 @@ def validar(id,valor):
     charla = EventoCharlas.query.filter_by(id=id).first()
     charla.aprobada = valor
     db.session.commit()
+
+"""
+    Obtener EventoCharlas por id de empresa.
+"""
+def get_by_empresa_id_all(empresa_id):
+    eventoCharlas = EventoCharlas.query.filter_by(empresa_id=empresa_id).all()
+    return eventoCharlas

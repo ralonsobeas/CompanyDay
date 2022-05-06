@@ -88,7 +88,7 @@ from controllers import EventoSpeedMeetingController
 
 from modules.moduleRegistro.forms import EmpresaRegisterForm, EventoCharlasRegisterForm,\
  EventoFeriaEmpresasRegisterForm, EventoPresentacionProyectosRegisterForm,\
- EventoSpeedMeetingRegisterForm, PersonaRegisterForm
+ EventoSpeedMeetingRegisterForm, PersonaRegisterForm, PersonaRegisterForm1, PersonaRegisterForm2, PersonaRegisterForm3
 
 from modules.moduleRegistro.moduleRegistro import moduleRegistro
 app.register_blueprint(moduleRegistro, url_prefix="/moduleRegistro")
@@ -102,15 +102,15 @@ def index():
     empresas = EmpresaController.all_query()
     formEmpresa = EmpresaRegisterForm()
     formPersona1 = PersonaRegisterForm()
-    formPersona2 = PersonaRegisterForm()
-    formPersona3 = PersonaRegisterForm()
-    formPersona4 = PersonaRegisterForm()
+    formPersona2 = PersonaRegisterForm1()
+    formPersona3 = PersonaRegisterForm2()
+    formPersona4 = PersonaRegisterForm3()
     formEventoCharlas = EventoCharlasRegisterForm()
     formEventoFeriaEmpresas = EventoFeriaEmpresasRegisterForm()
     formEventoPresentacionProyectos = EventoPresentacionProyectosRegisterForm()
     formEventoSpeedMeeting = EventoSpeedMeetingRegisterForm()
 
-    return render_template('index3.html',empresas=empresas,formEmpresa=formEmpresa,\
+    return render_template('index.html',empresas=empresas,formEmpresa=formEmpresa,\
     formPersona1=formPersona1,formPersona2=formPersona2,formPersona3=formPersona3,\
     formPersona4=formPersona4,formEventoCharlas=formEventoCharlas,\
     formEventoFeriaEmpresas=formEventoFeriaEmpresas,formEventoPresentacionProyectos=formEventoPresentacionProyectos,\

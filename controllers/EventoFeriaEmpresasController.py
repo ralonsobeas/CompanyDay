@@ -47,3 +47,10 @@ def all():
 """
 def all_query():
     return EventoFeriaEmpresas.query.all()
+
+"""
+    Obtener EventoFeriaEmpresas por id de empresa.
+"""
+def get_by_empresa_id_all(empresa_id):
+    eventoFeriaEmpresas = EventoFeriaEmpresas.query.filter_by(empresa_id=empresa_id).all()
+    return eventoFeriaEmpresas

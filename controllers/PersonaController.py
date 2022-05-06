@@ -26,3 +26,10 @@ def store(persona):
 """
 def all_query():
     return Persona.query.all()
+
+"""
+    Obtener Persona por id de empresa.
+"""
+def get_by_empresa_id_all(empresa_id):
+    persona = Persona.query.filter_by(empresa_id=empresa_id).all()
+    return persona

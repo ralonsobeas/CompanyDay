@@ -27,92 +27,19 @@ from controllers import EventoPresentacionProyectosController
 from controllers import EventoSpeedMeetingController
 from controllers import PersonaController
 
-from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm, EmpresaRegisterForm, PersonaRegisterForm,\
-EventoSpeedMeetingRegisterForm, EventoCharlasRegisterForm, EventoFeriaEmpresasRegisterForm, EditEmpresaForm
+from modules.moduleRegistro.forms import ResetPasswordForm, SetNewPasswordForm, EmpresaRegisterForm\
+, PersonaRegisterForm, PersonaRegisterForm1, PersonaRegisterForm2, PersonaRegisterForm3, EventoSpeedMeetingRegisterForm, EventoCharlasRegisterForm, EventoFeriaEmpresasRegisterForm, EditEmpresaForm
 
 
 import random
 
 moduleRegistro = Blueprint("moduleRegistro", __name__,static_folder="static",template_folder="templates")
 
-"""
-    Guardar empresa en BBDD
-"""
-def store():
-    id = request.form['CIF']
-    nombre = request.form['nombreEmpresa']
-    password = request.form['password']
-    personaContacto = request.form['personaContacto']
-    email = request.form['email']
-    telefono = request.form['telefono']
-    direccion = request.form['direccion']
-    poblacion = request.form['poblacion']
-    provincia = request.form['provincia']
-    codigoPostal = request.form['codigoPostal']
-    pais = request.form['pais']
-    urlWeb = request.form['urlWeb']
-    consentimientoNombre = True
-    buscaCandidatos = True
-
-    logo = request.files['logo']
-    logoFileName = id + ".png";
-
-    # Cambiar barras dependiendo del sistema operativo
-    if(platform.system()=='Windows'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
-        UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
-        logo.save(UPLOADS_PATH+"\\"+logoFileName)
-    elif(platform.system()=='Linux'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
-        UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
-        logo.save(UPLOADS_PATH+"/"+logoFileName)
-
-
-    #Proceso validación usuario
-    userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
-    url = 'http://{}/empresas/confirmuser/{}/{}'.format(request.host,nombre,userHash)
-
-    empresa = Empresa(id=id,validado=False,nombre=nombre,password=password, \
-                        personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
-                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False,userHash=userHash)
-
-    EmpresaController.store(empresa)
-
-    tema = request.form['tema']
-    presencialidad = True if(request.form['presencialidad']=='True') else False
-    titulo = request.form['titulo']
-    fecha = request.form['fecha']
-    aprobada = False
-    autor = ''
-
-    eventoCharla = EventoCharlas(tema = tema,presencialidad = presencialidad,titulo = titulo,fecha = fecha,aprobada = aprobada, empresa_id = id, autor = autor)
-
-    EventoCharlaController.store(eventoCharla)
-
-    presencial = True if(request.form['presencialidad']=='True') else False
-    dia = request.form['dia']
-    horaInicio = request.form['horaInicio']
-    horaFin = request.form['horaFin']
-    perfiles = request.form['perfiles']
-    pregunta = request.form['pregunta']
-    aprobado = False
-    eventoSpeedMeeting=EventoSpeedMeeting(presencialidad = presencial, fecha = dia, horaInicio = horaInicio, horaFin = horaFin, perfiles = perfiles, pregunta = pregunta, aprobada = aprobado, empresa_id = id)
-
-
-
-    EventoSpeedMeetingController.store(eventoSpeedMeeting)
-    # Mandar mail
-    #send_email(email,'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
-    send_email("companydayprueba@gmail.com",'Bienvenido al Company Day en U-Tad', 'templateMail',url=url)
-    flash('Te has registrado! Revista tu email para confirmar tu cuenta.')
-
-    return  redirect(url_for('index'))
 
 """
     Guardar empresa en BBDD con WTForm
 """
-def store2():
+def store():
     formEmpresa = EmpresaRegisterForm()
 
     id = formEmpresa.cif.data
@@ -162,13 +89,13 @@ def store2():
     formPersona1 = PersonaRegisterForm()
     saveFormPersona(formPersona1,empresa.id)
 
-    formPersona2 = PersonaRegisterForm()
+    formPersona2 = PersonaRegisterForm1()
     saveFormPersona(formPersona2,empresa.id)
 
-    formPersona3 = PersonaRegisterForm()
+    formPersona3 = PersonaRegisterForm2()
     saveFormPersona(formPersona3,empresa.id)
 
-    formPersona4 = PersonaRegisterForm()
+    formPersona4 = PersonaRegisterForm3()
     saveFormPersona(formPersona4,empresa.id)
 
     #Añadir eventos
@@ -242,7 +169,9 @@ def confirmUser(username,userhash):
         abort(403, description="Invalid url.")
     else:
         try:
-            EmpresaController.confirmar(username)
+            confirmado, msg = EmpresaController.confirmar(username)
+            if not confirmado:
+                flash(msg)
             flash('Has confirmado el usuario!')
             #Mandar mail a admin
             send_email("companydayprueba@gmail.com",'Se ha registrado un nuevo usuario al CompanyDay', 'mail/templateMail',nombre=username)
@@ -288,7 +217,10 @@ def resetpassword():
                     url = 'http://{}/empresas/setnewpassword/{}/{}'.format(request.host,empresa.nombre,empresa.userHash)
                     #send_email(form.email.data,'Confirmar cambio de contraseña.', 'templateMail',url=url)
                     send_email("companydayprueba@gmail.com",'Confirmar cambio de contraseña.', 'mail/templateMailContrasenia',url=url)
-                    EmpresaController.store(empresa)
+
+                    actualizado, msg = EmpresaController.update(empresa)
+                    if not actualizado:
+                        flash(msg)
 
             flash('Se ha enviado un mensaje al correo electrónico si existe')
     return render_template("resetpassword.html", form=form)
@@ -323,7 +255,9 @@ def setnewpassword_post():
             empresa.userHash = ''
             empresa.password = generate_password_hash(form.password.data)
             empresa.confirmed = 1
-            EmpresaController.store(empresa)
+            actualizado, msg = EmpresaController.update(empresa)
+            if not actualizado:
+                flash(msg)
             flash('Contraseña cambiada.')
             return  redirect(url_for('index'))
 
@@ -334,38 +268,118 @@ def editEmpresa():
     formEdit = EditEmpresaForm()
     id = formEdit.id.data
     empresa = EmpresaController.get_by_id(id)
-    nombre = formEdit.nombre.data
-    personaContacto =  formEdit.personaContacto.data
-    telefono = formEdit.telefono.data
-    direccion = formEdit.direccion.data
-    poblacion = formEdit.poblacion.data
-    provincia = formEdit.provincia.data
-    codigoPostal = formEdit.codigoPostal.data
-    pais = formEdit.pais.data
-    urlWeb = formEdit.urlWeb.data
-    consentimientoNombre = True
-    buscaCandidatos = True
+    empresa.nombre = formEdit.nombre.data
+    empresa.personaContacto =  formEdit.personaContacto.data
+    empresa.telefono = formEdit.telefono.data
+    empresa.direccion = formEdit.direccion.data
+    empresa.poblacion = formEdit.poblacion.data
+    empresa.provincia = formEdit.provincia.data
+    empresa.codigoPostal = formEdit.codigoPostal.data
+    empresa.pais = formEdit.pais.data
+    empresa.urlWeb = formEdit.urlWeb.data
+    empresa.consentimientoNombre = True
+    empresa.buscaCandidatos = True
 
     logo = formEdit.logo.data
-    logoFileName = str(id) + ".png";
+    empresa.logoFileName = str(id) + ".png";
 
     # Cambiar barras dependiendo del sistema operativo
     if(platform.system()=='Windows'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
         UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
-        logo.save(UPLOADS_PATH+"\\"+logoFileName)
+        logo.save(UPLOADS_PATH+"\\"+empresa.logoFileName)
     elif(platform.system()=='Linux'):
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
         UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
-        logo.save(UPLOADS_PATH+"/"+logoFileName)
+        logo.save(UPLOADS_PATH+"/"+empresa.logoFileName)
 
-    aniadido, msg = EmpresaController.update(empresa.nombre, nombre, personaContacto, telefono, direccion, poblacion, provincia, codigoPostal, pais, urlWeb, consentimientoNombre, buscaCandidatos, logoFileName)
+    aniadido, msg = EmpresaController.update(empresa)
     if not aniadido:
         flash(msg)
 
     return redirect(url_for("empresa_bp.userProfile",editable=0))
 
 
+"""
+    Guardar empresa en BBDD ADMIN
+"""
+@login_required
+def storeAdmin():
+    id = request.form['CIF']
+    nombre = request.form['nombreEmpresa']
+    password = request.form['password']
+    personaContacto = request.form['personaContacto']
+    email = request.form['email']
+    telefono = request.form['telefono']
+    direccion = request.form['direccion']
+    poblacion = request.form['poblacion']
+    provincia = request.form['provincia']
+    codigoPostal = request.form['codigoPostal']
+    pais = request.form['pais']
+    urlWeb = request.form['urlWeb']
+    consentimientoNombre = True
+    buscaCandidatos = True
+
+    logo = request.files['logo']
+    logoFileName = id + ".png";
+
+    if(platform.system()=='Windows'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
+        UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
+        logo.save(UPLOADS_PATH+"\\"+logoFileName)
+    elif(platform.system()=='Linux'):
+        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
+        UPLOADS_PATH = UPLOADS_PATH.replace("controllers/", "")
+        logo.save(UPLOADS_PATH+"/"+logoFileName)
+
+    empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
+                        personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
+                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
+                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False)
+
+    aniadido, msg = EmpresaController.store(empresa)
+    if not aniadido:
+        flash(msg)
+
+
+    return redirect('../admin/empresa')
+
+
+"""
+    Actualizar usuario de empresa Admin.
+"""
+@login_required
+def updateAdmin():
+    if request.form['consentimientoNombre'] == 'True':
+        consentimientoNombre = True;
+    else:
+        consentimientoNombre = False;
+    if request.form['buscaCandidatos'] == 'True':
+        buscaCandidatos = True;
+    else:
+        buscaCandidatos = False;
+
+    empresa = Empresa.get_by_id(request.form['CIF'])
+
+    empresa.nombre = request.form['nombreEmpresa']
+    empresa.personaContacto = request.form['personaContacto']
+    emresa.email = request.form['email']
+    empresa.telefono = request.form['telefono']
+    empresa.direccion = request.form['direccion']
+    empresa.poblacion = request.form['poblacion']
+    empresa.provincia = request.form['provincia']
+    empresa.codigoPostal = request.form['codigoPostal']
+    empresa.pais = request.form['pais']
+    empresa.urlWeb = request.form['urlWeb']
+    empresa.consentimientoNombre = consentimientoNombre
+    empresa.buscaCandidatos = buscaCandidatos
+    #empresa.logoFileName = logoFileName
+
+    aniadido, msg = EmpresaController.update(empresa)
+    if not aniadido:
+        flash(msg)
+
+    return redirect('../admin/empresa')
 
 def moduleRegistro_test():
     return 'OK'

@@ -8,7 +8,7 @@ test_bp.register_blueprint(moduleRegistro)
 test_bp.register_blueprint(moduleLogin)
 
 # Test registro
-test_bp.route('/testRegistro', methods=['GET'])(moduleRegistro_test)
+test_bp.route('/moduleRegistro/test', methods=['GET'])(moduleRegistro_test)
 
 # Test login
-test_bp.route('/testLogin', methods=['GET'])(moduleLogin_test)
+test_bp.route('/moduleRegistro/test', methods=['GET'])(moduleLogin_test)

@@ -17,10 +17,11 @@ def index():
 """
     Guardar EventoSpeedMeetingController
 """
+@login_required
 def store(eventoSpeedMeeting):
     db.session.add(eventoSpeedMeeting)
     db.session.commit()
-
+"""
 @login_required
 def storeTemp():
     pregunta = request.form['pregunta']
@@ -37,7 +38,7 @@ def storeTemp():
     db.session.commit()
 
     return redirect(url_for('empresa_bp.userProfile',editable=0))
-
+"""
 
 def show(empresa_id):
     return 'show'
@@ -65,12 +66,18 @@ def all_query():
     .filter(Empresa.validado == True)\
     .filter(EventoSpeedMeeting.aprobada == True)
     return listaCharlasAprobadas;
-    
+
 """
     Validar para Admin
 """
-
 def validar(id,valor):
     speedmeeting = EventoSpeedMeeting.query.filter_by(id=id).first()
     speedmeeting.aprobada = valor
     db.session.commit()
+
+"""
+    Obtener EventoSpeedMeeting por id de empresa.
+"""
+def get_by_empresa_id_all(empresa_id):
+    eventoSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id=empresa_id).all()
+    return eventoSpeedMeeting

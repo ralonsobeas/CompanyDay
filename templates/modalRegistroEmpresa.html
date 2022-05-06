@@ -1,7 +1,7 @@
 <style>
 
 	/*form styles*/
-	
+
 	#msform {
 		width: 400px;
 		margin: 50px auto;
@@ -16,7 +16,7 @@
 		padding: 20px 30px;
 		box-sizing: border-box;
 	;
-	
+
 		/*stacking fieldsets above each other*/
 		position: relative;
 	}
@@ -112,16 +112,19 @@
 		background: #27AE60;
 		color: white;
 	}
-	
-	
-	
+
+
+
 	</style>
-	
-	
-	
-	
+
+
+	{% if formEmpresa %}
+	    {% import "bootstrap/wtf.html" as wtf %}
+
+
 	<!-- multistep form -->
-	<form id="msform" class = "form" action="/empresas/crear" method = "POST" role = "form" enctype="multipart/form-data">
+	<form style="color:black" id="msform" class = "form" action="/empresas/crear" method = "POST" role = "form" enctype="multipart/form-data">
+		{{ formEmpresa.hidden_tag() }}
 	  <!-- progressbar -->
 	  <div style="justify-content: center;">
 	  <ul id="progressbar">
@@ -136,35 +139,35 @@
 	  <fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
 		<h3 class="fs-subtitle">Datos de acceso</h3>
-		<input type="text" id = "CIF" name="CIF" placeholder="CIF sin letra" />
-		<input type="text" id = "email" name="email" placeholder="Email" />
-		<input type="text" id = "nombreEmpresa" name="nombreEmpresa" placeholder="Nombre de la empresa" />
-		<input type="password" id = "password" name="password" placeholder="Password" />
-		<input type="password" name="cpass" placeholder="Confirmar Password" />
+		{{ wtf.form_field(formEmpresa.cif) }}
+		{{ wtf.form_field(formEmpresa.email) }}
+		{{ wtf.form_field(formEmpresa.nombre) }}
+		{{ wtf.form_field(formEmpresa.password) }}
+		{{ wtf.form_field(formEmpresa.confirm_password) }}
 		<input type="button" name="next" class="next action-button" value="Siguiente" />
-	
+
 	  </fieldset>
 	  <fieldset>
 		<h2 class="fs-title">Crear cuenta de empresa</h2>
 		<h3 class="fs-subtitle">Información y contacto</h3>
-		<input type="text" id = "personaContacto" name="personaContacto" placeholder="Persona de contacto" />
-		<input type="text" id = "telefono" name="telefono" placeholder="Teléfono" />
-			<input type="text" id="urlWeb" name="urlWeb" placeholder="Url Web" />
+		{{ wtf.form_field(formEmpresa.personaContacto) }}
+		{{ wtf.form_field(formEmpresa.telefono) }}
+		{{ wtf.form_field(formEmpresa.urlWeb) }}
 			<label for="logo" style="color:black;">Selecciona un logo:</label>
-			<input type="file" id="logo" name="logo" accept="image/png">
-	
+		{{ wtf.form_field(formEmpresa.logo) }}
+
 		<input type="button" name="previous" class="previous action-button" value="Anterior" />
 		<input type="button" name="next" class="next action-button" value="Siguiente" />
 	  </fieldset>
 		<fieldset>
 			<h2 class="fs-title">Crear cuenta de empresa</h2>
 			<h3 class="fs-subtitle">Dirección</h3>
-			<input type="text" id = "direccion" name="direccion" placeholder="Dirección" />
-			<input type="text" id = "poblacion" name="poblacion" placeholder="Población" />
-			<input type="text" id = "provincia" name="provincia" placeholder="Provincia" />
-			<input type="text" id = "codigoPostal" name="codigoPostal" placeholder="Código postal" />
-			<input type="text" id = "pais" name="pais" placeholder="País" />
-	
+			{{ wtf.form_field(formEmpresa.direccion) }}
+			{{ wtf.form_field(formEmpresa.poblacion) }}
+			{{ wtf.form_field(formEmpresa.provincia) }}
+			{{ wtf.form_field(formEmpresa.codigoPostal) }}
+			{{ wtf.form_field(formEmpresa.pais) }}
+
 			<input type="button" name="previous" class="previous action-button" value="Anterior" />
 			<input type="button" name="next" class="next action-button" value="Siguiente" />
 		</fieldset>
@@ -178,73 +181,78 @@
 				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="miCheckBox4" name = "miCheckBox4" onchange="mostrar4()" disabled/>Persona 4</label>
 			</div>
 			  <div id="Persona1" hidden>
-				<input type="text" name="nombrePersona1" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto1" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios1" placeholder="Comentarios" style="width: 91%;"></textarea>
+				{{ formPersona1.hidden_tag() }}
+				{{ wtf.form_field(formPersona1.nombre) }}
+				{{ wtf.form_field(formPersona1.puesto) }}
+				{{ wtf.form_field(formPersona1.comentario) }}
 			  </div>
 			  <div id="Persona2" hidden>
-				<input type="text" name="nombrePersona2" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto2" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios2" placeholder="Comentarios" style="width: 91%;"></textarea>
+					{{ formPersona2.hidden_tag() }}
+					{{ wtf.form_field(formPersona2.nombre) }}
+					{{ wtf.form_field(formPersona2.puesto) }}
+					{{ wtf.form_field(formPersona2.comentario) }}
 			  </div>
 			  <div id="Persona3" hidden>
-				<input type="text" name="nombrePersona3" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto3" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios3" placeholder="Comentarios" style="width: 91%;"></textarea>
+					{{ formPersona3.hidden_tag() }}
+					{{ wtf.form_field(formPersona3.nombre) }}
+					{{ wtf.form_field(formPersona3.puesto) }}
+					{{ wtf.form_field(formPersona3.comentario) }}
 			  </div>
 			  <div id="Persona4" hidden>
-				<input type="text" name="nombrePersona4" placeholder="Nombre" style="width: 45%; margin-right: 5%;"/>
-				<input type="text" name="puesto4" placeholder="Puesto" style="width: 40%;"/>
-				<textarea name = "comentarios4" placeholder="Comentarios" style="width: 91%;"></textarea>
+					{{ formPersona4.hidden_tag() }}
+					{{ wtf.form_field(formPersona4.nombre) }}
+					{{ wtf.form_field(formPersona4.puesto) }}
+					{{ wtf.form_field(formPersona4.comentario) }}
 			  </div>
-			  
+
 			  <input type="button" name="previous" class="previous action-button" value="Anterior" />
 			  <input type="button" name="next" class="next action-button" value="Siguiente" />
 		</fieldset>
 
 		<fieldset>
 			<h2 class="fs-title">Crear speed meeting</h2>
-			<h3 class="fs-subtitle">Información sobre speed meeting</h3>
+			<h3 class="fs-subtitle">Speed meeting (opcional)</h3>
 			<div id="cajaBotones">
 				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="siSpeedMeeting" name="siSpeedMeeting" value="True"/>¿SpeedMeeting?</label>
 			</div>
-			<input type="text" name="pregunta" placeholder="Pregunta">
-			<textarea rows="3" type="text" name="perfiles" id = "perfiles" placeholder="Perfiles que buscáis" ></textarea>
-			<label class="form-label" for="fecha" style = "color:black"> Fecha de la speedmeeting </label>
-			<input type="date" min="2022-05-02" max="2022-05-06" name="dia" id="dia" placeholder="Fecha de la speedmeeting" />
-			<label class="form-label" for="horaInicio" style="color: black"> Hora de Inicio </label>
-			<input type="time" name="horaInicio" id="horaInicio" placeholder="Hora Inicio" />
-			<label class="form-label" for="horaFin" style="color:black"> Hora Final </label>
-			<input type="time" name="horaFin" id="horaFin" placeholder="Hora Final" />
-			<div id="cajaBotones">
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="presencial" name="presencial" value="True"/>Presencial</label>
-			</div>
+			{{ formEventoSpeedMeeting.hidden_tag() }}
+			{{ wtf.form_field(formEventoSpeedMeeting.pregunta) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.perfiles) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.fecha) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.horaInicio) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.horaFin) }}
+			{{ wtf.form_field(formEventoSpeedMeeting.presencialidad) }}
 			<input type="button" name="previous" class="previous action-button" value="Anterior" />
 			<input type="button" name="next" class="next action-button" value="Siguiente" />
 		</fieldset>
 
 		<fieldset>
-			<h2 class="fs-title">Crear cuenta de empresa</h2>
+			<h2 class="fs-title">Crear charla</h2>
 			<h3 class="fs-subtitle">Charlas (opcional)</h3>
 			<!--<div>
 				<label class="form-label" for="id">Id Charla</label>
 				<input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
 			</div>-->
-			<div>
-				<label class="form-label" for="tema">Tema de la charla</label>
-				<input type="text" class="form-control" id="tema" name="tema" placeholder="Tema de la charla" tabindex="2" required>
-			</div>
-			<div>
-				<label class="form-label" for="titulo">Titulo de la charla</label>
-				<input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo de la charla" tabindex="2" required>
-			</div>
-			<div>
-			  <label class="form-label" for="fecha">Fecha de la charla</label>
-			  <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la charla" tabindex="4" required>
-			</div>
-			<div id="cajaBotones">
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="presencialidad" onchange="mostrar1()" name="presencialidad" value="True"/>Presencial</label>
-			</div>
+			{{ formEventoCharlas.hidden_tag() }}
+			{{ wtf.form_field(formEventoCharlas.tema) }}
+			{{ wtf.form_field(formEventoCharlas.titulo) }}
+			{{ wtf.form_field(formEventoCharlas.fecha) }}
+			{{ wtf.form_field(formEventoCharlas.presencialidad) }}
+			<input type="button" name="previous" class="previous action-button" value="Anterior" />
+			<input type="button" name="next" class="next action-button" value="Siguiente" />
+			<!--<input type="submit" name="submit" class="btn action-button" value="Submit" />-->
+		</fieldset>
+
+		<fieldset>
+			<h2 class="fs-title">Inscribirse a Feria de empresas</h2>
+			<h3 class="fs-subtitle">Feria de empresas (opcional)</h3>
+			<!--<div>
+				<label class="form-label" for="id">Id Charla</label>
+				<input type="text" class="form-control" id="id" name="id" placeholder="Id Charla" tabindex="1" required>
+			</div>-->
+			{{ formEventoFeriaEmpresas.hidden_tag() }}
+			{{ wtf.form_field(formEventoFeriaEmpresas.fecha) }}
+			{{ wtf.form_field(formEventoFeriaEmpresas.presencialidad) }}
 			<input type="button" name="previous" class="previous action-button" value="Anterior" />
 			<!--<input type="button" name="next" class="next action-button" value="Siguiente" />-->
 			<input type="submit" name="submit" class="btn action-button" value="Submit" />
@@ -261,9 +269,9 @@
 		<input type="submit" name="submit" class="btn action-button" value="Submit" />
 	  </fieldset>-->
 	</form>
-	
+		{% endif %}
 	<script>
-	
+
 	function mostrar1(){
 		if(document.getElementById("miCheckBox1").checked == true){
 			document.getElementById("Persona1").removeAttribute("hidden");
@@ -275,60 +283,60 @@
 			document.getElementById("miCheckBox2").checked = false;
 			mostrar2()
 		}
-			
+
 	}
-	
+
 	function mostrar2(){
 		if(document.getElementById("miCheckBox2").checked == true){
 			document.getElementById("Persona2").removeAttribute("hidden");
 			document.getElementById("miCheckBox3").disabled = false;
 		}
-			
+
 		else{
 			document.getElementById("Persona2").setAttribute("hidden", "");
 			document.getElementById("miCheckBox3").disabled = true;
 			document.getElementById("miCheckBox3").checked = false;
 			mostrar3()
 		}
-			
+
 	}
-	
+
 	function mostrar3(){
 		if(document.getElementById("miCheckBox3").checked == true){
 			document.getElementById("Persona3").removeAttribute("hidden");
 			document.getElementById("miCheckBox4").disabled = false;
-		}	
+		}
 		else{
 			document.getElementById("Persona3").setAttribute("hidden", "");
 			document.getElementById("miCheckBox4").disabled = true;
 			document.getElementById("miCheckBox4").checked = false;
 			mostrar4()
 		}
-			
+
 	}
-	
+
 	function mostrar4(){
 		if(document.getElementById("miCheckBox4").checked == true)
 			document.getElementById("Persona4").removeAttribute("hidden");
 		else
 			document.getElementById("Persona4").setAttribute("hidden", "");
 	}
-	
+
 	//jQuery time
 	var current_fs, next_fs, previous_fs; //fieldsets
 	var left, opacity, scale; //fieldset properties which we will animate
 	var animating; //flag to prevent quick multi-click glitches
-	
+
 	$(".next").click(function(){
 		if(animating) return false;
 		animating = true;
-	
+
 		current_fs = $(this).parent();
 		next_fs = $(this).parent().next();
-	
+
 		//activate next step on progressbar using the index of next_fs
 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-	
+
 		//show the next fieldset
 		next_fs.show();
 		//hide the current fieldset with style
@@ -356,17 +364,17 @@
 			easing: 'easeInOutBack'
 		});
 	});
-	
+
 	$(".previous").click(function(){
 		if(animating) return false;
 		animating = true;
-	
+
 		current_fs = $(this).parent();
 		previous_fs = $(this).parent().prev();
-	
+
 		//de-activate current step on progressbar
 		$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-	
+
 		//show the previous fieldset
 		previous_fs.show();
 		//hide the current fieldset with style
@@ -391,10 +399,9 @@
 			easing: 'easeInOutBack'
 		});
 	});
-	
+
 	$(".submit").click(function(){
 		return false;
 	})
-	
+
 	</script>
-	
