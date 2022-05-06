@@ -1,6 +1,7 @@
 import sys
 
 from flask import render_template, redirect, url_for, request, abort, flash, Flask, current_app
+from modules.moduleRegistro.forms import EditEmpresaForm
 from models.Empresa import Empresa
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 from models.EventoPresentacionProyectos import EventoPresentacionProyectos
@@ -138,6 +139,12 @@ def storeAdmin():
     Mostrar perfil. Si editable 1, editable.
 """
 def show(nombre,editable=0):
+    empresa = get_by_name(nombre)
+    try:
+        formEdit = EditEmpresaForm(data=empresa.as_dict())
+    except:
+        print('User does not exist!')
+        return redirect(url_for('empresa_bp.all'))
     if(editable==1):
         editable=True
     else:
@@ -150,7 +157,7 @@ def show(nombre,editable=0):
     eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id = empresa.id).all()
     eventosSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id = empresa.id).all()
     eventosCharla = EventoCharlas.query.filter_by(empresa_id = empresa.id).all()
-    return render_template('empresa.html',
+    return render_template('empresa.html', formEdit=formEdit,
                             empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
                             eventosPresentacionProyectos=eventosPresentacionProyectos, \
                             eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
@@ -165,17 +172,21 @@ def userProfile(editable=0):
 """
     Actualizar usuario de empresa.
 """
-@login_required
-def update():
-    if(request.form['cancel'] != '1'):
-        db.session.query(Empresa).filter(Empresa.id==current_user.id).update({"personaContacto":request.form['personaContacto'],\
-        "email":request.form['email'],\
-        "telefono":request.form['telefono'],\
-        "direccion":request.form['direccion'],\
-        "provincia":request.form['provincia'],\
-        "pais":request.form['pais'],\
-        "codigoPostal":request.form['codigoPostal']})
-        db.session.commit()
+
+def update(oldnombre, nombre, telefono, direccion, poblacion, provincia, codigoPostal, pais, urlWeb, consentimientoNombre, buscaCandidatos, logoFileName):
+    db.session.query(Empresa).filter(Empresa.nombre==oldnombre).update({\
+        "nombre":nombre,\
+        "telefono":telefono,\
+        "direccion":direccion,\
+        "poblacion":poblacion,\
+        "provincia":provincia,\
+        "codigoPostal":codigoPostal,\
+        "pais":pais,\
+        "urlWeb":urlWeb,\
+        "consentimientoNombre":consentimientoNombre,\
+        "buscaCandidatos":buscaCandidatos,\
+        "logo":logoFileName})
+    db.session.commit()
     return render_template('profileRedirect.html')
 
 """
