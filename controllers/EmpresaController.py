@@ -172,27 +172,36 @@ def userProfile(editable=0):
 """
     Actualizar usuario de empresa.
 """
+@login_required
+def update(oldnombre, nombre, personaContacto, telefono, direccion, poblacion, provincia, codigoPostal, pais, urlWeb, consentimientoNombre, buscaCandidatos, logoFileName):
+    empresa = db.session.query(Empresa).filter(Empresa.nombre==oldnombre).first()
 
-def update(oldnombre, nombre, telefono, direccion, poblacion, provincia, codigoPostal, pais, urlWeb, consentimientoNombre, buscaCandidatos, logoFileName):
-    db.session.query(Empresa).filter(Empresa.nombre==oldnombre).update({\
-        "nombre":nombre,\
-        "telefono":telefono,\
-        "direccion":direccion,\
-        "poblacion":poblacion,\
-        "provincia":provincia,\
-        "codigoPostal":codigoPostal,\
-        "pais":pais,\
-        "urlWeb":urlWeb,\
-        "consentimientoNombre":consentimientoNombre,\
-        "buscaCandidatos":buscaCandidatos,\
-        "logo":logoFileName})
-    db.session.commit()
-    return render_template('profileRedirect.html')
+    empresa.nombre = nombre
+    empresa.personaContacto = personaContacto
+    empresa.telefono = telefono
+    empresa.direccion = direccion
+    empresa.poblacion = poblacion
+    empresa.provincia = provincia
+    empresa.codigoPostal = codigoPostal
+    empresa.pais = pais
+    empresa.urlWeb = urlWeb
+    empresa.consentimientoNombre = consentimientoNombre
+    empresa.buscaCandidatos = buscaCandidatos
+    empresa.logoFileName = logoFileName
+
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        return False, "Error al actualizar"
+
+    return True, "";
+
 
 """
     Actualizar usuario de empresa Admin.
 """
-
+@login_required
 def updateAdmin():
     if request.form['consentimientoNombre'] == 'True':
         consentimientoNombre = True;

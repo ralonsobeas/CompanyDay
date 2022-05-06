@@ -10,6 +10,8 @@ import platform
 from flask_mail import Mail, Message
 from threading import Thread
 
+from flask_login import login_required
+
 from models.Empresa import Empresa
 from models.EventoCharlas import EventoCharlas
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
@@ -327,11 +329,13 @@ def setnewpassword_post():
 
     return render_template("setnewpassword.html", form=form)
 
+@login_required
 def editEmpresa():
     formEdit = EditEmpresaForm()
     id = formEdit.id.data
     empresa = EmpresaController.get_by_id(id)
     nombre = formEdit.nombre.data
+    personaContacto =  formEdit.personaContacto.data
     telefono = formEdit.telefono.data
     direccion = formEdit.direccion.data
     poblacion = formEdit.poblacion.data
@@ -354,10 +358,14 @@ def editEmpresa():
         UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
         UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
         logo.save(UPLOADS_PATH+"/"+logoFileName)
-    EmpresaController.update(empresa.nombre, nombre, telefono, direccion, poblacion, provincia, codigoPostal, pais, urlWeb, consentimientoNombre, buscaCandidatos, logoFileName)
-    return redirect(url_for('empresa_bp.show',nombre=nombre))
-    
-    
+
+    aniadido, msg = EmpresaController.update(empresa.nombre, nombre, personaContacto, telefono, direccion, poblacion, provincia, codigoPostal, pais, urlWeb, consentimientoNombre, buscaCandidatos, logoFileName)
+    if not aniadido:
+        flash(msg)
+
+    return redirect(url_for("empresa_bp.userProfile",editable=0))
+
+
 
 def moduleRegistro_test():
     return 'OK'
