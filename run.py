@@ -60,21 +60,17 @@ migrate = Migrate(app, db)
 # REGISTER BLUEPRINTS
 from routes.empresa_bp import empresa_bp
 from routes.test_bp import test_bp
-"""
 from routes.eventoFeriaEmpresas_bp import eventoFeriaEmpresas_bp
 from routes.eventoPresentacionProyectos_bp import eventoPresentacionProyectos_bp
 from routes.eventoCharla_bp import eventoCharla_bp
 from routes.eventoSpeedMeeting_bp import eventoSpeedMeeting_bp
-"""
 
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
 app.register_blueprint(test_bp, url_prefix='/test')
-"""
 app.register_blueprint(eventoFeriaEmpresas_bp, url_prefix='/eventoFeriaEmpresas')
 app.register_blueprint(eventoPresentacionProyectos_bp, url_prefix='/proyectos')
 app.register_blueprint(eventoCharla_bp, url_prefix='/charlas')
 app.register_blueprint(eventoSpeedMeeting_bp, url_prefix='/speedMeeting')
-"""
 
 from controllers import EmpresaController
 from controllers import EventoCharlaController

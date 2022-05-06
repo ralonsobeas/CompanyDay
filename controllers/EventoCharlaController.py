@@ -14,28 +14,28 @@ db = SQLAlchemy()
 def index():
     return 'index'
 
-def store(eventoCharla):
-    db.session.add(eventoCharla)
-    db.session.commit()
 
 """
     Guardar EventoCharla en BBDD
 """
 @login_required
-def storeTemp():
-    tema = request.form['tema']
-    presencialidad = True if(request.form['presencialidad']=='True') else False
-    titulo = request.form['titulo']
-    fecha = request.form['fecha']
-    autor = request.form['autor']
-    empresa_id = current_user.id
-    aprobada = False
-
-    eventoCharla = EventoCharlas(tema,presencialidad,titulo,fecha,aprobada,autor,empresa_id)
+def store(eventoCharla):
     db.session.add(eventoCharla)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        if re.match("(.*)Duplicate entry(.*)for key 'PRIMARY'", error.args[0]):
+            return False, "Error, id repetido (%s)" % eventoCharla.id
 
-    return redirect(url_for('empresa_bp.userProfile',editable=0))
+            """
+        elif "FOREIGN KEY constraint failed" in str(error):
+            return False, "supplier does not exist"
+            """
+        else:
+            return False, str(error)
+
+    return True, "";
 
 def show(empresa_id):
     return 'show'
@@ -67,11 +67,17 @@ def all_query():
 """
     Validar para Admin
 """
-
+@login_required
 def validar(id,valor):
     charla = EventoCharlas.query.filter_by(id=id).first()
     charla.aprobada = valor
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        return False, "Error al actualizar"
+
+    return True, "";
 
 """
     Obtener EventoCharlas por id de empresa.

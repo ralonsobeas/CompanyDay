@@ -115,6 +115,7 @@ def all_query():
 """
     Validar empresa.
 """
+@login_required
 def validar(id,valor):
     empresa = Empresa.query.filter_by(id=id).first()
     empresa.validado = valor
