@@ -423,5 +423,7 @@ def updateAdmin():
 def generatePass():
     print(generate_password_hash("12345", method='sha256'))
 
+from test import debug_only
+@debug_only
 def moduleRegistro_test():
     return 'OK'
