@@ -99,5 +99,8 @@ def validar(id,valor):
     Obtener EventoSpeedMeeting por id de empresa.
 """
 def get_by_empresa_id_all(empresa_id):
-    eventoSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id=empresa_id).all()
+    try:
+        eventoSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id=empresa_id).all()
+    except:
+        db.session.rollback()
     return eventoSpeedMeeting

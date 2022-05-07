@@ -46,5 +46,8 @@ def all_query():
     Obtener Persona por id de empresa.
 """
 def get_by_empresa_id_all(empresa_id):
-    persona = Persona.query.filter_by(empresa_id=empresa_id).all()
+    try:
+        persona = Persona.query.filter_by(empresa_id=empresa_id).all()
+    except:
+        db.session.rollback()
     return persona
