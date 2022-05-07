@@ -130,9 +130,7 @@ def validar(id,valor):
 """
     Confirmar empresa.
 """
-def confirmar(nombre):
-
-    empresa= db.session.query(Empresa).filter_by(nombre=nombre).first()
+def confirmar(empresa):
 
     empresa.confirmed = 1
     empresa.userHash = ''
