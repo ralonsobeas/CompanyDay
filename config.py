@@ -21,6 +21,9 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://gennakk:companyday@gennakk.mys
 # Turn off the Flask-SQLAlchemy event system and warning
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+# Evitar errores de muchas conexiones
+SQLALCHEMY_ENGINE_OPTIONS  = {"pool_recycle": 280}
+
 #Carpeta para guardar imágenes
 UPLOAD_FOLDER_WINDOWS = 'static\\images\\customlogos'
 UPLOAD_FOLDER_LINUX = 'static/images/customlogos'
