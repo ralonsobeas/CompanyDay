@@ -7,7 +7,7 @@ from shared.models import db
     Modelo EventoSpeedMeeting
 """
 class EventoSpeedMeeting(db.Model):
-    __tablename__ = 'EventoSpeedMeeting'
+    __tablename__ = 'eventospeedmeeting'
     id = db.Column(db.Integer, primary_key=True)
     presencialidad  = db.Column(db.Boolean)
     fecha = db.Column(db.Date)

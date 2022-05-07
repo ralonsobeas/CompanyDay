@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
-from modules.moduleRegistro.forms import EditEmpresaForm
+from modules.moduleRegistro.forms import EditEmpresaForm, EventoCharlasRegisterForm, EventoSpeedMeetingRegisterForm
 from modules.moduleLogin.forms import LoginForm
 from flask_login import login_user,login_required,current_user,logout_user
 from shared.models import login_manager
@@ -60,6 +60,8 @@ def show(nombre,editable=0):
         return redirect(url_for('empresa_bp.all'))
 
     formEdit = EditEmpresaForm(data=empresa.as_dict())
+    formEventoCharlas = EventoCharlasRegisterForm()
+    formEventoSpeedMeeting = EventoSpeedMeetingRegisterForm()
 
     if(editable==1):
         editable=True
@@ -73,7 +75,8 @@ def show(nombre,editable=0):
     eventosPresentacionProyectos = EventoPresentacionProyectosController.get_by_empresa_id_all(empresa.id)
     eventosSpeedMeeting = EventoSpeedMeetingController.get_by_empresa_id_all(empresa.id)
     eventosCharla = EventoCharlaController.get_by_empresa_id_all(empresa.id)
-    return render_template('empresa.html', formEdit=formEdit,
+    return render_template('empresa.html', formEdit=formEdit, \
+                            formEventoCharlas=formEventoCharlas, formEventoSpeedMeeting=formEventoSpeedMeeting,
                             empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
                             eventosPresentacionProyectos=eventosPresentacionProyectos, \
                             eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
@@ -83,7 +86,9 @@ def show(nombre,editable=0):
 """
 @login_required
 def userProfile(editable=0):
-    return show(current_user.nombre,editable)
+    if(current_user.admin == 0):
+        return show(current_user.nombre,editable)
+    return redirect('/admin')
 
 
 def moduleLogin_test():

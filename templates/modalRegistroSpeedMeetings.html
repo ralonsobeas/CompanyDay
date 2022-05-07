@@ -132,16 +132,25 @@
 	
 	
 	
+	{% if formEventoSpeedMeeting %}
+	{% import "bootstrap/wtf.html" as wtf %}	
 	<!-- multistep form -->
 	<form id="msform" action="/speedMeeting/crear" method="POST" role="form" enctype="multipart/form-data">
 	  <!-- progressbar -->
 	  <div style="justify-content: center;">
 	  <ul id="progressbar">
-		<li class="active">Información sobre speed meeting</li>
 		<li>Fecha y presencialidad</li>
 	  </ul>
 	  </div>
 	  <!-- fieldsets -->
+	  {{ formEventoSpeedMeeting.hidden_tag() }}
+	  {{ wtf.form_field(formEventoSpeedMeeting.pregunta) }}
+	  {{ wtf.form_field(formEventoSpeedMeeting.perfiles) }}
+	  {{ wtf.form_field(formEventoSpeedMeeting.fecha) }}
+	  {{ wtf.form_field(formEventoSpeedMeeting.horaInicio) }}
+	  {{ wtf.form_field(formEventoSpeedMeeting.horaFin) }}
+	  {{ wtf.form_field(formEventoSpeedMeeting.presencialidad) }}
+	  <!--
 	  <fieldset>
 		<h2 class="fs-title">Crear speed meeting</h2>
 		<h3 class="fs-subtitle">Información sobre speed meeting</h3>
@@ -172,7 +181,10 @@
 		<input type="button" name="previous" class="previous action-button" value="Anterior" />
 		<input type="submit" name="submit" class="btn action-button" value="Submit" />
 	  </fieldset>
+	  -->
+	  <input type="submit" name="submit" class="btn action-button" value="Submit" />
 	</form>
+	{% endif %}
 	
 	<script>
 	//jQuery time

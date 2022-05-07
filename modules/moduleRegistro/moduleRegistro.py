@@ -10,7 +10,7 @@ import platform
 from flask_mail import Mail, Message
 from threading import Thread
 
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from models.Empresa import Empresa
 from models.EventoCharlas import EventoCharlas
@@ -299,6 +299,42 @@ def editEmpresa():
 
     return redirect(url_for("empresa_bp.userProfile",editable=0))
 
+"""
+    Guardar evento charla
+"""
+
+@login_required
+def storeCharla():
+    formEventoCharlas = EventoCharlasRegisterForm()
+    if formEventoCharlas.tema.data != '':
+        tema = formEventoCharlas.tema.data
+        presencialidad = formEventoCharlas.presencialidad.data
+        titulo = formEventoCharlas.titulo.data
+        fecha = formEventoCharlas.fecha.data
+        autor = formEventoCharlas.autor.data
+        eventoCharlas = EventoCharlas(tema=tema,presencialidad=presencialidad,titulo=titulo,\
+        fecha=fecha,autor=autor,empresa_id=current_user.id)
+        EventoCharlaController.store(eventoCharlas)
+    return redirect(url_for("empresa_bp.userProfile",editable=0))
+        
+"""
+    Guardar evento speedmeeting
+"""
+
+@login_required
+def storeSpeedMeeting():
+    formEventoSpeedMeeting = EventoSpeedMeetingRegisterForm()
+    if formEventoSpeedMeeting.pregunta.data != '':
+        presencialidad = formEventoSpeedMeeting.presencialidad.data
+        fecha = formEventoSpeedMeeting.fecha.data
+        horaInicio = formEventoSpeedMeeting.horaInicio.data
+        horaFin = formEventoSpeedMeeting.horaFin.data
+        perfiles = formEventoSpeedMeeting.perfiles.data
+        pregunta = formEventoSpeedMeeting.pregunta.data
+        eventoSpeedMeeting = EventoSpeedMeeting(presencialidad=presencialidad,fecha=fecha,\
+        horaInicio=horaInicio,horaFin=horaFin,perfiles=perfiles,pregunta=pregunta,empresa_id=current_user.id)
+        EventoSpeedMeetingController.store(eventoSpeedMeeting)
+    return redirect(url_for("empresa_bp.userProfile",editable=0))
 
 """
     Guardar empresa en BBDD ADMIN

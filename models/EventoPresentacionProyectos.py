@@ -7,7 +7,7 @@ from shared.models import db
     Modelo EventoPresentacionProyectos
 """
 class EventoPresentacionProyectos(db.Model):
-    __tablename__ = 'presentacionProyectos'
+    __tablename__ = 'presentacionproyectos'
     validado = db.Column(db.Boolean)
     id = db.Column(db.Integer, primary_key=True)
     presencial = db.Column(db.Boolean)
