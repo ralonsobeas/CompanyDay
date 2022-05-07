@@ -56,7 +56,7 @@ def show(nombre,editable=0):
     empresa = EmpresaController.get_by_name(nombre)
 
     if empresa is None:
-        flash("No existe la empresa"+empresa.nombre)
+        flash("No existe la empresa "+empresa.nombre)
         return redirect(url_for('empresa_bp.all'))
 
     formEdit = EditEmpresaForm(data=empresa.as_dict())

@@ -82,7 +82,7 @@ def update(empresa):
     Obtener empresa por id.
 """
 def get_by_id(id):
-    empresa = db.session.query(Empresa).filter(Empresa.id==id).first()
+    empresa =     empresas = Empresa.query.filter_by(id=id).all()
     return empresa
 
 """
