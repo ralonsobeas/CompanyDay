@@ -90,6 +90,7 @@ def userProfile(editable=0):
         return show(current_user.nombre,editable)
     return redirect('/admin')
 
-
+from test import debug_only
+@debug_only
 def moduleLogin_test():
     return 'OK'

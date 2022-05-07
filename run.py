@@ -135,10 +135,6 @@ def login():
     loginForm = LoginForm()
     return dict(loginForm=loginForm)
 
-@app.route('/test')
-def testBBDD():
-    empresas = EmpresaController.all_query()
-    return "Primera empresa: " + empresas[0].nombre
 
 # Errores routing
 from errors import *
@@ -146,9 +142,10 @@ from errors import *
 #Modo admin
 from admin import *
 
+from config import DEBUG
 # Start app
 if __name__ == '__main__':
 
     with app.app_context():
         db.create_all()
-    app.run(port = 3001, debug=True)
+    app.run(port = 3001, debug=DEBUG)
