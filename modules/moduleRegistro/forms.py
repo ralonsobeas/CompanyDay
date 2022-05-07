@@ -60,7 +60,14 @@ class PersonaRegisterForm(FlaskForm):
     puesto = StringField("Puesto", validators=[Length(max=120)])
     comentario = StringField("Comentario", widget=TextArea(), validators=[Length(max=500)])
 
+class PersonaRegisterForm1(PersonaRegisterForm):
+    pass
 
+class PersonaRegisterForm2(PersonaRegisterForm):
+    pass
+
+class PersonaRegisterForm3(PersonaRegisterForm):
+    pass
 
 class ResetPasswordForm(FlaskForm):
     email = StringField("E-mail", validators=[InputRequired(),Email(message="Email no es válido!"),Length(max=50)])
@@ -71,3 +78,16 @@ class SetNewPasswordForm(FlaskForm):
     userhash = HiddenField('userhash')
     password = PasswordField("Password / Contraseña ",validators=[InputRequired(), Length(min=4), EqualTo('confirm_password', message='Passwords must match')])
     confirm_password = PasswordField("Confirm password / Confirmar contraseña ", validators=[InputRequired()])
+
+class EditEmpresaForm(FlaskForm):
+    id = HiddenField('cif', render_kw={'readonly': True})
+    nombre = StringField("Nombre", validators=[InputRequired(message="Nombre no es válido!"),Length(max=120)])
+    personaContacto = StringField("Persona de contacto", validators=[Length(max=120)])
+    telefono = StringField("Teléfono", validators=[Length(max=15)])
+    urlWeb = StringField("URL web", validators=[Length(max=15)])
+    logo = FileField("Logo")
+    direccion = StringField("Dirección", validators=[Length(max=120)])
+    poblacion = StringField("Población", validators=[Length(max=120)])
+    provincia = StringField("Provincia", validators=[Length(max=120)])
+    codigoPostal = StringField("Código postal", validators=[Length(max=15)])
+    pais = StringField("País", validators=[Length(max=120)])

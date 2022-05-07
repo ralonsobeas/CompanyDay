@@ -59,17 +59,18 @@ migrate = Migrate(app, db)
 
 # REGISTER BLUEPRINTS
 from routes.empresa_bp import empresa_bp
+from routes.test_bp import test_bp
 from routes.eventoFeriaEmpresas_bp import eventoFeriaEmpresas_bp
 from routes.eventoPresentacionProyectos_bp import eventoPresentacionProyectos_bp
 from routes.eventoCharla_bp import eventoCharla_bp
 from routes.eventoSpeedMeeting_bp import eventoSpeedMeeting_bp
 
 app.register_blueprint(empresa_bp, url_prefix='/empresas')
+app.register_blueprint(test_bp, url_prefix='/test')
 app.register_blueprint(eventoFeriaEmpresas_bp, url_prefix='/eventoFeriaEmpresas')
 app.register_blueprint(eventoPresentacionProyectos_bp, url_prefix='/proyectos')
 app.register_blueprint(eventoCharla_bp, url_prefix='/charlas')
 app.register_blueprint(eventoSpeedMeeting_bp, url_prefix='/speedMeeting')
-
 
 from controllers import EmpresaController
 from controllers import EventoCharlaController
@@ -83,7 +84,7 @@ from controllers import EventoSpeedMeetingController
 
 from modules.moduleRegistro.forms import EmpresaRegisterForm, EventoCharlasRegisterForm,\
  EventoFeriaEmpresasRegisterForm, EventoPresentacionProyectosRegisterForm,\
- EventoSpeedMeetingRegisterForm, PersonaRegisterForm
+ EventoSpeedMeetingRegisterForm, PersonaRegisterForm, PersonaRegisterForm1, PersonaRegisterForm2, PersonaRegisterForm3
 
 from modules.moduleRegistro.moduleRegistro import moduleRegistro
 app.register_blueprint(moduleRegistro, url_prefix="/moduleRegistro")
@@ -97,15 +98,15 @@ def index():
     empresas = EmpresaController.all_query()
     formEmpresa = EmpresaRegisterForm()
     formPersona1 = PersonaRegisterForm()
-    formPersona2 = PersonaRegisterForm()
-    formPersona3 = PersonaRegisterForm()
-    formPersona4 = PersonaRegisterForm()
+    formPersona2 = PersonaRegisterForm1()
+    formPersona3 = PersonaRegisterForm2()
+    formPersona4 = PersonaRegisterForm3()
     formEventoCharlas = EventoCharlasRegisterForm()
     formEventoFeriaEmpresas = EventoFeriaEmpresasRegisterForm()
     formEventoPresentacionProyectos = EventoPresentacionProyectosRegisterForm()
     formEventoSpeedMeeting = EventoSpeedMeetingRegisterForm()
 
-    return render_template('index3.html',empresas=empresas,formEmpresa=formEmpresa,\
+    return render_template('index.html',empresas=empresas,formEmpresa=formEmpresa,\
     formPersona1=formPersona1,formPersona2=formPersona2,formPersona3=formPersona3,\
     formPersona4=formPersona4,formEventoCharlas=formEventoCharlas,\
     formEventoFeriaEmpresas=formEventoFeriaEmpresas,formEventoPresentacionProyectos=formEventoPresentacionProyectos,\
@@ -147,9 +148,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(port = 3001, debug=True)
-
-from modules.moduleRegistro.moduleRegistro import moduleRegistro
-app.register_blueprint(moduleRegistro, url_prefix="/moduleRegistro")
-
-from modules.moduleLogin.moduleLogin import moduleLogin
-app.register_blueprint(moduleLogin, url_prefix="/moduleLogin")

@@ -5,6 +5,7 @@ from models.EventoPresentacionProyectos import EventoPresentacionProyectos
 from models.Empresa import Empresa
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from flask_login import login_required
 import base64
 
 db = SQLAlchemy()
@@ -16,6 +17,29 @@ def index():
 """
     Guardar EventoPresentacionProyectos
 """
+@login_required
+def store_new(presentacionProyectos):
+    db.session.add(presentacionProyectos)
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        if re.match("(.*)Duplicate entry(.*)for key 'PRIMARY'", error.args[0]):
+            return False, "Error, id repetido (%s)" % presentacionProyectos.id
+
+            """
+        elif "FOREIGN KEY constraint failed" in str(error):
+            return False, "supplier does not exist"
+            """
+        else:
+            return False, str(error)
+
+    return True, "";
+
+"""
+    Guardar EventoPresentacionProyectos
+"""
+@login_required
 def store():
     id = request.form['IdPresentacion']
     empresa_id = request.form['IdEmpresa']
@@ -51,18 +75,10 @@ def store():
         ingenieria = False
 
     presentacionProyectos = EventoPresentacionProyectos(False ,id, presencial, videojuegos, disenoDigital, ingenieria, cortosAnimacion, empresa_id)
-    db.session.add(presentacionProyectos)
-    db.session.commit()
+    store_new(presentacionProyectos)
 
-    return 'Su informacion ha sido guardada en nuestra base de datos'
-
-"""
-    Mostrar EventoPresentacionProyectos por id. Renderizar en empresa.html
-"""
 def show(presentacion_id):
-    presentacionProyectos = EventoPresentacionProyectos.query.get(presentacion_id)
-    return render_template('empresa.html',
-                            empresa=presentacionProyectos)
+    return 'show'
 
 def update(presentacion_id):
     return 'update'
@@ -70,15 +86,11 @@ def update(presentacion_id):
 def delete(presentacion_id):
     return 'delete'
 
-"""
-    Mostrar todas las empresas. Renderizar en empresas.html
-"""
-def all():
-    empresas = EventoPresentacionProyectos.query.all()
-    return render_template('empresas.html',empresas=empresas)
+def all(presentacion_id):
+    return 'all'
 
 """
-    Buscar todas las empresas.
+    Buscar todos los EventoPresentacionProyectos.
 """
 def all_query():
     listaProyectosAprobados = EventoPresentacionProyectos.query\
@@ -87,12 +99,25 @@ def all_query():
     .filter(Empresa.validado == True)\
     .filter(EventoPresentacionProyectos.validado == True)
     return listaProyectosAprobados;
-    
-"""
-    Validar para Admin
-"""
 
+"""
+    Validar para Admin EventoPresentacionProyectos
+"""
+@login_required
 def validar(id,valor):
     presentacion = EventoPresentacionProyectos.query.filter_by(id=id).first()
     presentacion.validado = valor
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        return False, "Error al actualizar"
+
+    return True, "";
+
+"""
+    Obtener EventoPresentacionProyectos por id de empresa.
+"""
+def get_by_empresa_id_all(empresa_id):
+    eventoPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id=empresa_id).all()
+    return eventoPresentacionProyectos

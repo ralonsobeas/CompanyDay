@@ -7,10 +7,11 @@ from models.EventoPresentacionProyectos import EventoPresentacionProyectos
 from models.EventoSpeedMeeting import EventoSpeedMeeting
 from models.EventoCharlas import EventoCharlas
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import exc
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-from shared.models import login_manager
-from flask_login import login_user,login_required,current_user,logout_user
+
+from flask_login import login_required
 import os
 from os.path import join, dirname, realpath
 import platform
@@ -22,177 +23,66 @@ from threading import Thread
 import base64
 
 import random
+import re
 
 db = SQLAlchemy()
-
-
-def index():
-    return 'index'
-
-"""
-    Login de empresa
-
-    Recibe mail y password, busca el usuario y compara el password.
-    Si es correcto redirige al index.
-"""
-def login():
-    email = request.form['mail']
-    password = request.form['password']
-    remember = True if (request.form.get('remember')) else False
-
-    user = Empresa.query.filter_by(email=email).first()
-
-    if not user or not check_password_hash(user.password,password):
-        flash('Please check your login details and try again.')
-        return redirect(url_for('loginEmpresa'))
-
-    flash('Usuario correcto')
-    login_user(user,remember=remember)
-
-    return redirect(url_for('index'))
-
-"""
-    Login manager para flask_login
-"""
-@login_manager.user_loader
-def loginManager(id):
-    return Empresa.query.get(id)
-
-"""
-    Logout
-"""
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
 
 """
     Store
 """
 def store(empresa):
     db.session.add(empresa)
-    db.session.commit()
 
-"""
-    Guardar empresa en BBDD ADMIN
-"""
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        if re.match("(.*)Duplicate entry(.*)for key 'nombre'", error.args[0]):
+            return False, "Error, nombre repetido (%s)" % empresa.nombre
+        elif re.match("(.*)Duplicate entry(.*)for key 'PRIMARY'", error.args[0]):
+            return False, "Error, cif repetido (%s)" % empresa.id
+        elif re.match("(.*)Duplicate entry(.*)for key 'email'", error.args[0]):
+            return False, "Error, mail repetido (%s)" % empresa.mail
+            """
+        elif "FOREIGN KEY constraint failed" in str(error):
+            return False, "supplier does not exist"
+            """
+        else:
+            return False, str(error)
 
-def storeAdmin():
-    id = request.form['CIF']
-    nombre = request.form['nombreEmpresa']
-    password = request.form['password']
-    personaContacto = request.form['personaContacto']
-    email = request.form['email']
-    telefono = request.form['telefono']
-    direccion = request.form['direccion']
-    poblacion = request.form['poblacion']
-    provincia = request.form['provincia']
-    codigoPostal = request.form['codigoPostal']
-    pais = request.form['pais']
-    urlWeb = request.form['urlWeb']
-    consentimientoNombre = True
-    buscaCandidatos = True
-
-    logo = request.files['logo']
-    logoFileName = id + ".png";
-
-    if(platform.system()=='Windows'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
-        UPLOADS_PATH = UPLOADS_PATH.replace("controllers\\", "")
-        logo.save(UPLOADS_PATH+"\\"+logoFileName)
-    elif(platform.system()=='Linux'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
-        UPLOADS_PATH = UPLOADS_PATH.replace("controllers/", "")
-        logo.save(UPLOADS_PATH+"/"+logoFileName)
-
-    empresa = Empresa(id=id,validado=False,nombre=nombre,password=generate_password_hash(password, method='sha256'), \
-                        personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
-                        poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
-                        consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False)
-    db.session.add(empresa)
-    db.session.commit()
-    return redirect('../admin/empresa')
-
-
-
-"""
-    Mostrar perfil. Si editable 1, editable.
-"""
-def show(nombre,editable=0):
-    if(editable==1):
-        editable=True
-    else:
-        editable=False
-
-    empresa = Empresa.query.filter_by(nombre=nombre).first()
-    if not empresa or empresa.admin==True:
-        return abort(404)
-    eventosFeriaEmpresa = EventoFeriaEmpresas.query.filter_by(empresa_id = empresa.id).all()
-    eventosPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id = empresa.id).all()
-    eventosSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id = empresa.id).all()
-    eventosCharla = EventoCharlas.query.filter_by(empresa_id = empresa.id).all()
-    return render_template('empresa.html',
-                            empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
-                            eventosPresentacionProyectos=eventosPresentacionProyectos, \
-                            eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
-
-"""
-    Mostrar perfil del usuario actual.
-"""
-@login_required
-def userProfile(editable=0):
-    return show(current_user.nombre,editable)
+    return True, "";
 
 """
     Actualizar usuario de empresa.
 """
 @login_required
-def update():
-    if(request.form['cancel'] != '1'):
-        db.session.query(Empresa).filter(Empresa.id==current_user.id).update({"personaContacto":request.form['personaContacto'],\
-        "email":request.form['email'],\
-        "telefono":request.form['telefono'],\
-        "direccion":request.form['direccion'],\
-        "provincia":request.form['provincia'],\
-        "pais":request.form['pais'],\
-        "codigoPostal":request.form['codigoPostal']})
+def update(empresa):
+
+    try:
         db.session.commit()
-    return render_template('profileRedirect.html')
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        if re.match("(.*)Duplicate entry(.*)for key 'nombre'", error.args[0]):
+            return False, "Error, nombre repetido"
+        elif re.match("(.*)Duplicate entry(.*)for key 'PRIMARY'", error.args[0]):
+            return False, "Error, cif repetido"
+        elif re.match("(.*)Duplicate entry(.*)for key 'email'", error.args[0]):
+            return False, "Error, mail repetido"
+            """
+        elif "FOREIGN KEY constraint failed" in str(error):
+            return False, "supplier does not exist"
+            """
+        else:
+            return False, str(error)
 
-"""
-    Actualizar usuario de empresa Admin.
-"""
+    return True, "";
 
-def updateAdmin():
-    if request.form['consentimientoNombre'] == 'True':
-        consentimientoNombre = True;
-    else:
-        consentimientoNombre = False;
-    if request.form['buscaCandidatos'] == 'True':
-        buscaCandidatos = True;
-    else:
-        buscaCandidatos = False;
-    db.session.query(Empresa).filter(Empresa.id==request.form['CIF']).update({\
-        "nombre":request.form['nombreEmpresa'],\
-        "personaContacto":request.form['personaContacto'],\
-        "email":request.form['email'],\
-        "telefono":request.form['telefono'],\
-        "direccion":request.form['direccion'],\
-        "poblacion":request.form['poblacion'],\
-        "provincia":request.form['provincia'],\
-        "pais":request.form['pais'],\
-        "codigoPostal":request.form['codigoPostal'],\
-        "urlWeb":request.form['urlWeb'],\
-        "consentimientoNombre":consentimientoNombre,\
-        "buscaCandidatos":buscaCandidatos})
-    db.session.commit()
-    return redirect('../admin/empresa')
 
 """
     Obtener empresa por id.
 """
 def get_by_id(id):
-    empresa = Empresa.query.filter_by(id=id).first()
+    empresa = db.session.query(Empresa).filter(Empresa.id==id).first()
     return empresa
 
 """
@@ -225,10 +115,17 @@ def all_query():
 """
     Validar empresa.
 """
+@login_required
 def validar(id,valor):
     empresa = Empresa.query.filter_by(id=id).first()
     empresa.validado = valor
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        return False, "Error al actualizar"
+
+    return True, "";
 
 """
     Confirmar empresa.
@@ -240,4 +137,10 @@ def confirmar(nombre):
     empresa.confirmed = 1
     empresa.userHash = ''
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        return False, "Error al actualizar"
+
+    return True, "";

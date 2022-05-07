@@ -17,12 +17,27 @@ def index():
 """
     Guardar EventoSpeedMeetingController
 """
-def store(eventoSpeedMeeting):
+@login_required
+def store_new(eventoSpeedMeeting):
     db.session.add(eventoSpeedMeeting)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        """
+        if re.match("(.*)Duplicate entry(.*)for key 'PRIMARY'", error.args[0]):
+            return False, "Error, id repetido (%s)" % eventoSpeedMeeting.id
+
+        elif "FOREIGN KEY constraint failed" in str(error):
+            return False, "supplier does not exist"
+
+        else:
+            return False, str(error)
+        """
+
 
 @login_required
-def storeTemp():
+def store():
     pregunta = request.form['pregunta']
     perfiles = request.form['perfiles']
     fecha = request.form['fecha']
@@ -30,11 +45,9 @@ def storeTemp():
     horaFin = request.form['horaFin']
     presencialidad = True if(request.form['presencialidad']=='True') else False
     empresa_id = current_user.id
-    aprobada = False
 
-    eventoSpeedMeeting = EventoSpeedMeeting(presencialidad,fecha,horaInicio,horaFin,perfiles,pregunta,aprobada,empresa_id)
-    db.session.add(eventoSpeedMeeting)
-    db.session.commit()
+    eventoSpeedMeeting = EventoSpeedMeeting(presencialidad,fecha,horaInicio,horaFin,perfiles,pregunta,empresa_id)
+    store_new(eventoSpeedMeeting)
 
     return redirect(url_for('empresa_bp.userProfile',editable=0))
 
@@ -65,12 +78,25 @@ def all_query():
     .filter(Empresa.validado == True)\
     .filter(EventoSpeedMeeting.aprobada == True)
     return listaCharlasAprobadas;
-    
+
 """
     Validar para Admin
 """
-
+@login_required
 def validar(id,valor):
     speedmeeting = EventoSpeedMeeting.query.filter_by(id=id).first()
     speedmeeting.aprobada = valor
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError as error:
+        db.session.rollback()
+        return False, "Error al actualizar"
+
+    return True, "";
+
+"""
+    Obtener EventoSpeedMeeting por id de empresa.
+"""
+def get_by_empresa_id_all(empresa_id):
+    eventoSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id=empresa_id).all()
+    return eventoSpeedMeeting
