@@ -381,5 +381,8 @@ def updateAdmin():
 
     return redirect('../admin/empresa')
 
+def generatePass():
+    print(generate_password_hash("12345", method='sha256'))
+
 def moduleRegistro_test():
     return 'OK'
