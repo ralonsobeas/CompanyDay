@@ -263,6 +263,11 @@ def setnewpassword_post():
 
     return render_template("setnewpassword.html", form=form)
 
+"""
+    Editar empresa desde perfil
+"""
+
+
 @login_required
 def editEmpresa():
     formEdit = EditEmpresaForm()
@@ -280,18 +285,19 @@ def editEmpresa():
     empresa.consentimientoNombre = True
     empresa.buscaCandidatos = True
 
-    logo = formEdit.logo.data
-    empresa.logoFileName = str(id) + ".png";
+    if(formEdit.logo.data != None):
+        logo = formEdit.logo.data
+        empresa.logoFileName = str(id) + ".png";
 
     # Cambiar barras dependiendo del sistema operativo
-    if(platform.system()=='Windows'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
-        UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
-        logo.save(UPLOADS_PATH+"\\"+empresa.logoFileName)
-    elif(platform.system()=='Linux'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
-        UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
-        logo.save(UPLOADS_PATH+"/"+empresa.logoFileName)
+        if(platform.system()=='Windows'):
+            UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
+            UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
+            logo.save(UPLOADS_PATH+"\\"+empresa.logoFileName)
+        elif(platform.system()=='Linux'):
+            UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
+            UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
+            logo.save(UPLOADS_PATH+"/"+empresa.logoFileName)
 
     aniadido, msg = EmpresaController.update(empresa)
     if not aniadido:
