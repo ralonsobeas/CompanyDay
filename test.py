@@ -50,7 +50,7 @@ def testBBDD():
         raise Exception("Error: BBDD!")
     return "OK"
 
-
+@debug_only
 def tests():
     try:
         test_connection("moduleRegistro")
