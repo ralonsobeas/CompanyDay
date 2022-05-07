@@ -117,5 +117,8 @@ def validar(id,valor):
     Obtener EventoPresentacionProyectos por id de empresa.
 """
 def get_by_empresa_id_all(empresa_id):
-    eventoPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id=empresa_id).all()
+    try:
+        eventoPresentacionProyectos = EventoPresentacionProyectos.query.filter_by(empresa_id=empresa_id).all()
+    except:
+        db.session.rollback()
     return eventoPresentacionProyectos
