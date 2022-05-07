@@ -25,7 +25,7 @@ import base64
 import random
 import re
 
-db = SQLAlchemy()
+from shared.models import db
 
 """
     Store
