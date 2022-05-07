@@ -84,7 +84,7 @@ def update(empresa):
 def get_by_id(id):
 
     try:
-        empresa = empresas = Empresa.query.filter_by(id=id).all()
+        empresa = empresas = Empresa.query.filter_by(id=id).first()
     except:
         db.session.rollback()
     return empresa
