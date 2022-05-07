@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2022 a las 13:29:58
+-- Tiempo de generación: 07-05-2022 a las 14:52:52
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -71,7 +71,7 @@ CREATE TABLE `empresas` (
 --
 
 INSERT INTO `empresas` (`validado`, `id`, `nombre`, `password`, `personaContacto`, `email`, `telefono`, `direccion`, `poblacion`, `provincia`, `codigoPostal`, `pais`, `urlWeb`, `logo`, `consentimientoNombre`, `buscaCandidatos`, `admin`, `confirmed`, `userHash`) VALUES
-(0, 0, 'admin', 'sha256$gu1vTdLYzQbhi9Yq$b16e4f324b1acccc612b271a7450d7f3b14fef31dea10a06f5773f98896b4b7e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL),
+(0, 0, 'admin', 'sha256$gu1vTdLYzQbhi9Yq$b16e4f324b1acccc612b271a7450d7f3b14fef31dea10a06f5773f98896b4b7e', NULL, 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL),
 (1, 1, 'BMW', 'sha256$AYQah9rrFOO3yvE4$2c3ad1c7cf4608558e2cbcedd87e30a5923f37ab503fb8e94d6b821668be42aa', 'Fernando Alonso', 'falonso@bmw.com', '900357902', 'Av. de Burgos, nº 118', 'Madrid', 'Madrid', '28050', 'España', 'https://www.bmw.es', '1.png', 1, 1, 0, 1, NULL),
 (1, 2, 'Telefonica', 'sha256$AYQah9rrFOO3yvE4$2c3ad1c7cf4608558e2cbcedd87e30a5923f37ab503fb8e94d6b821668be42aa', 'Sandra López', 'slopez@telefonica.com', '936895350', 'Calle gran vía, 28', 'Madrid', 'Madrid', '28013', 'España', 'https://www.telefonica.es/es/', '2.png', 1, 1, 0, NULL, NULL),
 (1, 3, 'CaixaBank', 'sha256$AYQah9rrFOO3yvE4$2c3ad1c7cf4608558e2cbcedd87e30a5923f37ab503fb8e94d6b821668be42aa', 'Carlos Martínez', 'cmartinez@caixabank.com', '902223223', 'Calle pintor Sorolla,2 - 4', 'Valencia', 'Valencia', '46002', 'España', 'https://www.caixabank.es', '3.png', 1, 1, 0, 1, NULL),
