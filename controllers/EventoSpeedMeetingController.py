@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from flask_login import login_required,current_user
 import base64
 
-db = SQLAlchemy()
+from shared.models import db
 
 
 def index():

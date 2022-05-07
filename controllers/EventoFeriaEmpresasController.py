@@ -5,8 +5,7 @@ from models.EventoFeriaEmpresas import EventoFeriaEmpresas
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from flask_login import login_required
-
-db = SQLAlchemy()
+from shared.models import db
 
 
 def index():
