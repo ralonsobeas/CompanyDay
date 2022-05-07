@@ -56,7 +56,7 @@ class EventoSpeedMeetingRegisterForm(FlaskForm):
     pregunta = StringField("Pregunta", validators=[Length(max=4096)])
 
 class PersonaRegisterForm(FlaskForm):
-    nombre = StringField("Nombre", validators=[Length(max=500)])
+    nombrePersona = StringField("Nombre", validators=[Length(max=500)])
     puesto = StringField("Puesto", validators=[Length(max=120)])
     comentario = StringField("Comentario", widget=TextArea(), validators=[Length(max=500)])
 

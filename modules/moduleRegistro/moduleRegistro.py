@@ -75,7 +75,7 @@ def store():
     userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
     url = 'http://{}/empresas/confirmuser/{}/{}'.format(request.host,nombre,userHash)
 
-    empresa = Empresa(id=id,validado=False,nombre=nombre,password=password, method='sha256', \
+    empresa = Empresa(id=id,validado=False,nombre=nombre,password=password, \
                         personaContacto=personaContacto,email=email,telefono=telefono,direccion=direccion, \
                         poblacion=poblacion,provincia=provincia,codigoPostal=codigoPostal,pais=pais,urlWeb=urlWeb,logo=logoFileName, \
                         consentimientoNombre=consentimientoNombre,buscaCandidatos=buscaCandidatos,admin=False,userHash=userHash)
@@ -148,8 +148,8 @@ def store():
     Guardar formulario persona
 """
 def saveFormPersona(formPersona,id):
-    if formPersona.nombre.data != '':
-        nombre = formPersona.nombre.data
+    if formPersona.nombrePersona.data != '':
+        nombre = formPersona.nombrePersona.data
         puesto = formPersona.puesto.data
         comentario = formPersona.comentario.data
 
@@ -168,15 +168,12 @@ def confirmUser(username,userhash):
     elif len(empresa.userHash) == 0 or empresa.userHash != userhash:
         abort(403, description="Invalid url.")
     else:
-        try:
-            confirmado, msg = EmpresaController.confirmar(username)
-            if not confirmado:
-                flash(msg)
-            flash('Has confirmado el usuario!')
-            #Mandar mail a admin
-            send_email("companydayprueba@gmail.com",'Se ha registrado un nuevo usuario al CompanyDay', 'mail/templateMail',nombre=username)
-        except:
-            abort(500, description="An error has occurred.")
+        confirmado, msg = EmpresaController.confirmar(empresa)
+        if not confirmado:
+            flash(msg)
+        flash('Has confirmado el usuario!')
+        #Mandar mail a admin
+        send_email("companydayprueba@gmail.com",'Se ha registrado un nuevo usuario al CompanyDay', 'mail/templateMailAdmin',nombre=username)
 
     return  redirect(url_for('index'))
 
@@ -186,7 +183,7 @@ from flask import current_app
 """
     Enviar mail
 """
-def send_email(to, subject, template, url, **kwargs):
+def send_email(to, subject, template, **kwargs):
     app = Flask(__name__)
 
     app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -200,7 +197,7 @@ def send_email(to, subject, template, url, **kwargs):
     app.config.from_object('config')
     msg = Message(subject, sender=app.config['MAIL_USERNAME'], recipients=[to])
     #msg.body = render_template(template + '.txt', **kwargs, url=url)
-    msg.html = render_template(template + '.html', **kwargs, url=url)
+    msg.html = render_template(template + '.html', **kwargs)
     # flash("send_email: {}".format(url))
     mail.send(msg)
 
@@ -263,6 +260,11 @@ def setnewpassword_post():
 
     return render_template("setnewpassword.html", form=form)
 
+"""
+    Editar empresa desde perfil
+"""
+
+
 @login_required
 def editEmpresa():
     formEdit = EditEmpresaForm()
@@ -280,18 +282,19 @@ def editEmpresa():
     empresa.consentimientoNombre = True
     empresa.buscaCandidatos = True
 
-    logo = formEdit.logo.data
-    empresa.logoFileName = str(id) + ".png";
+    if(formEdit.logo.data != None):
+        logo = formEdit.logo.data
+        empresa.logoFileName = str(id) + ".png";
 
     # Cambiar barras dependiendo del sistema operativo
-    if(platform.system()=='Windows'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
-        UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
-        logo.save(UPLOADS_PATH+"\\"+empresa.logoFileName)
-    elif(platform.system()=='Linux'):
-        UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
-        UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
-        logo.save(UPLOADS_PATH+"/"+empresa.logoFileName)
+        if(platform.system()=='Windows'):
+            UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_WINDOWS)
+            UPLOADS_PATH = UPLOADS_PATH.replace("modules\\moduleRegistro", "")
+            logo.save(UPLOADS_PATH+"\\"+empresa.logoFileName)
+        elif(platform.system()=='Linux'):
+            UPLOADS_PATH = join(dirname(realpath(__file__)), UPLOAD_FOLDER_LINUX)
+            UPLOADS_PATH = UPLOADS_PATH.replace("modules/moduleRegistro/", "")
+            logo.save(UPLOADS_PATH+"/"+empresa.logoFileName)
 
     aniadido, msg = EmpresaController.update(empresa)
     if not aniadido:
@@ -316,7 +319,7 @@ def storeCharla():
         fecha=fecha,autor=autor,empresa_id=current_user.id)
         EventoCharlaController.store(eventoCharlas)
     return redirect(url_for("empresa_bp.userProfile",editable=0))
-        
+
 """
     Guardar evento speedmeeting
 """

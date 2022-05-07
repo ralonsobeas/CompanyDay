@@ -1,6 +1,6 @@
 from run import app,db
 
-from flask import abort
+from flask import abort, flash
 
 from flask_admin import Admin
 from flask_admin.base import expose

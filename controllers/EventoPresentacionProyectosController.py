@@ -17,7 +17,6 @@ def index():
 """
     Guardar EventoPresentacionProyectos
 """
-@login_required
 def store_new(presentacionProyectos):
     db.session.add(presentacionProyectos)
     try:
@@ -39,7 +38,6 @@ def store_new(presentacionProyectos):
 """
     Guardar EventoPresentacionProyectos
 """
-@login_required
 def store():
     id = request.form['IdPresentacion']
     empresa_id = request.form['IdEmpresa']

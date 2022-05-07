@@ -17,7 +17,6 @@ def index():
 """
     Guardar EventoSpeedMeetingController
 """
-@login_required
 def store_new(eventoSpeedMeeting):
     db.session.add(eventoSpeedMeeting)
     try:
@@ -36,7 +35,6 @@ def store_new(eventoSpeedMeeting):
         """
 
 
-@login_required
 def store(eventoSpeedMeeting):
     db.session.add(eventoSpeedMeeting)
     try:

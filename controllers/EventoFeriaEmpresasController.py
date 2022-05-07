@@ -15,7 +15,6 @@ def index():
 """
     Guardar EventoCharla en BBDD
 """
-@login_required
 def store(eventoFeriaEmpresas):
     db.session.add(eventoFeriaEmpresas)
     try:

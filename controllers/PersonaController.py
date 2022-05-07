@@ -17,7 +17,6 @@ def index():
 """
     Guardar Persona.
 """
-@login_required
 def store(persona):
     db.session.add(persona)
     try:
