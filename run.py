@@ -135,6 +135,9 @@ def login():
     loginForm = LoginForm()
     return dict(loginForm=loginForm)
 
+def testBBDD():
+    empresas = EmpresaController.all_query()
+    return "Primera empresa: " + empresas[0].nombre
 
 # Errores routing
 from errors import *
