@@ -212,7 +212,7 @@ def resetpassword():
             if empresa:
                     empresa.userHash = ''.join(random.choice('AILNOQVBCDEFGHJKMPRSTUXZabcdefghijklmnopqrstuvxz1234567890') for i in range(50))
                     url = 'http://{}/empresas/setnewpassword/{}/{}'.format(request.host,empresa.nombre,empresa.userHash)
-                    send_email(form.email.data,'Confirmar cambio de contraseña.', 'mail/templateMail',url=url)
+                    send_email(form.email.data,'Confirmar cambio de contraseña.', 'mail/templateMailContrasenia',url=url)
                     #send_email("companydayprueba@gmail.com",'Confirmar cambio de contraseña.', 'mail/templateMailContrasenia',url=url)
 
                     actualizado, msg = EmpresaController.update(empresa)
