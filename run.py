@@ -17,6 +17,8 @@ import git
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
+#Comentario 09/05/2022
+
 #Route for the GitHub webhook
 @app.route('/update_server', methods=['POST'])
 def git_update():
