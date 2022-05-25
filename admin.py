@@ -104,7 +104,7 @@ Empresa_View = EmpresaView(Empresa,db.session)
 
 class EventoFeriaEmpresasView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'fecha', 'presencial']
+    column_list = ['empresa_id', 'fecha', 'presencial', 'url']
     column_sortable_list = ['empresa_id', 'fecha']
 
     column_formatters = {
@@ -116,7 +116,7 @@ EventoFeriaEmpresas_View = EventoFeriaEmpresasView(EventoFeriaEmpresas,db.sessio
 
 class EventoPresentacionProyectosView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'validado', 'presencial','videojuegos','disenoDigital','cortosAnimacion','ingenieria']
+    column_list = ['empresa_id', 'validado', 'presencial','videojuegos','disenoDigital','cortosAnimacion','ingenieria', 'url']
     column_sortable_list = ['empresa_id', 'validado', 'presencial','videojuegos','disenoDigital','cortosAnimacion','ingenieria']
 
     column_formatters = {
@@ -147,7 +147,7 @@ EventoPresentacionProyectos_View = EventoPresentacionProyectosView(EventoPresent
 
 class EventoCharlasView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'aprobada', 'fecha','titulo','tema','autor','presencialidad']
+    column_list = ['empresa_id', 'aprobada', 'fecha','titulo','tema','autor','presencialidad', 'url']
     column_sortable_list = ['empresa_id', 'fecha','aprobada']
 
     column_formatters = {
@@ -178,7 +178,7 @@ EventoCharlas_View = EventoCharlasView(EventoCharlas,db.session)
 
 class EventoSpeedMeetingView(GeneralView):
     column_exclude_list = ['id']
-    column_list = ['empresa_id', 'aprobada', 'fecha','pregunta','perfiles','horaInicio','horaFin']
+    column_list = ['empresa_id', 'aprobada', 'fecha','pregunta','perfiles','horaInicio','horaFin', 'url']
     column_sortable_list = ['empresa_id', 'fecha','aprobada','horaInicio','horaFin']
 
     column_formatters = {
@@ -220,11 +220,16 @@ Persona_View = PersonaView(Persona,db.session)
 
 
 admin=Admin(app, name='Administrador',url="/admin", template_mode='bootstrap4')
+
+from flask_admin.menu import MenuLink
+admin.add_link(MenuLink(name='Web pública',category="", url='/'))
+
 admin.add_view(Empresa_View)
 admin.add_view(EventoFeriaEmpresas_View)
 admin.add_view(EventoPresentacionProyectos_View)
 admin.add_view(EventoCharlas_View)
 admin.add_view(EventoSpeedMeeting_View)
 admin.add_view(Persona_View)
+
 
 # FIN MODO ADMINISTRADOR

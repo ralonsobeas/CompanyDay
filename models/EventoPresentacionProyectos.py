@@ -15,7 +15,7 @@ class EventoPresentacionProyectos(db.Model):
     disenoDigital = db.Column(db.Boolean)
     cortosAnimacion = db.Column(db.Boolean)
     ingenieria = db.Column(db.Boolean)
-
+    url =  db.Column(db.String(516), nullable=False, default="")
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
 

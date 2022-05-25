@@ -3,6 +3,7 @@ import sys
 from flask import render_template, redirect, url_for, request, abort
 from models.EventoCharlas import EventoCharlas
 from models.Empresa import Empresa
+from models.Persona import Persona
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from flask_login import login_required
@@ -47,7 +48,7 @@ def all_query():
 """
 def get_by_empresa_id_all(empresa_id):
     try:
-        persona = Persona.query.filter_by(empresa_id=empresa_id).all()
+        personas = Persona.query.filter_by(empresa_id=empresa_id).all()
     except:
         db.session.rollback()
-    return persona
+    return personas

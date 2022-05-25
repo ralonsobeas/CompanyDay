@@ -56,7 +56,7 @@ def show(nombre,editable=0):
     empresa = EmpresaController.get_by_name(nombre)
 
     if empresa is None:
-        flash("No existe la empresa "+empresa.nombre)
+        flash("No existe la empresa "+nombre)
         return redirect(url_for('empresa_bp.all'))
 
     formEdit = EditEmpresaForm(data=empresa.as_dict())
@@ -75,11 +75,13 @@ def show(nombre,editable=0):
     eventosPresentacionProyectos = EventoPresentacionProyectosController.get_by_empresa_id_all(empresa.id)
     eventosSpeedMeeting = EventoSpeedMeetingController.get_by_empresa_id_all(empresa.id)
     eventosCharla = EventoCharlaController.get_by_empresa_id_all(empresa.id)
+    personas = PersonaController.get_by_empresa_id_all(empresa.id)
     return render_template('empresa.html', formEdit=formEdit, \
                             formEventoCharlas=formEventoCharlas, formEventoSpeedMeeting=formEventoSpeedMeeting,
                             empresa=empresa,eventosFeriaEmpresa=eventosFeriaEmpresa, \
                             eventosPresentacionProyectos=eventosPresentacionProyectos, \
-                            eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable)
+                            eventosSpeedMeeting=eventosSpeedMeeting,eventosCharla=eventosCharla,editable=editable, \
+                            personas=personas)
 
 """
     Mostrar perfil del usuario actual.

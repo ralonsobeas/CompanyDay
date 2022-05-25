@@ -8,14 +8,14 @@ SECRET_KEY = os.urandom(32)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Enable debug mode.
-DEBUG = False
+DEBUG = True
 
 # Secret key
 SECRET_KEY = "hardsecretkey"
 
 # Connect to the database
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://gennakk:companyday@gennakk.mysql.pythonanywhere-services.com/gennakk$companyday"
-#SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://companyday:companyday@localhost/companyday'
+#SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://gennakk:companyday@gennakk.mysql.pythonanywhere-services.com/gennakk$companyday"
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://companyday:companyday@localhost/companyday'
 
 
 # Turn off the Flask-SQLAlchemy event system and warning

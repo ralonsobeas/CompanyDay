@@ -20,10 +20,10 @@
             <img class="postcard__img" src="/static/images/customlogos/{{proyecto.logo}}" alt="Image Title" />
           </a>
           <div class="postcard__text">
-            <h1 class="postcard__title blue"><a href="#">Presentación de proyectos</a></h1>
+            <h1 class="postcard__title blue"><a href="{{proyecto.url}}">Presentación de proyectos</a></h1>
             <div class="postcard__subtitle small">
               <time datetime="2020-05-25 12:00:00">
-                <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                <i class="fas fa-calendar-alt mr-2"></i><!-- Mon, May 25th 2020 -->
               </time>
             </div>
             <div class="postcard__bar"></div>
@@ -57,7 +57,7 @@
             <img class="postcard__img" src="/static/images/customlogos/{{charla.logo}}" alt="Image Title" />
           </a>
           <div class="postcard__text">
-            <h1 class="postcard__title blue"><a href="#">Charlas</a></h1>
+            <h1 class="postcard__title blue"><a href="{{charla.url}}">Charlas</a></h1>
             <div class="postcard__subtitle small">
               <time datetime="2020-05-25 12:00:00">
                 <i class="fas fa-calendar-alt mr-2"></i>{{charla.fecha}}
@@ -80,6 +80,31 @@
             </div>
           </div>
         </article>
+        {% endfor %}
+
+
+        {% for eventoFeriaEmpresas in eventosFeriaEmpresa %}
+            <article class="postcard dark blue">
+              <a class="postcard__img_link" href="#">
+                <img class="postcard__img" src="/static/images/customlogos/{{eventoFeriaEmpresas.logo}}" alt="Image Title" />
+              </a>
+              <div class="postcard__text">
+                <h1 class="postcard__title blue"><a href="{{eventoFeriaEmpresas.url}}" target="_blank">Feria de empresas</a></h1>
+                <div class="postcard__subtitle small">
+                  <time datetime="2020-05-25 12:00:00">
+                    <i class="fas fa-calendar-alt mr-2"></i>{{eventoFeriaEmpresas.fecha}}
+                  </time>
+                </div>
+                <div class="postcard__bar"></div>
+                <div class="postcard__preview-txt">
+                  {% if eventoFeriaEmpresas.presencial %}
+                    Presencial
+                  {% else %}
+                    Online
+                  {% endif %}
+                </div>
+              </div>
+            </article>
         {% endfor %}
       </div>
 

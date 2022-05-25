@@ -16,7 +16,7 @@ class EventoSpeedMeeting(db.Model):
     perfiles = db.Column(db.String(4096))
     pregunta = db.Column(db.String(4096))
     aprobada = db.Column(db.Boolean)
-
+    url =  db.Column(db.String(516), nullable=False, default="")
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
 

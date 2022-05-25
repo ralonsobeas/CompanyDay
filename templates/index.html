@@ -33,13 +33,14 @@
 <!-- CAMBIO DE COLOR  style="color:white" -->
 <div class="row vh-100"  style="color:white;height:100%;">
   <section class="container-fluid container-main" >
+       <a href="#carr" style="text-decoration: none;color:white">
     <div class="row mb-5">
       <div class="col-md-12 d-flex justify-content-end align-items-center">
         <h3 class="mr-5">¿DE QUÉ VA ESTO?</h3>
         <h3 class="fas fa-arrow-right fa-5x" style="color:#0065ef"></h3>
       </div>
     </div>
-
+    </a>
     <div class="container align-items-center justify-content-center h-50"  >
        <div class="row  align-items-center justify-content-center h-50">
           <!--<h1 class="titulo ">COMPANY DAY</h1>-->
@@ -74,7 +75,7 @@
          </div>
 
      </div>
-     <a href="#talentos" style="text-decoration: none;color:white">
+     <a href="#datos" style="text-decoration: none;color:white">
      <div class="row ">
        <div class="col-md-12 d-flex  align-items-center align-bottom">
          <h3 class="fas fa-arrow-right fa-5x mr-5" style="transform: rotate(90deg);color:#0065ef" ></h3>
@@ -109,7 +110,7 @@
 </div>
 </div>
 <!-- Segundo bloque -->
-<div class="row" style="background-color:black">
+<div id="datos" class="row" style="background-color:black">
   <div class="col-xl-3 col-lg-6">
         <div class="card">
             <div class="card-statistic-3 p-4">
@@ -198,14 +199,14 @@
     </div>
   </div>
 <!-- Segundo bloque -->
-  <div class="row mt-5">
+  <div id="carr" class="row mt-5">
     <div class="container ">
       <div class="row  align-items-center justify-content-center">
         <h3>ASISTEN AL EVENTO<h3>
       </div>
       <div class="row">
         <div class="col-sm-1 carousel-arrow">
-          <img class="customPrevBtn" src='/static/images/arrowLeft.png' width='64' height='64'> Anterior
+          <img class="customPrevBtn" src='/static/images/arrowLeft.png' width='64' height='64'>
         </div>
         <div class="col-sm-10 brand-carousel section-padding owl-carousel " >
           {% for empresa in empresas %}
@@ -215,7 +216,7 @@
           {% endfor %}
         </div>
         <div class="col-sm-1 carousel-arrow">
-          <img class="customNextBtn" src='/static/images/arrowRight.png' width='64' height='64'> Siguiente
+          <img class="customNextBtn" src='/static/images/arrowRight.png' width='64' height='64'>
         </div>
       </div>
     </div>
@@ -225,7 +226,7 @@
 <!-- Cuarto Bloque-->
 <!-- BREAKING NEWS -->
 
-  <div class="row ">
+  <div id="eventos" class="row ">
     <div class="container">
       <div class="row">
         <section class="dark">
@@ -238,9 +239,11 @@
         			<div class="postcard__text">
         				<h1 class="postcard__title blue"><a href="#">Feria de empresas</a></h1>
         				<div class="postcard__subtitle small">
+                  <!--
         					<time datetime="2020-05-25 12:00:00">
         						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
         					</time>
+                -->
         				</div>
         				<div class="postcard__bar"></div>
         				<div class="postcard__preview-txt">El principal punto de encuentro del evento, un espacio donde empresas y el talento U-tad podrán darse a conocer, charlar sobre sus proyectos y ponerse en valor.</div>
@@ -254,9 +257,11 @@
         			<div class="postcard__text">
         				<h1 class="postcard__title blue"><a href="#">Presentación de proyectos</a></h1>
         				<div class="postcard__subtitle small">
+                  <!--
         					<time datetime="2020-05-25 12:00:00">
         						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
         					</time>
+                -->
         				</div>
         				<div class="postcard__bar"></div>
         				<div class="postcard__preview-txt">Cortos de animación y VFX, videojuegos, portfolios de diseño, apps, experiencias de realidades extendidas… Los alumnos presentan sus proyectos a las empresas.</div>
@@ -270,9 +275,11 @@
         			<div class="postcard__text">
         				<h1 class="postcard__title blue"><a href="#">Speed meetings</a></h1>
         				<div class="postcard__subtitle small">
-        					<time datetime="2020-05-25 12:00:00">
-        						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
-        					</time>
+                  <!--
+                  <time datetime="2020-05-25 12:00:00">
+                    <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                  </time>
+                -->
         				</div>
         				<div class="postcard__bar"></div>
         				<div class="postcard__preview-txt">43 empresas realizarán entrevistas de prácticas y empleo.
@@ -291,9 +298,11 @@ Estudiantes: podrás solicitar las ofertas y enviar tu perfil a las empresas que
         			<div class="postcard__text">
         				<h1 class="postcard__title blue"><a href="#">Charlas</a></h1>
         				<div class="postcard__subtitle small">
+                  <!--
         					<time datetime="2020-05-25 12:00:00">
         						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
         					</time>
+                -->
         				</div>
         				<div class="postcard__bar"></div>
         				<div class="postcard__preview-txt">Conoce lo que las empresas buscan y en lo que trabajan, a reclutadores y profesionales que te darán información de primera mano sobre sus procesos de selección, sectores y casos de éxito.

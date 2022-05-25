@@ -57,7 +57,7 @@ def all():
 def all_query():
     listaCharlasAprobadas = EventoCharlas.query\
     .join(Empresa, EventoCharlas.empresa_id == Empresa.id)\
-    .add_columns(EventoCharlas.tema, EventoCharlas.presencialidad, EventoCharlas.titulo, EventoCharlas.fecha, EventoCharlas.autor, Empresa.logo, Empresa.nombre)\
+    .add_columns(EventoCharlas.url,EventoCharlas.tema, EventoCharlas.presencialidad, EventoCharlas.titulo, EventoCharlas.fecha, EventoCharlas.autor, Empresa.logo, Empresa.nombre)\
     .filter(Empresa.validado == True)\
     .filter(EventoCharlas.aprobada == True)
     return listaCharlasAprobadas;

@@ -15,6 +15,7 @@ class EventoCharlas(db.Model):
     fecha = db.Column(db.Date)
     aprobada = db.Column(db.Boolean)
     autor = db.Column(db.String(516))
+    url =  db.Column(db.String(516), nullable=False, default="")
 
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
