@@ -125,7 +125,13 @@ def favicon():
 def actividades():
     proyectos = EventoPresentacionProyectosController.all_query()
     charlas = EventoCharlaController.all_query()
-    return render_template('proyectos.html',proyectos=proyectos,charlas=charlas)
+    eventosFeriaEmpresa = EventoFeriaEmpresasController.all_query()
+    return render_template('proyectos.html',proyectos=proyectos,charlas=charlas,eventosFeriaEmpresa=eventosFeriaEmpresa)
+
+@app.route('/planoFeria')
+def planoFeria():
+
+    return render_template('planoFeria.html')
 
 
 from modules.moduleLogin.forms import LoginForm
@@ -137,6 +143,9 @@ def login():
     loginForm = LoginForm()
     return dict(loginForm=loginForm)
 
+def testBBDD():
+    empresas = EmpresaController.all_query()
+    return "Primera empresa: " + empresas[0].nombre
 
 # Errores routing
 from errors import *

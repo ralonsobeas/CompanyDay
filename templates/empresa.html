@@ -43,10 +43,10 @@
                 </ul>
               </div>
             </div>
-
+            {% if current_user.id == empresa.id or current_user.admin%}
             <div class="card mb-4">
               <div class="card-body">
-              {% if current_user.id == empresa.id %}
+              {% if current_user.id == empresa.id%}
                 <div class="row">
                   <div class="col-sm-9">
                   </div>
@@ -57,7 +57,7 @@
                   </div>
                 </div>
                 <hr>
-              {% endif %}
+                {% endif %}
               {% if editable == 0 %}
                 <div class="row">
                   <div class="col-sm-3">
@@ -96,10 +96,26 @@
                   </div>
                 </div>
                 <hr>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <p class="mb-0">Personas asistentes</p>
+                  </div>
+                </div>
+                  <div class="row">
+                  {% for persona in personas %}
+                  <div class="col-sm-9 m-2">
+                    <p class="text-muted mb-0">Nombre: {{persona.nombre}}</p>
+                    <p class="text-muted mb-0">Puesto: {{persona.puesto}}</p>
+                    <p class="text-muted mb-0">Comentario: {{persona.comentario}}</p>
+                  </div>
+                  <hr>
+                  {% endfor %}
+                </div>
+                <hr>
               {% else %}
                 {% if formEdit %}
                 {% import "bootstrap/wtf.html" as wtf %}
-                
+
                 <form id="contact-form" class="form" action="/empresas/update" method="POST" role="form" enctype="multipart/form-data">
                   {{ formEdit.hidden_tag() }}
                   {{ wtf.form_field(formEdit.nombre) }}
@@ -161,10 +177,12 @@
                 </form>
                 {% endif %}
               {% endif %}
+
               </div>
             </div>
+            {% endif %}
           </div>
-          
+
           <div class="col-lg-8">
 
             <div class="row justify-content-center">
@@ -181,27 +199,27 @@
 
               <div class="col-md-12">
                 {% for eventoFeriaEmpresas in eventosFeriaEmpresa %}
-                  <article class="postcard dark blue">
-                    <a class="postcard__img_link" href="#">
-                      <img class="postcard__img" src="https://st1.u-tad.com/media/sites/2/2021/09/company-day-event-u-tad.jpeg" alt="Image Title" />
-                    </a>
-                    <div class="postcard__text">
-                      <h1 class="postcard__title blue"><a href="#">Feria de empresas</a></h1>
-                      <div class="postcard__subtitle small">
-                        <time datetime="2020-05-25 12:00:00">
-                          <i class="fas fa-calendar-alt mr-2"></i>{{eventoFeriaEmpresas.fecha}}
-                        </time>
+                    <article class="postcard dark blue">
+                      <a class="postcard__img_link" href="#">
+                        <img class="postcard__img" src="https://st1.u-tad.com/media/sites/2/2021/09/company-day-event-u-tad.jpeg" alt="Image Title" />
+                      </a>
+                      <div class="postcard__text">
+                        <h1 class="postcard__title blue"><a href="{{eventoFeriaEmpresas.url}}" target="_blank">Feria de empresas</a></h1>
+                        <div class="postcard__subtitle small">
+                          <time datetime="2020-05-25 12:00:00">
+                            <i class="fas fa-calendar-alt mr-2"></i>{{eventoFeriaEmpresas.fecha}}
+                          </time>
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt">
+                          {% if eventoFeriaEmpresas.presencial %}
+                            Presencial
+                          {% else %}
+                            Online
+                          {% endif %}
+                        </div>
                       </div>
-                      <div class="postcard__bar"></div>
-                      <div class="postcard__preview-txt">
-                        {% if eventoFeriaEmpresas.presencial %}
-                          Presencial
-                        {% else %}
-                          Online
-                        {% endif %}
-                      </div>
-                    </div>
-                  </article>
+                    </article>
                 {% endfor %}
 
               </div>
@@ -212,10 +230,10 @@
                     <img class="postcard__img" src="https://media.vandal.net/i/1200x630/11-2021/202111239321190_1.jpg" alt="Image Title" />
                   </a>
                   <div class="postcard__text">
-                    <h1 class="postcard__title blue"><a href="#">Presentación de proyectos</a></h1>
+                    <h1 class="postcard__title blue"><a href="{{eventoPresentacionProyectos.url}}" target="_blank">Presentación de proyectos</a></h1>
                     <div class="postcard__subtitle small">
                       <time datetime="2020-05-25 12:00:00">
-                        <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                        <i class="fas fa-calendar-alt mr-2"></i><!--Mon, May 25th 2020-->
                       </time>
                     </div>
                     <div class="postcard__bar"></div>
@@ -251,7 +269,7 @@
             				<img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologias-educativas.jpg" alt="Image Title" />
             			</a>
             			<div class="postcard__text">
-            				<h1 class="postcard__title blue"><a href="#">Speed meetings</a></h1>
+            				<h1 class="postcard__title blue"><a href="{{eventoSpeedMeeting.url}}" target="_blank">Speed meetings</a></h1>
             				<div class="postcard__subtitle small">
             					<time datetime="2020-05-25 12:00:00">
             						<i class="fas fa-calendar-alt mr-2"></i>{{eventoSpeedMeeting.fecha}}
@@ -277,7 +295,7 @@
                     <img class="postcard__img" src="https://st1.u-tad.com/media/2020/11/tecnologia-educativa-formacion.jpg" alt="Image Title" />
                   </a>
                   <div class="postcard__text">
-                    <h1 class="postcard__title blue"><a href="#">Charlas</a></h1>
+                    <h1 class="postcard__title blue"><a href="{{eventoCharla.url}}" target="_blank">Charlas</a></h1>
                     <div class="postcard__subtitle small">
                       <time datetime="2020-05-25 12:00:00">
                         <i class="fas fa-calendar-alt mr-2"></i>{{eventoCharla.fecha}}

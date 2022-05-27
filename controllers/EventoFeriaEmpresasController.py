@@ -2,6 +2,7 @@ import sys
 
 from flask import render_template, redirect, url_for, request, abort
 from models.EventoFeriaEmpresas import EventoFeriaEmpresas
+from models.Empresa import Empresa
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from flask_login import login_required
@@ -59,7 +60,11 @@ def all():
     Buscar todos los EventoFeriaEmpresas
 """
 def all_query():
-    return EventoFeriaEmpresas.query.all()
+    listaFeriaEmpresas = EventoFeriaEmpresas.query\
+    .join(Empresa, EventoFeriaEmpresas.empresa_id == Empresa.id)\
+    .add_columns(Empresa.logo,EventoFeriaEmpresas.fecha,EventoFeriaEmpresas.presencial,EventoFeriaEmpresas.url)\
+    .filter(Empresa.validado == True)
+    return listaFeriaEmpresas
 
 """
     Obtener EventoFeriaEmpresas por id de empresa.

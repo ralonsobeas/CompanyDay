@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="/static/css/empresas.css">
+{% endblock %}
+
+{% block content %}
+    <h1 class="title text-center">{% block title %} PLANO DE LA FERIA {% endblock %}</h1>
+    <object data="static/pdf/paginaPlanoFeria.pdf" type="application/pdf" width="100%" height="800px">
+      <p>It appears you don't have a PDF plugin for this browser.
+       No biggie... you can <a href="resume.pdf">click here to
+      download the PDF file.</a></p>
+    </object>
+{% endblock %}

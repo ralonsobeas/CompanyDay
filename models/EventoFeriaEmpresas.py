@@ -11,7 +11,7 @@ class EventoFeriaEmpresas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fecha  = db.Column(db.Date)
     presencial = db.Column(db.Boolean)
-
+    url =  db.Column(db.String(516), nullable=False, default="")
     #Relación con empresa
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
 
@@ -21,4 +21,3 @@ class EventoFeriaEmpresas(db.Model):
         self.presencial = presencial
 
         self.empresa_id = empresa_id
-        

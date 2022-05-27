@@ -93,7 +93,7 @@ def all(presentacion_id):
 def all_query():
     listaProyectosAprobados = EventoPresentacionProyectos.query\
     .join(Empresa, EventoPresentacionProyectos.empresa_id == Empresa.id)\
-    .add_columns(EventoPresentacionProyectos.presencial, EventoPresentacionProyectos.videojuegos, EventoPresentacionProyectos.disenoDigital, EventoPresentacionProyectos.cortosAnimacion, EventoPresentacionProyectos.ingenieria, Empresa.logo, Empresa.nombre)\
+    .add_columns(EventoPresentacionProyectos.url,EventoPresentacionProyectos.presencial, EventoPresentacionProyectos.videojuegos, EventoPresentacionProyectos.disenoDigital, EventoPresentacionProyectos.cortosAnimacion, EventoPresentacionProyectos.ingenieria, Empresa.logo, Empresa.nombre)\
     .filter(Empresa.validado == True)\
     .filter(EventoPresentacionProyectos.validado == True)
     return listaProyectosAprobados;
