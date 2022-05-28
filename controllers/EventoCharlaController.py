@@ -41,8 +41,13 @@ def show(empresa_id):
 def update(empresa_id):
     return 'update'
 
-def delete(empresa_id):
-    return 'delete'
+@login_required
+def delete(eventoCharla_id):
+    current_charla = EventoCharlas.query.filter_by(id=eventoCharla_id).first()
+    if current_user.id == current_charla.empresa_id:
+        db.session.delete(EventoCharlas.query.filter_by(id=eventoCharla_id).first())
+        db.session.commit()
+    return redirect("/empresas/user_profile/0")
 
 """
     Mostrar todos los EventoCharlas. Renderiza en registroCharlas.html
@@ -81,6 +86,7 @@ def validar(id,valor):
     Obtener EventoCharlas por id de empresa.
 """
 def get_by_empresa_id_all(empresa_id):
+    eventoCharlas = ' '
     try:
         eventoCharlas = EventoCharlas.query.filter_by(empresa_id=empresa_id).all()
     except:
