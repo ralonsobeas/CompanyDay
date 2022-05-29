@@ -188,21 +188,21 @@
 			  </div>
 			  <div id="Persona2" hidden>
 					{{ formPersona2.hidden_tag() }}
-					{{ wtf.form_field(formPersona2.nombrePersona) }}
-					{{ wtf.form_field(formPersona2.puesto) }}
-					{{ wtf.form_field(formPersona2.comentario) }}
+					{{ wtf.form_field(formPersona2.nombrePersona1) }}
+					{{ wtf.form_field(formPersona2.puesto1) }}
+					{{ wtf.form_field(formPersona2.comentario1) }}
 			  </div>
 			  <div id="Persona3" hidden>
 					{{ formPersona3.hidden_tag() }}
-					{{ wtf.form_field(formPersona3.nombrePersona) }}
-					{{ wtf.form_field(formPersona3.puesto) }}
-					{{ wtf.form_field(formPersona3.comentario) }}
+					{{ wtf.form_field(formPersona3.nombrePersona2) }}
+					{{ wtf.form_field(formPersona3.puesto2) }}
+					{{ wtf.form_field(formPersona3.comentario2) }}
 			  </div>
 			  <div id="Persona4" hidden>
 					{{ formPersona4.hidden_tag() }}
-					{{ wtf.form_field(formPersona4.nombrePersona) }}
-					{{ wtf.form_field(formPersona4.puesto) }}
-					{{ wtf.form_field(formPersona4.comentario) }}
+					{{ wtf.form_field(formPersona4.nombrePersona3) }}
+					{{ wtf.form_field(formPersona4.puesto3) }}
+					{{ wtf.form_field(formPersona4.comentario3) }}
 			  </div>
 
 			  <input type="button" name="previous" class="previous action-button" value="Anterior" />
@@ -212,9 +212,6 @@
 		<fieldset>
 			<h2 class="fs-title">Crear speed meeting</h2>
 			<h3 class="fs-subtitle">Speed meeting (opcional)</h3>
-			<div id="cajaBotones">
-				<label class="checkbox-inline" style="color:black; font-size: 11px; margin: 3%;"><input type="checkbox" id="siSpeedMeeting" name="siSpeedMeeting" value="True"/>¿SpeedMeeting?</label>
-			</div>
 			{{ formEventoSpeedMeeting.hidden_tag() }}
 			{{ wtf.form_field(formEventoSpeedMeeting.pregunta) }}
 			{{ wtf.form_field(formEventoSpeedMeeting.perfiles) }}
