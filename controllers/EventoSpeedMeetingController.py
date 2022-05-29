@@ -59,8 +59,13 @@ def show(empresa_id):
 def update(empresa_id):
     return 'update'
 
-def delete(empresa_id):
-    return 'delete'
+@login_required
+def delete(eventoSpeedMeeting_id):
+    current_speedMeeting = EventoSpeedMeeting.query.filter_by(id=eventoSpeedMeeting_id).first()
+    if current_user.id == current_speedMeeting.empresa_id:
+        db.session.delete(EventoSpeedMeeting.query.filter_by(id=eventoSpeedMeeting_id).first())
+        db.session.commit()
+    return redirect("/empresas/user_profile/0")
 
 """
     Mostrar todos los EventoSpeedMeeting. Renderizar en registroSpeedMetting.html
@@ -99,6 +104,7 @@ def validar(id,valor):
     Obtener EventoSpeedMeeting por id de empresa.
 """
 def get_by_empresa_id_all(empresa_id):
+    eventoSpeedMeeting = ' '
     try:
         eventoSpeedMeeting = EventoSpeedMeeting.query.filter_by(empresa_id=empresa_id).all()
     except:

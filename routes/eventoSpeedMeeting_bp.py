@@ -16,6 +16,6 @@ eventoSpeedMeeting_bp.route('/crear', methods=['GET','POST'])(storeSpeedMeeting)
 # Guardar EventoPresentacionProyectos
 eventoSpeedMeeting_bp.route('/<int:empresa_id>/editar', methods=['POST'])(update)
 # Borrar EventoPresentacionProyectos
-eventoSpeedMeeting_bp.route('/<int:empresa_id>/delete', methods=['DELETE'])(delete)
+eventoSpeedMeeting_bp.route('/<int:eventoSpeedMeeting_id>/delete', methods=['GET','POST'])(delete)
 # Mostrar todos EventoPresentacionProyectos
 #eventoSpeedMeeting_bp.route('/all', methods=['GET'])(all)

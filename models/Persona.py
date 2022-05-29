@@ -14,7 +14,7 @@ class Persona(db.Model):
     comentario  = db.Column(db.String(500))
 
     #Relación con empresa
-    empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
+    empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id', ondelete='CASCADE'))
 
     def __init__(self,nombre,puesto,comentario,empresa_id):
         self.nombre = nombre

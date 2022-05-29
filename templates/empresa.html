@@ -190,8 +190,6 @@
               <h1 class=""> EVENTOS A LOS QUE ASISTE </h1>
               {% if current_user.id == empresa.id %}
               <div class="col-md-12 py-4">
-                <a class="btn btn-dark m-1" href="">Registro Feria empresas</a>
-                <a type="button" class="btn btn-dark m-1" data-toggle="modal" data-target="#registroModalPresentaciones" href="">Registro Presentación de proyectos</a>
                 <a type="button" class="btn btn-dark m-1"  data-toggle="modal" data-target="#registroModalSpeedMeetings" href="">Registro Speed meeting</a>
                 <a type="button" class="btn btn-dark m-1"  data-toggle="modal" data-target="#registroModalCharla" href="">Registro Charla</a>
               </div>
@@ -282,6 +280,12 @@
                       Perfiles: {{eventoSpeedMeeting.perfiles}}
                       <br>
                       Pregunta: {{eventoSpeedMeeting.pregunta}}
+                      {% if current_user.id == empresa.id %}
+                      {% if eventoSpeedMeeting.aprobada == false %}
+                      <br>
+                      <button type="button" class="btn btn-danger" onclick="location.href = '/speedMeeting/{{eventoSpeedMeeting.id}}/delete';">Eliminar</button>
+                      {% endif %}
+                      {% endif %}
                     </div>
             			</div>
             		</article>
@@ -315,6 +319,12 @@
                       </br>
                       </br>
                       {{eventoCharla.tema}}
+                      {% if current_user.id == empresa.id %}
+                      {% if eventoCharla.aprobada == false %}
+                      <br>
+                      <button type="button" class="btn btn-danger" onclick="location.href = '/charlas/{{eventoCharla.id}}/delete';">Eliminar</button>
+                      {% endif %}
+                      {% endif %}
                     </div>
                   </div>
                 </article>
@@ -324,6 +334,7 @@
             </div>
           </div>
 
+          <!--
           <div class="modal fade" id="registroModalPresentaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog form-dark" role="document">
               <div class="modal-content card card-image" style="background-color: #0065ef;">
@@ -341,6 +352,7 @@
               </div>
             </div>
           </div>
+          -->
 
           <div class="modal fade" id="registroModalSpeedMeetings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog form-dark" role="document">

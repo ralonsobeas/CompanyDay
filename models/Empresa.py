@@ -25,7 +25,7 @@ class Empresa(UserMixin,db.Model):
     provincia = db.Column(db.String(120))
     codigoPostal = db.Column(db.String(15))
     pais = db.Column(db.String(120))
-    urlWeb = db.Column(db.String(120))
+    urlWeb = db.Column(db.String(516))
     logo = db.Column(db.String(120))
     consentimientoNombre = db.Column(db.Boolean)
     buscaCandidatos = db.Column(db.Boolean)
@@ -37,10 +37,10 @@ class Empresa(UserMixin,db.Model):
     userHash = db.Column(db.String(50))
 
     #Eventos
-    eventosFeriaEmpresas = db.relationship('EventoFeriaEmpresas', backref=db.backref('empresa'))
-    eventosPresentacionProyectos = db.relationship('EventoPresentacionProyectos', backref='empresa', lazy='dynamic')
-    eventosSpeedMeetings = db.relationship('EventoSpeedMeeting', backref='empresa', lazy='dynamic')
-    eventosCharlas = db.relationship('EventoCharlas', backref='empresa', lazy='dynamic')
+    eventosFeriaEmpresas = db.relationship('EventoFeriaEmpresas', passive_deletes=True, backref=db.backref('empresa'))
+    eventosPresentacionProyectos = db.relationship('EventoPresentacionProyectos', passive_deletes=True, backref='empresa', lazy='dynamic')
+    eventosSpeedMeetings = db.relationship('EventoSpeedMeeting', passive_deletes=True, backref='empresa', lazy='dynamic')
+    eventosCharlas = db.relationship('EventoCharlas', passive_deletes=True, backref='empresa', lazy='dynamic')
 
 
 

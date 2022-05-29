@@ -156,7 +156,6 @@ from admin import *
 from config import DEBUG
 # Start app
 if __name__ == '__main__':
-
     with app.app_context():
         db.create_all()
     app.run(port = 3001, debug=DEBUG)

@@ -70,6 +70,7 @@ def all_query():
     Obtener EventoFeriaEmpresas por id de empresa.
 """
 def get_by_empresa_id_all(empresa_id):
+    eventoFeriaEmpresas = ' '
     try:
         eventoFeriaEmpresas = EventoFeriaEmpresas.query.filter_by(empresa_id=empresa_id).all()
     except:

@@ -15,6 +15,6 @@ eventoCharla_bp.route('/crear', methods=['GET','POST'])(storeCharla)
 # Actualizar EventoCharla
 eventoCharla_bp.route('/<int:empresa_id>/editar', methods=['POST'])(update)
 # Borrar EventoCharla
-eventoCharla_bp.route('/<int:empresa_id>/delete', methods=['DELETE'])(delete)
+eventoCharla_bp.route('/<int:eventoCharla_id>/delete', methods=['GET','POST'])(delete)
 # Mostrar todos EventoCharlas
 #eventoCharla_bp.route('/all', methods=['GET'])(all)

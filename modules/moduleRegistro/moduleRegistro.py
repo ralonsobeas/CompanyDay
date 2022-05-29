@@ -87,16 +87,50 @@ def store():
 
     #Añadir personas
     formPersona1 = PersonaRegisterForm()
-    saveFormPersona(formPersona1,empresa.id)
+    #saveFormPersona(formPersona1,empresa.id)
+    if formPersona1.nombrePersona.data != '':
+        nombre = formPersona1.nombrePersona.data
+        puesto = formPersona1.puesto.data
+        comentario = formPersona1.comentario.data
+
+        persona = Persona(nombre=nombre,puesto=puesto,comentario=comentario,empresa_id=id)
+
+        PersonaController.store(persona)
 
     formPersona2 = PersonaRegisterForm1()
-    saveFormPersona(formPersona2,empresa.id)
+    #saveFormPersona(formPersona2,empresa.id)
+    if formPersona2.nombrePersona1.data != '':
+        nombre = formPersona2.nombrePersona1.data
+        puesto = formPersona2.puesto1.data
+        comentario = formPersona2.comentario1.data
+
+        persona = Persona(nombre=nombre,puesto=puesto,comentario=comentario,empresa_id=id)
+
+        PersonaController.store(persona)
+
 
     formPersona3 = PersonaRegisterForm2()
-    saveFormPersona(formPersona3,empresa.id)
+    #saveFormPersona(formPersona3,empresa.id)
+    if formPersona3.nombrePersona2.data != '':
+        nombre = formPersona3.nombrePersona2.data
+        puesto = formPersona3.puesto2.data
+        comentario = formPersona3.comentario2.data
+
+        persona = Persona(nombre=nombre,puesto=puesto,comentario=comentario,empresa_id=id)
+
+        PersonaController.store(persona)
+
 
     formPersona4 = PersonaRegisterForm3()
-    saveFormPersona(formPersona4,empresa.id)
+    #saveFormPersona(formPersona4,empresa.id)
+    if formPersona4.nombrePersona3.data != '':
+        nombre = formPersona4.nombrePersona3.data
+        puesto = formPersona4.puesto3.data
+        comentario = formPersona4.comentario3.data
+
+        persona = Persona(nombre=nombre,puesto=puesto,comentario=comentario,empresa_id=id)
+
+        PersonaController.store(persona)
 
     #Añadir eventos
     formEventoSpeedMeeting = EventoSpeedMeetingRegisterForm()
@@ -421,7 +455,7 @@ def updateAdmin():
     return redirect('../admin/empresa')
 
 def generatePass():
-    print(generate_password_hash("12345", method='sha256'))
+    print(generate_password_hash("admin", method='sha256'))
 
 from test import debug_only
 @debug_only
