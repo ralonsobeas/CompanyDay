@@ -3,7 +3,7 @@ from config import DEBUG
 from controllers import EmpresaController
 
 """
-    Funcionar en debug mode
+    Funcionar en debug mode.
 """
 from functools import wraps
 from flask import current_app, abort, request
