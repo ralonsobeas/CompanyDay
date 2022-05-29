@@ -421,7 +421,7 @@ def updateAdmin():
     return redirect('../admin/empresa')
 
 def generatePass():
-    print(generate_password_hash("12345", method='sha256'))
+    print(generate_password_hash("admin", method='sha256'))
 
 from test import debug_only
 @debug_only

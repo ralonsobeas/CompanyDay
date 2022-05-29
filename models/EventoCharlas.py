@@ -18,7 +18,7 @@ class EventoCharlas(db.Model):
     url =  db.Column(db.String(516), nullable=False, default="")
 
     #Relación con empresa
-    empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'))
+    empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id', ondelete='CASCADE'))
 
     def __init__(self,tema,presencialidad,titulo,fecha,autor,empresa_id):
         self.tema = tema

@@ -60,14 +60,20 @@ class PersonaRegisterForm(FlaskForm):
     puesto = StringField("Puesto", validators=[Length(max=120)])
     comentario = StringField("Comentario", widget=TextArea(), validators=[Length(max=500)])
 
-class PersonaRegisterForm1(PersonaRegisterForm):
-    pass
+class PersonaRegisterForm1(FlaskForm):
+    nombrePersona = StringField("Nombre", validators=[Length(max=500)])
+    puesto = StringField("Puesto", validators=[Length(max=120)])
+    comentario = StringField("Comentario", widget=TextArea(), validators=[Length(max=500)])
 
-class PersonaRegisterForm2(PersonaRegisterForm):
-    pass
+class PersonaRegisterForm2(FlaskForm):
+    nombrePersona = StringField("Nombre", validators=[Length(max=500)])
+    puesto = StringField("Puesto", validators=[Length(max=120)])
+    comentario = StringField("Comentario", widget=TextArea(), validators=[Length(max=500)])
 
-class PersonaRegisterForm3(PersonaRegisterForm):
-    pass
+class PersonaRegisterForm3(FlaskForm):
+    nombrePersona = StringField("Nombre", validators=[Length(max=500)])
+    puesto = StringField("Puesto", validators=[Length(max=120)])
+    comentario = StringField("Comentario", widget=TextArea(), validators=[Length(max=500)])
 
 class ResetPasswordForm(FlaskForm):
     email = StringField("E-mail", validators=[InputRequired(),Email(message="Email no es válido!"),Length(max=50)])
